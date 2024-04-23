@@ -1,7 +1,8 @@
-// login.js
 const express = require('express');
 const path = require('path');
-
+const bcrypt = require('bcrypt');
+const DataModel = require('../DataSchematics/UserSchematic');
+const { decryptText } = require("./RSAEncryption");
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -9,15 +10,28 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    const username = req.body.username;
+    const { email, password } = req.body;
 
-    // TODO: Voeg authenticatie voor gebruikersnaam en wachtwoord toe
-    if (username !== 'test') {
-        req.session.username = username;
-        res.redirect('/');
-    } else {
-        res.redirect('/login');
-    }
+    DataModel.findOne({ email })
+        .then((user) => {
+            if (!user) {
+                res.sendStatus(401);
+            } else {
+                decrypted = decryptText(user.password, user.privateKey)
+                console.log(decrypted, password);
+                if (decrypted === password) {
+                    console.log("correct")
+                    req.session.username = email;
+                    res.redirect('/');
+                } else {
+                    console.log("fout")
+                }
+            }
+        })
+        .catch((err) => {
+            console.error(err);
+            res.sendStatus(500);
+        });
 });
 
 module.exports = router;

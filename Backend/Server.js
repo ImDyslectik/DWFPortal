@@ -3,7 +3,6 @@ const session = require('express-session');
 const loginRouter = require('./Login');
 const db = require('./ConnectDB');
 const DataModel = require('../DataSchematics/UserSchematic');
-const { generateKeyPair, encryptText, decryptText } = require('./RSAEncryption');
 
 const app = express();
 const path = require('path');
@@ -58,34 +57,6 @@ app.get('/home.css', (req, res) => {
 
 app.get('/login.css', (req, res) => {
     res.sendFile(path.join(__dirname, '../Frontend/CSS/login.css'));
-});
-
-app.post('/data', (req, res) => {
-    const { email, password } = req.body;
-
-    const keyPair = generateKeyPair();
-    const publicKey = keyPair.publicKey;
-    const privateKey = keyPair.privateKey;
-
-    const encryptedPassword = encryptText(password, publicKey);
-    const decryptedPassword = decryptText(encryptedPassword, privateKey);
-    console.log(decryptedPassword);
-    const newData = new DataModel({
-        email,
-        password: encryptedPassword,
-        role: 'user',
-        publicKey,
-        privateKey,
-    });
-
-    newData.save()
-        .then(() => {
-            res.sendStatus(200);
-        })
-        .catch((err) => {
-            console.error(err);
-            res.sendStatus(500);
-        });
 });
 
 app.listen(PORT, () => {
