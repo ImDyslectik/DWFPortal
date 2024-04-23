@@ -1,10 +1,59 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Home</title>
-    <link href="/home.css" rel="stylesheet" type="text/css" >
+    <title>Index</title>
+    <link rel="stylesheet" type="text/css" href="/home.css">
 </head>
 <body>
-<h1>Welkom <%= username %></h1>
+<h1>Welkom</h1>
+
+<form id="dataForm" method="POST" action="/data">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="password">Wachtwoord:</label>
+    <input type="password" id="password" name="password" required>
+
+    <button type="submit">Verzenden</button>
+</form>
+
+<div id="feedback"></div>
+
+<h1>Gegevens</h1>
+<% if (data && data.length > 0) { %>
+    <ul>
+        <% data.forEach((item) => { %>
+            <li><%= item.email %> - <%= item.password %> - <%= item.publicKey %></li>
+        <% }); %>
+    </ul>
+<% } else { %>
+    <p>Geen gegevens beschikbaar.</p>
+<% } %>
+
+<script>
+    document.getElementById('dataForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+
+        fetch('/data', {
+            method: 'POST',
+            body: new URLSearchParams(formData),
+        })
+            .then(function(response) {
+                if (response.ok) {
+                    console.log('Gegevens succesvol verzonden');
+                    document.getElementById('feedback').innerHTML = '<p class="success-message">Gegevens succesvol verzonden</p>';
+                } else {
+                    console.error('Fout bij het verzenden van gegevens');
+                    document.getElementById('feedback').innerHTML = '<p class="error-message">Fout bij het verzenden van gegevens</p>';
+                }
+            })
+            .catch(function(error) {
+                console.error(error);
+                document.getElementById('feedback').innerHTML = '<p class="error-message">Fout bij het verzenden van gegevens</p>';
+            });
+    });
+</script>
 </body>
 </html>
