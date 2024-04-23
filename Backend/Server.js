@@ -1,55 +1,23 @@
-const express = require('express');
+const sessionMiddleware = require('./session');
 const session = require('express-session');
+const checkAuth = require('./checkAuth');
+const DataModel = require('../DataSchematics/UserSchematic');
+const indexRouter = require('./Routes/Index');
+const express = require('express');
 const loginRouter = require('./Login');
 const db = require('./ConnectDB');
-const DataModel = require('../DataSchematics/UserSchematic');
-
-const app = express();
 const path = require('path');
+const app = express();
 const PORT = process.env.PORT || 3001;
 
-const checkAuth = (req, res, next) => {
-    if (req.session.username) {
-        next();
-    } else {
-        res.redirect('/login');
-    }
-};
-
-const generateSecret = () => {
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    let secret = '';
-    for (let i = 0; i < 32; i++) {
-        const randomIndex = Math.floor(Math.random() * characters.length);
-        secret += characters[randomIndex];
-    }
-    return secret;
-};
-
-app.use(session({
-    secret: generateSecret(),
-    resave: false,
-    saveUninitialized: true
-}));
+app.use(sessionMiddleware);
+app.use(express.static(path.join(__dirname, 'Frontend/public')));
+app.use(express.urlencoded({ extended: true }));
+app.use('/login', loginRouter);
+app.use('/', indexRouter);
 
 app.set('views', path.join(__dirname, '../Frontend/EJS'));
 app.set('view engine', 'ejs');
-
-app.use(express.static(path.join(__dirname, 'Frontend/public')));
-app.use(express.urlencoded({ extended: true }));
-
-app.use('/login', loginRouter);
-
-app.get('/', checkAuth, (req, res) => {
-    DataModel.find()
-        .then((data) => {
-            res.render('index', { data });
-        })
-        .catch((err) => {
-            console.error(err);
-            res.sendStatus(500);
-        });
-});
 
 app.get('/home.css', (req, res) => {
     res.sendFile(path.join(__dirname, '../Frontend/CSS/home.css'));

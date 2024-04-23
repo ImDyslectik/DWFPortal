@@ -1,8 +1,7 @@
-const express = require('express');
-const path = require('path');
-const bcrypt = require('bcrypt');
 const DataModel = require('../DataSchematics/UserSchematic');
+const express = require('express');
 const { decryptText } = require("./RSAEncryption");
+const path = require('path');
 const router = express.Router();
 
 router.get('/', (req, res) => {
