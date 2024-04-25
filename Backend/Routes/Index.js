@@ -1,18 +1,18 @@
 const express = require('express');
-const DataModel = require('../../DataSchematics/UserSchematic');
+const UserModel = require('../../DataSchematics/UserSchematic');
 const checkAuth = require('../CheckAuth');
 const indexRouter = express.Router();
 const { generateKeyPair, encryptText, decryptText } = require('../RSAEncryption');
 
 
 indexRouter.get('/', checkAuth, (req, res) => {
-    DataModel.find()
+    UserModel.find()
         .then((data) => {
             res.render('index', { data });
         })
         .catch((err) => {
             console.error(err);
-            res.sendStatus(500);
+            res.redirect(`https://http.cat/${500}`);
         });
 });
 
@@ -25,9 +25,8 @@ indexRouter.post('/data', (req, res) => {
 
     const encryptedPassword = encryptText(password, publicKey);
     const decryptedPassword = decryptText(encryptedPassword, privateKey);
-    console.log(decryptedPassword);
 
-    const newData = new DataModel({
+    const newData = new UserModel({
         email,
         password: encryptedPassword,
         role: 'user',
@@ -37,11 +36,11 @@ indexRouter.post('/data', (req, res) => {
 
     newData.save()
         .then(() => {
-            res.sendStatus(200);
+            res.redirect(`https://http.cat/${200}`);
         })
         .catch((err) => {
             console.error(err);
-            res.sendStatus(500);
+            res.redirect(`https://http.cat/${500}`);
         });
 });
 
