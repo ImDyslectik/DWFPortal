@@ -1,3 +1,12 @@
+
+:root {
+    --primary: #FB6D48;
+    --secondary: #FFA559;
+    --tertrairy: #FFE6C7;
+    --fourth: #D74B76;
+    --border: #D4D3E8;
+}
+
 body {
     background-color: orange;
 }

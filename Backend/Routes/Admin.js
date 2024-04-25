@@ -1,14 +1,14 @@
 const express = require('express');
 const UserModel = require('../../DataSchematics/UserSchematic');
 const checkAuth = require('../CheckAuth');
-const indexRouter = express.Router();
+const router = express.Router();
 const { generateKeyPair, encryptText, decryptText } = require('../RSAEncryption');
 
 
-indexRouter.get('/', checkAuth, (req, res) => {
+router.get('/', checkAuth, (req, res) => {
     UserModel.find()
         .then((data) => {
-            res.render('index', { data });
+            res.render('admin', { data });
         })
         .catch((err) => {
             console.error(err);
@@ -16,7 +16,7 @@ indexRouter.get('/', checkAuth, (req, res) => {
         });
 });
 
-indexRouter.post('/data', (req, res) => {
+router.post('/data', (req, res) => {
     const { email, password } = req.body;
 
     const keyPair = generateKeyPair();
@@ -44,4 +44,4 @@ indexRouter.post('/data', (req, res) => {
         });
 });
 
-module.exports = indexRouter;
+module.exports = router;
