@@ -5,7 +5,7 @@ const DataModel = require('../DataSchematics/UserSchematic');
 
 const agendaRouter = require('./Routes/Agenda');
 const homepageRouter = require('./Routes/Home');
-const indexRouter = require('./Routes/Admin');
+const adminRouter = require('./Routes/Admin');
 const loginRouter = require('./Routes/Login');
 
 const express = require('express');
@@ -22,7 +22,7 @@ app.use(express.static(path.join(__dirname, 'Frontend/public')));
 app.use(express.urlencoded({ extended: true }));
 app.use('/agenda', agendaRouter);
 app.use('/login', loginRouter);
-app.use('/admin', indexRouter);
+app.use('/admin', adminRouter);
 app.use('/', homepageRouter);
 
 
