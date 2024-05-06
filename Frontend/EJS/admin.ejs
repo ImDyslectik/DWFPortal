@@ -1,9 +1,9 @@
 <head>
-    <title>Index</title>
+    <title>Admin</title>
     <link rel="stylesheet" type="text/css" href="/admin.css">
 </head>
 <body>
-<h1>Welkom</h1>
+<h1>Gebruiker toevoegen</h1>
 
 <form id="dataForm" method="POST" action="/data">
     <label for="email">Email:</label>
@@ -12,23 +12,97 @@
     <label for="password">Wachtwoord:</label>
     <input type="password" id="password" name="password" required>
 
+    <label for="role">Rol:</label>
+    <select id="role" name="role">
+        <option value="user">Gebruiker</option>
+        <option value="admin">Beheerder</option>
+    </select>
+
     <button type="submit">Verzenden</button>
 </form>
 
 <div id="feedback"></div>
 
+<h1>Gebruiker verwijderen</h1>
+<form id="deleteForm" method="POST" action="/data/delete">
+    <label for="deleteEmail">E-mail:</label>
+    <input type="email" id="filterInput" name="email" required>
+
+    <button type="submit">Verwijderen</button>
+</form>
+
 <h1>Gegevens</h1>
-<% if (data && data.length > 0) { %>
-    <ul>
+<ul id="dataList">
+    <% if (data && data.length > 0) { %>
         <% data.forEach((item) => { %>
-            <li><%= item.email %> - <%= item.password %></li>
+            <li><%= item.email %> - <%= item.role %></li>
         <% }); %>
-    </ul>
-<% } else { %>
-    <p>Geen gegevens beschikbaar.</p>
-<% } %>
+    <% } else { %>
+        <p>Geen gegevens beschikbaar.</p>
+    <% } %>
+</ul>
 
 <script>
+
+    document.getElementById('deleteForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const deleteEmail = document.getElementById('filterInput').value.toLowerCase();
+        const dataList = document.getElementById('dataList');
+        const items = dataList.getElementsByTagName('li');
+
+        Array.from(items).forEach(function(item) {
+            const email = item.innerText.toLowerCase();
+            if (email.includes(deleteEmail)) {
+                item.style.display = 'none';
+                const formData = new FormData();
+                formData.append('email', email.split(' - ')[0]);
+
+                fetch('/data/delete', {
+                    method: 'POST',
+                    body: new URLSearchParams(formData),
+                })
+                    .then(function(response) {
+                        if (response.ok) {
+                            console.log('Gebruiker succesvol verwijderd');
+                            document.getElementById('feedback').innerHTML = '<p class="success-message">Gebruiker succesvol verwijderd</p>';
+                            item.parentNode.removeChild(item);
+                            document.getElementById('filterInput').value = ''; // Voeg deze regel toe om de zoekbalk leeg te maken
+                        } else {
+                            console.error('Fout bij het verwijderen van gebruiker');
+                            document.getElementById('feedback').innerHTML = '<p class="error-message">Fout bij het verwijderen van gebruiker</p>';
+                        }
+                    })
+                    .catch(function(error) {
+                        console.error(error);
+                        document.getElementById('feedback').innerHTML = '<p class="error-message">Fout bij het verwijderen van gebruiker</p>';
+                    });
+            }
+        });
+    });
+
+    document.getElementById('filterInput').addEventListener('keyup', function(event) {
+        const filterValue = event.target.value.toLowerCase();
+        const dataList = document.getElementById('dataList');
+        const items = dataList.getElementsByTagName('li');
+
+        Array.from(items).forEach(function(item) {
+            const email = item.innerText.toLowerCase();
+            if (filterValue === '' || email.includes(filterValue)) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        // Controleer of de zoekbalk leeg is
+        if (filterValue === '') {
+            Array.from(items).forEach(function(item) {
+                item.style.display = 'block';
+            });
+        }
+    });
+
     document.getElementById('dataForm').addEventListener('submit', function(event) {
         event.preventDefault();
 
@@ -42,6 +116,14 @@
                 if (response.ok) {
                     console.log('Gegevens succesvol verzonden');
                     document.getElementById('feedback').innerHTML = '<p class="success-message">Gegevens succesvol verzonden</p>';
+                    // Voeg de nieuwe gebruiker toe aan de lijst
+                    const email = formData.get('email');
+                    const password = formData.get('password');
+                    const role = formData.get('role');
+                    const dataList = document.getElementById('dataList');
+                    const newItem = document.createElement('li');
+                    newItem.innerHTML = `${email} - ${password}`;
+                    dataList.appendChild(newItem);
                 } else {
                     console.error('Fout bij het verzenden van gegevens');
                     document.getElementById('feedback').innerHTML = '<p class="error-message">Fout bij het verzenden van gegevens</p>';
@@ -52,5 +134,6 @@
                 document.getElementById('feedback').innerHTML = '<p class="error-message">Fout bij het verzenden van gegevens</p>';
             });
     });
+
 </script>
 </body>

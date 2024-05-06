@@ -11,7 +11,7 @@ router.get('/', checkAuth, (req, res) => {
 
 
 router.post('/data', (req, res) => {
-    const { email, password } = req.body;
+    const { email, password, role } = req.body;
 
     const keyPair = generateKeyPair();
     const publicKey = keyPair.publicKey;
@@ -24,12 +24,25 @@ router.post('/data', (req, res) => {
     const newData = new DataModel({
         email,
         password: encryptedPassword,
-        role: 'user',
+        role,
         publicKey,
         privateKey,
     });
 
     newData.save()
+        .then(() => {
+            res.sendStatus(200);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.sendStatus(500);
+        });
+});
+
+router.post('/data/delete', (req, res) => {
+    const { email } = req.body;
+
+    DataModel.findOneAndDelete({ email })
         .then(() => {
             res.sendStatus(200);
         })
