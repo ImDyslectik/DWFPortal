@@ -8,7 +8,7 @@ const { generateKeyPair, encryptText, decryptText } = require('../RSAEncryption'
 router.get('/', checkAuth, (req, res) => {
     UserModel.find()
         .then((data) => {
-            res.render('admin', { data });
+            res.render('admin', { isAdmin:true, data });
         })
         .catch((err) => {
             console.error(err);

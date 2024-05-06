@@ -1,5 +1,5 @@
 // const mongoose = require('mongoose');
-// require('dotenv').config();
+
 //
 // const connectDB = async () => {
 //     try {
@@ -17,15 +17,15 @@
 // module.exports = connectDB;
 
 const mongoose = require('mongoose');
+require('dotenv').config();
 
 // Verbind met de MongoDB-database
-mongoose.connect('mongodb://localhost:27017/databasename', {
+mongoose.connect(process.env.DATABASE_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
 
 const connectDB = mongoose.connection;
 
-// Voeg eventuele database-gebeurtenisafhandelaars hier toe
 
 module.exports = connectDB;

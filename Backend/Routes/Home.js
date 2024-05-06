@@ -6,7 +6,7 @@ const router = express.Router();
 const { generateKeyPair, encryptText, decryptText } = require('../RSAEncryption');
 
 router.get('/', checkAuth, (req, res) => {
-    res.render(path.join(__dirname, '../../Frontend/EJS/homepage.ejs'));
+    res.render(path.join(__dirname, '../../Frontend/EJS/homepage.ejs'), {isAdmin:false});
 });
 
 
@@ -19,7 +19,7 @@ router.post('/data', (req, res) => {
 
     const encryptedPassword = encryptText(password, publicKey);
     const decryptedPassword = decryptText(encryptedPassword, privateKey);
-    console.log(decryptedPassword);
+
 
     const newData = new DataModel({
         email,

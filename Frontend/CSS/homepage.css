@@ -5,3 +5,41 @@
     --fourth: #D74B76;
     --border: #D4D3E8;
 }
+
+body {
+    padding: 16px
+}
+
+/**************************************************/
+/***************** Navigation Bar******************/
+/**************************************************/
+
+.navbar-primary {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+}
+
+.icon {
+    max-height: 10px;
+    max-width: 10px;
+}
+
+/**************************************************/
+/*** Notifications, Projects and Uploading*********/
+/**************************************************/
+
+.overview {
+    display: flex;
+    justify-content: space-between;
+}
+
+.search {
+    display: flex;
+}
+
+.grid {
+    display: flex;
+    justify-content: space-between;
+}
+
