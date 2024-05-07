@@ -2,6 +2,7 @@
     <title>Homepage</title>
     <link rel="stylesheet" type="text/css" href="homepage.css">
     <link rel="icon" href="" type="image/x-icon">
+    <script src="APIConnection.js"></script>
 </head>
 
 <body>
@@ -41,6 +42,10 @@
         <% } %>
     </ul>
 </div>
+
+<h1>Connect hier (tijdelijk)</h1>
+<a href="https://app-eu1.hubspot.com/oauth/authorize?client_id=ee514772-3efe-4518-ad4f-ae1a13610dd7&redirect_uri=http://
+localhost:3000/code&scope=crm.schemas.deals.read%20crm.schemas.deals.write%20crm.schemas.contacts.read">Ga naar API</a>
 
 <div class="overview">
     <div>
@@ -115,5 +120,13 @@
             <div class="column-item">3</div>
         </div>
     </div>
+
+    <h1>"The value for number is: " <span id="myText"></span></h1>
+
+    <script>
+        const searchParams = new URLSearchParams(window.location.search);
+        console.log(searchParams);
+        document.getElementById("myText").innerHTML = searchParams;
+    </script>
 </div>
 </body>

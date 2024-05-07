@@ -1,12 +1,13 @@
 const sessionMiddleware = require('./session');
 const session = require('express-session');
-const checkAuth = require('./checkAuth');
+const checkAuth = require('./CheckAuth');
 const DataModel = require('../DataSchematics/UserSchematic');
 
 const agendaRouter = require('./Routes/Agenda');
 const homepageRouter = require('./Routes/Home');
 const adminRouter = require('./Routes/Admin');
 const loginRouter = require('./Routes/Login');
+const codeRouter = require('./Routes/Code');
 
 const express = require('express');
 const db = require('./ConnectDB');
@@ -46,6 +47,7 @@ app.get('/agenda.css', (req, res) => {
     res.sendFile(path.join(__dirname, '../Frontend/CSS/agenda.css'));
 });
 
-app.listen(PORT, () => {
-    console.log(`Server gestart op poort ${PORT}`);
-});
+app.listen(PORT, function (error) {
+    if (error) throw error
+    console.log("Server created Successfully on PORT", PORT)
+})

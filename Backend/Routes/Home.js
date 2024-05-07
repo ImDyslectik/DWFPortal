@@ -9,6 +9,12 @@ router.get('/', checkAuth, (req, res) => {
     res.render(path.join(__dirname, '../../Frontend/EJS/homepage.ejs'), {isAdmin:false});
 });
 
+router.get('/code', (req, res) => {
+    var code = req.query.code;
+    console.log("code:", code);
+    res.redirect('/');
+});
+
 
 router.post('/data', (req, res) => {
     const { email, password, role } = req.body;
