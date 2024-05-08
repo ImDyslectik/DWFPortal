@@ -18,8 +18,9 @@ class InputValidatorPattern {
         return regex.test(kvkNumber);
     }
 
+    //TODO verwijderen van de () bij deze input, is alleen handig om geen errors te krijgen tijdens het testen
     static validateNames(names) {
-        const regex = /^[A-Za-z\s]+$/;
+        const regex = /^[A-Za-z\s()]+$/;
         return regex.test(names);
     }
 

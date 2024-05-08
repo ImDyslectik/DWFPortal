@@ -1,5 +1,5 @@
 const axios = require("axios");
-const Contact = require("../DataSchematics/ContactSchematic"); // Importeer het Contact-model dat je moet maken
+const Contact = require("../DataSchematics/ContactSchematic2");
 require('dotenv').config();
 const apiHost = process.env.API_HOST;
 const InputValidatorPattern = require("./Validation/InputValidationPattern");

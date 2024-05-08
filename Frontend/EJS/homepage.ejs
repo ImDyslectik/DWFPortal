@@ -80,6 +80,10 @@ localhost:3000/code&scope=crm.schemas.deals.read%20crm.schemas.deals.write%20crm
     <div>
         <div class="upload-csv">
             <div>Upload Hier!</div>
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept=".xlsx, .xls">
+                <button type="submit">Uploaden</button>
+            </form>
         </div>
     </div>
 </div>
