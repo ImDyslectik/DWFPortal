@@ -1,8 +1,8 @@
 const express = require('express');
 const UserModel = require('../../DataSchematics/UserSchematic');
-const checkAuth = require('../CheckAuth');
+const checkAuth = require('../Validation/CheckAuth');
 const router = express.Router();
-const { generateKeyPair, encryptText, decryptText } = require('../RSAEncryption');
+const { generateKeyPair, encryptText, decryptText } = require('../Validation/RSAEncryption');
 
 
 router.get('/', checkAuth, (req, res) => {

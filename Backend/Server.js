@@ -1,13 +1,11 @@
 const sessionMiddleware = require('./session');
 const session = require('express-session');
-const checkAuth = require('./CheckAuth');
-const DataModel = require('../DataSchematics/UserSchematic');
+const checkAuth = require('./Validation/CheckAuth');
 
 const agendaRouter = require('./Routes/Agenda');
 const homepageRouter = require('./Routes/Home');
 const adminRouter = require('./Routes/Admin');
 const loginRouter = require('./Routes/Login');
-const codeRouter = require('./Routes/Code');
 
 const express = require('express');
 const db = require('./ConnectDB');

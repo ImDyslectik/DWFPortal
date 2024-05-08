@@ -1,6 +1,6 @@
 const DataModel = require('../../DataSchematics/UserSchematic');
 const express = require('express');
-const { decryptText } = require("../RSAEncryption");
+const { decryptText } = require("../Validation/RSAEncryption");
 const path = require('path');
 const router = express.Router();
 
