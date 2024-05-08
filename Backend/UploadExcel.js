@@ -19,7 +19,7 @@ async function processExcelFile(fileData) {
 
         const existingContact = await ContactModel.findOne({ email });
         if (existingContact) {
-            console.log(`Duplicate gevonden: ${email}`);
+            // console.log(`Duplicate gevonden: ${email}`);
             continue;
         }
 
@@ -33,22 +33,18 @@ async function processExcelFile(fileData) {
 
         try {
             await newContact.save();
-            console.log('Contact succesvol aangemaakt en opgeslagen in de database');
         } catch (err) {
             console.error(err);
-            console.log('Er is een fout opgetreden bij het aanmaken van het contact');
         }
     }
 }
 
-router.post('/', upload.single('file'), (req, res) => {
+router.post('/', upload.single('file'), async (req, res) => {
     const fileData = req.file.buffer;
 
-    (async () => {
-        await processExcelFile(fileData);
-    })();
+    await processExcelFile(fileData);
 
-    res.send('Excel-bestand succesvol verwerkt');
+    res.redirect('/');
 });
 
 module.exports = router;

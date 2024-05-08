@@ -43,3 +43,38 @@ body {
     justify-content: space-between;
 }
 
+.upload-text{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.overview-container{
+    border: 2px dashed var(--fourth);
+    width: 30%;
+    padding: 16px;
+    margin: 16px 0px;
+}
+
+#dropArea {
+    display: flex;
+    justify-content: center;
+    width: 300px;
+    height: 100px;
+    border: 2px dashed #ccc;
+    line-height: 150px;
+    margin: 16px auto;
+    cursor: pointer;
+}
+
+#message {
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: medium;
+}
+
+
+/**************************************************/
+/************** Search Bar & Grid *****************/
+/**************************************************/
+

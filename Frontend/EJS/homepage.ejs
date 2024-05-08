@@ -47,7 +47,7 @@
 localhost:3000/code&scope=crm.schemas.deals.read%20crm.schemas.deals.write%20crm.schemas.contacts.read">Ga naar API</a>
 
 <div class="overview">
-    <div>
+    <div class="overview-container">
         <div class="notifications">
             <ul>
                 <li>
@@ -62,7 +62,7 @@ localhost:3000/code&scope=crm.schemas.deals.read%20crm.schemas.deals.write%20crm
             </ul>
         </div>
     </div>
-    <div>
+    <div class="overview-container">
         <div class="assigned-projects">
             <ul>
                 <li>
@@ -77,13 +77,13 @@ localhost:3000/code&scope=crm.schemas.deals.read%20crm.schemas.deals.write%20crm
             </ul>
         </div>
     </div>
-    <div>
-        <div class="upload-csv">
-            <div>Upload Hier!</div>
-            <form action="/upload" method="post" enctype="multipart/form-data">
-                <input type="file" name="file" accept=".xlsx, .xls">
-                <button type="submit">Uploaden</button>
-            </form>
+    <div class="overview-container">
+        <div class="upload-text" id="message">Sleep hier je bestanden in of klik!</div>
+        <div class="upload-csv"></div>
+        <div id="dropArea" ondragover="handleDragOver(event)"
+             ondrop="handleDrop(event)" ondragenter="handleDragEnter(event)"
+             ondragleave="handleDragLeave(event)" onclick="selectFile()">
+            <a class="upload-text">Upload CSV</a>
         </div>
     </div>
 </div>
@@ -125,6 +125,66 @@ localhost:3000/code&scope=crm.schemas.deals.read%20crm.schemas.deals.write%20crm
     </div>
 
     <script>
+        function handleDragOver(event) {
+            event.preventDefault();
+        }
+
+        function handleDragEnter(event) {
+            event.preventDefault();
+            document.getElementById('dropArea').classList.add('invalid');
+        }
+
+        function handleDragLeave(event) {
+            event.preventDefault();
+            document.getElementById('dropArea').classList.remove('invalid');
+        }
+
+        function handleDrop(event) {
+            event.preventDefault();
+            const file = event.dataTransfer.files[0];
+            handleFile(file);
+            document.getElementById('dropArea').classList.remove('invalid');
+        }
+
+        function selectFile() {
+            const fileInput = document.createElement('input');
+            fileInput.type = 'file';
+            fileInput.accept = '.csv'; // Accepteer alleen CSV-bestanden
+            fileInput.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                handleFile(file);
+            });
+            fileInput.click();
+        }
+
+        function handleFile(file) {
+            const formData = new FormData();
+            formData.append('file', file);
+
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        throw new Error('Er is een probleem opgetreden bij het uploaden van het bestand.');
+                    }
+                })
+                .then(message => {
+                    console.log(message);
+                    console.log('Bestandnaam:', file.name);
+                    document.getElementById('message').textContent = `Bestand "${file.name}" succesvol geüpload!`;
+                    document.getElementById('message').classList.remove('error');
+                })
+                .catch(error => {
+                    console.error(error);
+                    document.getElementById('message').textContent = error.message;
+                    document.getElementById('message').classList.add('error');
+                });
+        }
+
         const searchParams = new URLSearchParams(window.location.search);
         console.log(searchParams);
         document.getElementById("myText").innerHTML = searchParams;
