@@ -1,23 +1,68 @@
 const mongoose = require('mongoose');
 
 const firstReviewSchema = new mongoose.Schema({
-    digitalisering: {
+    id: {
         type: Number,
         required: true,
     },
-    ervaring: {
-        type: Number,
-        required: true,
-    },
-    sector: {
+    begintijd: {
         type: String,
         required: true,
     },
-    begincijfer: {
-        type: Number,
+    voltooitijd: {
+        type: String,
         required: true,
     },
-})
+    email: {
+        type: String,
+        required: true,
+    },
+    naam: {
+        type: String,
+    },
+    bedrijfsnaam: {
+        type: String,
+    },
+    kvkNummer: {
+        type: String,
+    },
+    woonplaats: {
+        type: String,
+    },
+    sector: {
+        type: String,
+    },
+    aantalMedewerkers: {
+        type: String,
+    },
+    contactpersoon: {
+        type: String,
+    },
+    emailContactpersoon: {
+        type: String,
+    },
+    typeActiviteit: {
+        type: String,
+    },
+    inAanraking: {
+        type: String,
+    },
+    aanleiding: {
+        type: String,
+    },
+    hoeDicht: {
+        type: Number,
+    },
+    obstakels: {
+        type: String,
+    },
+    hooptU: {
+        type: String,
+    },
+    vraagstuk: {
+        type: String,
+    }
+});
 
 const FirstReviewSchema = mongoose.model('FirstReview', firstReviewSchema);
 
