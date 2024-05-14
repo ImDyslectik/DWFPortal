@@ -3,16 +3,20 @@ const YOUR_TOKEN = 'pat-eu1-6c1472d7-5f6a-46de-a1fe-3b7e059d7d28';
 const Deal = require('../DataSchematics/DealSchematic');
 const mongoose = require('mongoose');
 
+
 //TODO fix this to the actual name using the .env file
 mongoose.connect('mongodb://localhost:27017/databasename', {useNewUrlParser: true});
 
 
-axios.get('https://api.hubapi.com/crm/v3/objects/deals?limit=100', {
-    headers: {
-        'Authorization': `Bearer ${YOUR_TOKEN}`,
-        'Content-Type': 'application/json'
-    }
-})
+module.exports = function refresh() {
+    mongoose.connect('mongodb://localhost:27017/databasename', {useNewUrlParser: true});
+
+    axios.get('https://api.hubapi.com/crm/v3/objects/deals?limit=100', {
+        headers: {
+            'Authorization': `Bearer ${YOUR_TOKEN}`,
+            'Content-Type': 'application/json'
+        }
+    })
     .then(response => {
         const deals = response.data.results;
 
@@ -47,3 +51,4 @@ axios.get('https://api.hubapi.com/crm/v3/objects/deals?limit=100', {
     .catch(error => {
         console.error(error);
     });
+}

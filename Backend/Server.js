@@ -1,6 +1,7 @@
 const sessionMiddleware = require('./session');
 const session = require('express-session');
 const checkAuth = require('./Validation/CheckAuth');
+//const manageServices = require('./Manager');
 
 const agendaRouter = require('./Routes/Agenda');
 const homepageRouter = require('./Routes/Home');
