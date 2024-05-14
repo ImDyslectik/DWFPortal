@@ -1,13 +1,16 @@
 :root {
-    --primary: #FB6D48;
-    --secondary: #FFA559;
-    --tertiary: #FFE6C7;
-    --fourth: #D74B76;
-    --border: #D4D3E8;
+    --primary: #fb6d48;
+    --secondary: #ffa559;
+    --tertiary: #ffe6c7;
+    --fourth: #d74b76;
+    --border: #d4d3e8;
+    --top: rgb(51, 71, 91);
 }
 
 body {
-    padding: 16px
+    margin: 0px;
+    /*background: linear-gradient(10deg, var(--primary), var(--secondary));*/
+    font-family: system-ui;
 }
 
 /**************************************************/
@@ -18,11 +21,22 @@ body {
     display: flex;
     justify-content: space-between;
     list-style: none;
+    background-color: var(--primary);
+    padding: 16px;
+    margin: 0px;
+}
+
+.navbar-items {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: large;
+    font-weight: bold;
 }
 
 .icon {
-    max-height: 10px;
-    max-width: 10px;
+    max-height: 16px;
+    max-width: 16px;
 }
 
 /**************************************************/
@@ -32,10 +46,45 @@ body {
 .overview {
     display: flex;
     justify-content: space-between;
+    background-color: var(--tertiary);
 }
 
 .search {
     display: flex;
+}
+.search-btn {
+}
+.search-btn {
+    background-color: #ea4c89;
+    border-radius: 8px;
+    border-style: none;
+    box-sizing: border-box;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial,
+    sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    height: 40px;
+    line-height: 20px;
+    list-style: none;
+    margin: 0;
+    outline: none;
+    padding: 10px 16px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    transition: color 100ms;
+    vertical-align: baseline;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.search-btn:hover,
+.search-btn:focus {
+    background-color: #f082ac;
 }
 
 .grid {
@@ -43,17 +92,19 @@ body {
     justify-content: space-between;
 }
 
-.upload-text{
+.upload-text {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.overview-container{
-    border: 2px dashed var(--fourth);
+.overview-container {
+    border: 2px solid var(--top);
     width: 30%;
     padding: 16px;
-    margin: 16px 0px;
+    margin: 16px;
+    border-radius: 10px;
+    background-color: var(--border);
 }
 
 #dropArea {
@@ -61,7 +112,7 @@ body {
     justify-content: center;
     width: 300px;
     height: 100px;
-    border: 2px dashed #ccc;
+    border: 2px dashed var(--top);
     line-height: 150px;
     margin: 16px auto;
     cursor: pointer;
@@ -73,8 +124,23 @@ body {
     font-size: medium;
 }
 
-
 /**************************************************/
 /************** Search Bar & Grid *****************/
 /**************************************************/
 
+.projects {
+    width: 100%;
+    padding: 8px;
+}
+
+.project-container {
+    padding: 10px;
+}
+
+.column-item {
+    border: 2px solid #333333;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 8px;
+    padding: 8px;
+    border-radius: 8px;
+}

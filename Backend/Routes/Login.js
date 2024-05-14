@@ -15,15 +15,17 @@ router.post('/', (req, res) => {
         .then((user) => {
             if (!user) {
                 res.sendStatus(401);
+                return;
             }
             decrypted = decryptText(user.password, user.privateKey)
             if (decrypted === password) {
                 req.session.username = email;
-                res.redirect('/');
+                req.session.save((err) => {
+                    res.redirect('/');
+                });
             } else {
                 res.redirect('/login');
             }
-
         })
         .catch((err) => {
             console.error(err);

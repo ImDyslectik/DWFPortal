@@ -1,61 +1,49 @@
-const axios = require("axios");
-const Contact = require("../DataSchematics/ContactSchematic2");
-require('dotenv').config();
-const apiHost = process.env.API_HOST;
-const InputValidatorPattern = require("./Validation/InputValidationPattern");
+const axios = require('axios');
+const YOUR_TOKEN = 'pat-eu1-6c1472d7-5f6a-46de-a1fe-3b7e059d7d28';
+const Deal = require('../DataSchematics/DealSchematic');
+const mongoose = require('mongoose');
 
-async function getHubspotConnection(req) {
-    try {
-        const tokenResponse = await axios.post(`https://${apiHost}/oauth/v1/token`, {
-            grant_type: 'authorization_code',
-            client_id: process.env.CLIENT_ID,
-            client_secret: process.env.CLIENT_SECRET,
-            redirect_uri: process.env.REDIRECT_URI,
-            code: req.query.code
-        }, {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        });
+//TODO fix this to the actual name using the .env file
+mongoose.connect('mongodb://localhost:27017/databasename', {useNewUrlParser: true});
 
-        const accessToken = tokenResponse.data.access_token;
 
-        const response = await axios.get(`https://${apiHost}/contacts/v1/lists/all/contacts/all`, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            }
-        });
-        console.log('Verbinding met HubSpot API is gelukt! :))) ');
-
-        for (const contactData of response.data.contacts) {
-            const { firstname, lastname, company } = contactData.properties;
-
-            if (!InputValidatorPattern.validateNames(firstname.value)) {
-                throw new Error('Ongeldige voornaam');
-            }
-
-            if (!InputValidatorPattern.validateNames(lastname.value)) {
-                throw new Error('Ongeldige achternaam');
-            }
-
-            if (!InputValidatorPattern.validateNames(company.value)) {
-                throw new Error('Ongeldige bedrijfsnaam');
-            }
-
-            const contact = new Contact({
-                firstName: firstname.value,
-                lastName: lastname.value,
-                company: company.value
-            });
-
-            await contact.save();
-        }
-
-        console.log('Gegevens zijn succesvol opgeslagen!');
-
-    } catch (error) {
-        console.error(error);
+axios.get('https://api.hubapi.com/crm/v3/objects/deals?limit=100', {
+    headers: {
+        'Authorization': `Bearer ${YOUR_TOKEN}`,
+        'Content-Type': 'application/json'
     }
-}
+})
+    .then(response => {
+        const deals = response.data.results;
 
-module.exports = { getHubspotConnection: getHubspotConnection };
+        deals.forEach(deal => {
+            const dealData = {
+                dealId: deal.id,
+                amount: deal.properties.amount,
+                closedate: deal.properties.closedate,
+                createdate: deal.properties.createdate,
+                dealname: deal.properties.dealname,
+                ownerId: deal.properties.hs_owner_id,
+                dealstage: deal.properties.dealstage,
+                hs_lastmodifieddate: deal.properties.hs_lastmodifieddate,
+                pipeline: deal.properties.pipeline,
+                archived: deal.archived,
+            };
+
+            const dbDeal = new Deal(dealData);
+            dbDeal.save()
+                .then(() => console.log(`Deal ${deal.id} saved!`))
+                .catch(error => console.error(`Failed to save deal ${deal.id}:`, error));
+
+            console.log(`Deal ID: ${deal.id}`);
+            console.log(`Properties:`, deal.properties);
+            console.log(`Created At: ${deal.createdAt}`);
+            console.log(`owner: ${deal.ownerId}`);
+            console.log(`Updated At: ${deal.updatedAt}`);
+            console.log(`Archived: ${deal.archived}`);
+            console.log('-----------------------------');
+        });
+    })
+    .catch(error => {
+        console.error(error);
+    });
