@@ -3,7 +3,7 @@ const router = express.Router();
 const multer = require("multer");
 const upload = multer();
 const xlsx = require("xlsx");
-const ContactModel = require("../DataSchematics/ContactSchematic");
+const ContactModel = require("../DataSchematics/CompanySchematic");
 const FirstReviewModel = require("../DataSchematics/FirstReviewSchematic");
 const SecondReviewModel = require("../DataSchematics/SecondReviewSchematic");
 
@@ -32,6 +32,7 @@ class DataImporter {
     }
 }
 
+//TODO fix contactimporter not always working
 class ContactDataImporter extends DataImporter {
     createModel(row) {
         this.model = new ContactModel({
@@ -126,6 +127,7 @@ class SecondReviewDataImporter extends DataImporter {
 }
 
 
+//Used to differentiate CSV files based on columns
 router.post("/", upload.single("file"), async (req, res) => {
     const fileData = req.file.buffer;
     const workbook = xlsx.read(fileData, { type: "buffer" });

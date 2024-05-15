@@ -2,7 +2,6 @@ const express = require('express');
 const DataModel = require('../../DataSchematics/UserSchematic');
 const checkAuth = require('../Validation/CheckAuth');
 const router = express.Router();
-const { generateKeyPair, encryptText, decryptText } = require('../Validation/RSAEncryption');
 
 
 router.post('/delete', (req, res) => {

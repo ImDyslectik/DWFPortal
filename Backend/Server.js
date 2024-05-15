@@ -1,7 +1,10 @@
 const sessionMiddleware = require('./session');
 const session = require('express-session');
 const checkAuth = require('./Validation/CheckAuth');
-//const manageServices = require('./Manager');
+
+//TODO uncomment when deploying application
+
+// const manageServices = require('./Scheduler');
 
 const agendaRouter = require('./Routes/Agenda');
 const homepageRouter = require('./Routes/Home');

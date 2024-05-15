@@ -21,17 +21,7 @@ const companySchema = new Schema({
         unique: true,
     },
     phoneNumber: {
-        type: Int,
-        required: true,
-        unique: true,
-    },
-    kvkNumber: {
-        type: Int,
-        required: true,
-        unique: true,
-    },
-    adress: {
-        type: Int,
+        type: Number,
         required: true,
         unique: true,
     },

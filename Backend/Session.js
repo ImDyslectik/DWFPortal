@@ -13,7 +13,11 @@ const generateSecret = () => {
 const sessionMiddleware = session({
     secret: generateSecret(),
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {
+        // Set session lifetime to 1 hour, seems reasonable
+        maxAge: 60 * 60 * 1000
+    }
 });
 
 module.exports = sessionMiddleware;

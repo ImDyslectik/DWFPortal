@@ -9,7 +9,7 @@
 
 body {
     margin: 0px;
-    background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    background-image: linear-gradient( 135deg, #FAD7A1 10%, #E96D71 100%);
     font-family: system-ui;
 }
 
@@ -46,9 +46,8 @@ body {
 .overview {
     display: flex;
     justify-content: space-between;
-    background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    background-image: linear-gradient(135deg, #FAD7A1 10%, #E96D71 100%);
 }
-
 .search {
     display: flex;
 }
