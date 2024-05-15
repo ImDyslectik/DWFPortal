@@ -24,7 +24,7 @@
 <div id="feedback"></div>
 
 <h1>Gebruiker verwijderen</h1>
-<form id="deleteForm" method="POST" action="/data/delete">
+<form id="deleteForm" method="POST" action="/admin/delete">
     <label for="deleteEmail">E-mail:</label>
     <input type="email" id="filterInput" name="email" required>
 
@@ -58,7 +58,7 @@
                 const formData = new FormData();
                 formData.append('email', email.split(' - ')[0]);
 
-                fetch('/data/delete', {
+                fetch('/admin/delete', {
                     method: 'POST',
                     body: new URLSearchParams(formData),
                 })

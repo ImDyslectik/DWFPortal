@@ -311,7 +311,7 @@
         function selectFile() {
             const fileInput = document.createElement('input');
             fileInput.type = 'file';
-            fileInput.accept = '.csv'; // Accepteer alleen CSV-bestanden
+            fileInput.accept = '.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel';
             fileInput.addEventListener('change', (event) => {
                 const file = event.target.files[0];
                 handleFile(file);

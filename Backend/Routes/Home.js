@@ -30,17 +30,4 @@ router.get('/code', (req, res) => {
 });
 
 
-router.post('/data/delete', (req, res) => {
-    const { email } = req.body;
-
-    DataModel.findOneAndDelete({ email })
-        .then(() => {
-            res.sendStatus(200);
-        })
-        .catch((err) => {
-            console.error(err);
-            res.sendStatus(500);
-        });
-});
-
 module.exports = router;
