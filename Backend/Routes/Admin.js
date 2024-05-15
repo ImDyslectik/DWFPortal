@@ -1,6 +1,7 @@
 const express = require('express');
 const DataModel = require('../../DataSchematics/UserSchematic');
 const checkAuth = require('../Validation/CheckAuth');
+const path = require("path");
 const router = express.Router();
 
 
@@ -21,7 +22,7 @@ router.post('/delete', (req, res) => {
 router.get('/', checkAuth, (req, res) => {
     DataModel.find()
         .then((data) => {
-            res.render('admin', { isAdmin:true, data });
+            res.render(path.join(__dirname, '../../Frontend/EJS/admin.ejs'), { isAdmin: false, data });
         })
         .catch((err) => {
             console.error(err);

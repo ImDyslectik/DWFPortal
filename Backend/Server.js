@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 3001;
 
 
 app.use(sessionMiddleware);
-app.use(express.static(path.join(__dirname, 'Frontend/public')));
+app.use(express.static(path.join(__dirname, '../Frontend/public')));
 app.use(express.urlencoded({ extended: true }));
 app.use('/agenda', agendaRouter);
 app.use('/login', loginRouter);
@@ -29,25 +29,9 @@ app.use('/admin', adminRouter);
 app.use('/', homepageRouter);
 
 
-app.set('views', path.join(__dirname, '../Frontend/EJS'));
+app.set('views', path.join(__dirname, '../../Frontend/EJS'));
 app.set('view engine', 'ejs');
 
-
-app.get('/admin.css', (req, res) => {
-    res.sendFile(path.join(__dirname, '../Frontend/CSS/admin.css'));
-});
-
-app.get('/login.css', (req, res) => {
-    res.sendFile(path.join(__dirname, '../Frontend/CSS/login.css'));
-});
-
-app.get('/homepage.css', (req, res) => {
-    res.sendFile(path.join(__dirname, '../Frontend/CSS/homepage.css'));
-});
-
-app.get('/agenda.css', (req, res) => {
-    res.sendFile(path.join(__dirname, '../Frontend/CSS/agenda.css'));
-});
 
 app.listen(PORT, function (error) {
     if (error) throw error
