@@ -10,6 +10,8 @@ const dealSchema = new Schema({
     dealstage: String,
     hs_lastmodifieddate: Date,
     pipeline: String,
+    ownerName: String,
+    companyName: String,
     archived: Boolean
 });
 

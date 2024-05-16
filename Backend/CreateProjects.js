@@ -1,39 +1,58 @@
 const mongoose = require('mongoose');
-const Project = require('../DataSchematics/ProjectSchematic');
+const path = require('path');
+const dotenv = require('dotenv');
 const Deal = require('../DataSchematics/DealSchematic');
 const FirstReview = require('../DataSchematics/FirstReviewSchematic');
 const SecondReview = require('../DataSchematics/SecondReviewSchematic');
-const path = require('path')
-require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
+const Project = require('../DataSchematics/ProjectSchematic');
 
-//TODO have .env recognized
+dotenv.config({ path: path.resolve(__dirname, '../.env') });
+
 mongoose.connect('mongodb://localhost:27017/databasename');
 
-Deal.findOne({ dealId: '5428045787' })
-    .then(deal => {
-        return FirstReview.findOne({/* uw zoekcriteria */})
-            .then(firstReview => {
-                return SecondReview.findOne({/* uw zoekcriteria */}) // voeg uw zoekcriteria hier toe
-                    .then(secondReview => {
-                        const projectData = {
-                            name: deal.dealname,
-                            description: firstReview.typeActiviteit,
-                            problem: firstReview.vraagstuk,
-                            company: firstReview.bedrijfsnaam,
-                            stage: deal.dealstage,
-                        };
+// ...
+const createOrUpdateProject = async () => {
+    try {
+        const deals = await Deal.find();
 
-                        return Project.findOneAndUpdate({ name: projectData.name }, projectData, {
-                            upsert: true,
-                            new: true,
-                            runValidators: true
-                        });
-                    });
-            });
-    })
-    .then(savedProject => {
-        console.log('Successfully created or updated a project:', savedProject);
-    })
-    .catch(error => {
+        const groupedByCompany = {};
+
+        for (let deal of deals) {
+            const companyName = deal.bedrijfsnaam;
+            let firstReview = await FirstReview.findOne({ bedrijfsnaam: companyName });
+
+            // Controleer of firstReview bestaat voor deze deal
+            if (!firstReview) {
+                console.log(`Bij bedrijfsnaam ${companyName} is geen bijpassende FirstReview gevonden.`);
+                continue;  // Ga verder naar de volgende 'deal'
+            }
+
+            let projectData = {
+                name: deal.dealname,
+                description: firstReview.typeActiviteit,
+                problem: firstReview.vraagstuk,
+                company: companyName,
+                stage: deal.dealstage,
+            };
+
+            let secondReview = await SecondReview.findOne({ bedrijfsnaam: companyName });
+            if (secondReview) {
+                // Voeg hier eventueel gegevens uit secondReview toe aan projectData
+            }
+
+            const savedProject = await Project.findOneAndUpdate({ name: projectData.name }, projectData,
+                {
+                    upsert: true,
+                    new: true,
+                    runValidators: true
+                }
+            );
+
+            console.log('Successfully created or updated a project:', savedProject);
+        }
+    } catch (error) {
         console.error('Error while creating or updating a project:', error);
-    });
+    }
+};
+
+createOrUpdateProject();

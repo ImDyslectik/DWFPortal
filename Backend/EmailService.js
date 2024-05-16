@@ -12,8 +12,8 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-let userEmail = req.session.username;
-console.log(userEmail);
+//let userEmail = req.session.username;
+//console.log(userEmail);
 
 
 const emailContent = `

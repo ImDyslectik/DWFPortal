@@ -10,9 +10,9 @@ const refreshJob = schedule.scheduleJob('*/5 * * * * *', function() {
 });
 
 // Call email to send a mail every friday morning
-const emailJob = schedule.scheduleJob('*/1 * * * *', function() {
-    sendEmail();
-});
+// const emailJob = schedule.scheduleJob('*/1 * * * *', function() {
+//     sendEmail();
+// });
 
 //TODO access token refreshen als het nodig is
 

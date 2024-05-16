@@ -11,22 +11,30 @@ const projectSchema = new Schema({
     company: String,
     nameContactPerson: String,
     emailContact: String,
-    stage: String,
-
-    deal: {
-        type: Schema.Types.ObjectId,
-        ref: 'Deal'
+    stage: {
+        type: String
     },
-
-    firstReview: {
-        type: Schema.Types.ObjectId,
-        ref: 'FirstReview'
+    dealname: {
+        type: String
     },
-
-    secondReview: [{
-        type: Schema.Types.ObjectId,
-        ref: 'SecondReview'
-    }],
+    tevredenResultaat: {
+        type: Number
+    },
+    onverwachteResultaten: {
+        type: String
+    },
+    aanbevelingWerkplaats: {
+        type: Number
+    },
+    vervolgstappen: {
+        type: String
+    },
+    belemmeringen: {
+        type: String
+    },
+    opmerkingen: {
+        type: String
+    }
 });
 
 module.exports = mongoose.model('Project', projectSchema);
