@@ -6,7 +6,6 @@ const Project = require('../../DataSchematics/ProjectSchematic');
 router.post('/update-project', async (req, res) => {
     try {
         const { id, stage } = req.body;
-        console.log('Received body', req.body);
 
         const project = await Project.findById(id);
         if (!project) {

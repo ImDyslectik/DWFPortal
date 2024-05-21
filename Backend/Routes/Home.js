@@ -7,8 +7,12 @@ const path = require('path');
 const router = express.Router();
 
 const Project = require('../../DataSchematics/ProjectSchematic');
-const FirstReview = require("../../DataSchematics/FirstReviewSchematic");
-const Users = require('../../DataSchematics/UserSchematic');
+const projectRouter = require("../AddProject");
+const cards = require("./UpdateCards");
+
+router.use('/', projectRouter);
+router.use('/', uploadRouter);
+router.use('/', cards);
 
 router.use('/upload', uploadRouter);
 router.post('/data', HandleData);
