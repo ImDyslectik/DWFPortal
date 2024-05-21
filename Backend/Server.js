@@ -13,6 +13,8 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const app = express();
 const projectRouter = require('./AddProject');
+const uploadRouter = require('./Routes/Upload'); // Verander met uw eigen pad naar Upload.js
+
 const PORT = process.env.PORT || 3001;
 
 
@@ -25,7 +27,9 @@ app.use('/agenda', agendaRouter);
 app.use('/login', loginRouter);
 app.use('/admin', adminRouter);
 app.use('/', homepageRouter);
+
 app.use('/', projectRouter);
+app.use('/', uploadRouter);
 
 
 app.set('views', path.join(__dirname, '../../Frontend/EJS'));

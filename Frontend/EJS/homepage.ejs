@@ -98,10 +98,11 @@
     localhost:3000/code&scope=crm.schemas.deals.read%20crm.schemas.deals.write%20crm.schemas.contacts.read">Ga naar API (tijdelijk)</a>
 </div>
 
+
 <form id="myForm">
     <input type="text" id="name" />
-    <input type="text" id="companyEmail" />
-    <input type="text" id="dealOwnerEmail" />
+    <input type="email" id="companyEmail" />
+    <input type="email" id="dealOwnerEmail" />
     <select id="stage">
         <option value="appointmentscheduled">Appointment Scheduled</option>
         <option value="qualifiedtobuy">Qualified to Buy</option>
@@ -112,7 +113,9 @@
     <input type="submit" />
 </form>
 
+
 <script>
+    // TODO put into function and add to rest of script
     document.getElementById('myForm').addEventListener('submit', function(event) {
         event.preventDefault();
         const name = document.getElementById('name').value;
@@ -136,10 +139,6 @@
             });
     });
 </script>
-
-
-
-
 
 <div class="project-container">
     <div class="search">
@@ -182,25 +181,29 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Project Description: <%= project.description %></p>
-                                    <p>Project Problem: <%= project.problem %></p>
-                                    <p>Project owner: dropdown...</p>
-                                    <p>Company: <%= project.company %></p>
-                                    <p>Deal Name: <%= project.dealname %></p>
-                                    <p>Stage: <%= project.stage %></p>
-                                    <p>Tevreden Resultaat: <%= project.tevredenResultaat %></p>
-                                    <p>Onverwachte Resultaten: <%= project.onverwachteResultaten %></p>
-                                    <p>Aanbeveling Werkplaats: <%= project.aanbevelingWerkplaats %></p>
-                                    <p>Vervolgstappen: <%= project.vervolgstappen %></p>
-                                    <p>Belemmeringen: <%= project.belemmeringen %></p>
-                                    <p>Opmerkingen: <%= project.opmerkingen %></p>
+                                    <p>Contact: <%= project.companyEmail %></p>
+                                    <% if (project.problem) { %>
+                                        <p>Project Description: <%= project.description %></p>
+                                        <p>Project owner: dropdown (coming soon!)</p>
+                                        <p>Company: <%= project.company %></p>
+                                        <p>Contactpersoon: <%= project.nameContactPerson %></p>
+                                    <% } %>
+                                    <% if (project.tevredenResultaat) { %>
+                                        <p>Tevredenheid: <%= project.tevredenResultaat %></p>
+                                        <p>Onverwachte resultaten: <%= project.onverwachteResultaten %></p>
+                                        <p>Aanbeveling: <%= project.aanbevelingWerkplaats %></p>
+                                        <p>Belemmeringen: <%= project.belemmeringen %></p>
+                                        <p>Vervolgstappen: <%= project.vervolgstappen %></p>
+                                        <p>Opmerkingen: <%= project.opmerkingen %></p>
+                                    <% } %>
                                 </div>
-<!--                                experimental-->
+
                                 <form action="/uploadexcel" method="post" enctype="multipart/form-data">
                                     <input type="hidden" name="projectId" value="<%= project._id %>"> <!-- Verstuur projectId met het formulier -->
                                     <input type="file" name="firstReviewFile"> <!-- De `name` moet hetzelfde zijn als wat je in `upload.single()` hebt opgegeven -->
                                     <input type="submit" value="Upload">
                                 </form>
+
 
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -231,18 +234,30 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Project Description: <%= project.description %></p>
-                                    <p>Project Problem: <%= project.problem %></p>
-                                    <p>Company: <%= project.company %></p>
-                                    <p>Deal Name: <%= project.dealname %></p>
-                                    <p>Stage: <%= project.stage %></p>
-                                    <p>Tevreden Resultaat: <%= project.tevredenResultaat %></p>
-                                    <p>Onverwachte Resultaten: <%= project.onverwachteResultaten %></p>
-                                    <p>Aanbeveling Werkplaats: <%= project.aanbevelingWerkplaats %></p>
-                                    <p>Vervolgstappen: <%= project.vervolgstappen %></p>
-                                    <p>Belemmeringen: <%= project.belemmeringen %></p>
-                                    <p>Opmerkingen: <%= project.opmerkingen %></p>
+                                    <p>Contact: <%= project.companyEmail %></p>
+                                    <% if (project.problem) { %>
+                                        <p>Project Description: <%= project.description %></p>
+                                        <p>Project owner: dropdown (coming soon!)</p>
+                                        <p>Company: <%= project.company %></p>
+                                        <p>Contactpersoon: <%= project.nameContactPerson %></p>
+                                    <% } %>
+                                    <% if (project.tevredenResultaat) { %>
+                                        <p>Tevredenheid: <%= project.tevredenResultaat %></p>
+                                        <p>Onverwachte resultaten: <%= project.onverwachteResultaten %></p>
+                                        <p>Aanbeveling: <%= project.aanbevelingWerkplaats %></p>
+                                        <p>Belemmeringen: <%= project.belemmeringen %></p>
+                                        <p>Vervolgstappen: <%= project.vervolgstappen %></p>
+                                        <p>Opmerkingen: <%= project.opmerkingen %></p>
+                                    <% } %>
                                 </div>
+
+                                <form action="/uploadexcel" method="post" enctype="multipart/form-data">
+                                    <input type="hidden" name="projectId" value="<%= project._id %>"> <!-- Verstuur projectId met het formulier -->
+                                    <input type="file" name="firstReviewFile"> <!-- De `name` moet hetzelfde zijn als wat je in `upload.single()` hebt opgegeven -->
+                                    <input type="submit" value="Upload">
+                                </form>
+
+
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 </div>
@@ -272,18 +287,30 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Project Description: <%= project.description %></p>
-                                    <p>Project Problem: <%= project.problem %></p>
-                                    <p>Company: <%= project.company %></p>
-                                    <p>Deal Name: <%= project.dealname %></p>
-                                    <p>Stage: <%= project.stage %></p>
-                                    <p>Tevreden Resultaat: <%= project.tevredenResultaat %></p>
-                                    <p>Onverwachte Resultaten: <%= project.onverwachteResultaten %></p>
-                                    <p>Aanbeveling Werkplaats: <%= project.aanbevelingWerkplaats %></p>
-                                    <p>Vervolgstappen: <%= project.vervolgstappen %></p>
-                                    <p>Belemmeringen: <%= project.belemmeringen %></p>
-                                    <p>Opmerkingen: <%= project.opmerkingen %></p>
+                                    <p>Contact: <%= project.companyEmail %></p>
+                                    <% if (project.problem) { %>
+                                        <p>Project Description: <%= project.description %></p>
+                                        <p>Project owner: dropdown (coming soon!)</p>
+                                        <p>Company: <%= project.company %></p>
+                                        <p>Contactpersoon: <%= project.nameContactPerson %></p>
+                                    <% } %>
+                                    <% if (project.tevredenResultaat) { %>
+                                        <p>Tevredenheid: <%= project.tevredenResultaat %></p>
+                                        <p>Onverwachte resultaten: <%= project.onverwachteResultaten %></p>
+                                        <p>Aanbeveling: <%= project.aanbevelingWerkplaats %></p>
+                                        <p>Belemmeringen: <%= project.belemmeringen %></p>
+                                        <p>Vervolgstappen: <%= project.vervolgstappen %></p>
+                                        <p>Opmerkingen: <%= project.opmerkingen %></p>
+                                    <% } %>
                                 </div>
+
+                                <form action="/uploadexcel" method="post" enctype="multipart/form-data">
+                                    <input type="hidden" name="projectId" value="<%= project._id %>"> <!-- Verstuur projectId met het formulier -->
+                                    <input type="file" name="firstReviewFile"> <!-- De `name` moet hetzelfde zijn als wat je in `upload.single()` hebt opgegeven -->
+                                    <input type="submit" value="Upload">
+                                </form>
+
+
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 </div>
@@ -313,18 +340,30 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Project Description: <%= project.description %></p>
-                                    <p>Project Problem: <%= project.problem %></p>
-                                    <p>Company: <%= project.company %></p>
-                                    <p>Deal Name: <%= project.dealname %></p>
-                                    <p>Stage: <%= project.stage %></p>
-                                    <p>Tevreden Resultaat: <%= project.tevredenResultaat %></p>
-                                    <p>Onverwachte Resultaten: <%= project.onverwachteResultaten %></p>
-                                    <p>Aanbeveling Werkplaats: <%= project.aanbevelingWerkplaats %></p>
-                                    <p>Vervolgstappen: <%= project.vervolgstappen %></p>
-                                    <p>Belemmeringen: <%= project.belemmeringen %></p>
-                                    <p>Opmerkingen: <%= project.opmerkingen %></p>
+                                    <p>Contact: <%= project.companyEmail %></p>
+                                    <% if (project.problem) { %>
+                                        <p>Project Description: <%= project.description %></p>
+                                        <p>Project owner: dropdown (coming soon!)</p>
+                                        <p>Company: <%= project.company %></p>
+                                        <p>Contactpersoon: <%= project.nameContactPerson %></p>
+                                    <% } %>
+                                    <% if (project.tevredenResultaat) { %>
+                                        <p>Tevredenheid: <%= project.tevredenResultaat %></p>
+                                        <p>Onverwachte resultaten: <%= project.onverwachteResultaten %></p>
+                                        <p>Aanbeveling: <%= project.aanbevelingWerkplaats %></p>
+                                        <p>Belemmeringen: <%= project.belemmeringen %></p>
+                                        <p>Vervolgstappen: <%= project.vervolgstappen %></p>
+                                        <p>Opmerkingen: <%= project.opmerkingen %></p>
+                                    <% } %>
                                 </div>
+
+                                <form action="/uploadexcel" method="post" enctype="multipart/form-data">
+                                    <input type="hidden" name="projectId" value="<%= project._id %>"> <!-- Verstuur projectId met het formulier -->
+                                    <input type="file" name="firstReviewFile"> <!-- De `name` moet hetzelfde zijn als wat je in `upload.single()` hebt opgegeven -->
+                                    <input type="submit" value="Upload">
+                                </form>
+
+
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 </div>
@@ -348,22 +387,36 @@
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="projectModalLabel"><%= project.problem %></h5>
+                                    <h5 class="modal-title" id="projectModalLabel"><%= project.name %></h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Project beschrijving: <%= project.description %></p>
-                                    <p>Company: <%= project.company %></p>
-                                    <p>HubSpot naam: <%= project.dealname %></p>
-                                    <p>Tevredenheid: <%= project.tevredenResultaat %></p>
-                                    <p>Onverwachte Resultaten: <%= project.onverwachteResultaten %></p>
-                                    <p>Aanbeveling: <%= project.aanbevelingWerkplaats %></p>
-                                    <p>Vervolgstappen: <%= project.vervolgstappen %></p>
-                                    <p>Belemmeringen: <%= project.belemmeringen %></p>
-                                    <p>Opmerkingen: <%= project.opmerkingen %></p>
+                                    <p>Contact: <%= project.companyEmail %></p>
+                                    <% if (project.problem) { %>
+                                        <p>Project Description: <%= project.description %></p>
+                                        <p>Project owner: dropdown (coming soon!)</p>
+                                        <p>Company: <%= project.company %></p>
+                                        <p>Contactpersoon: <%= project.nameContactPerson %></p>
+                                    <% } %>
+                                    <% if (project.tevredenResultaat) { %>
+                                        <p>Tevredenheid: <%= project.tevredenResultaat %></p>
+                                        <p>Onverwachte resultaten: <%= project.onverwachteResultaten %></p>
+                                        <p>Aanbeveling: <%= project.aanbevelingWerkplaats %></p>
+                                        <p>Belemmeringen: <%= project.belemmeringen %></p>
+                                        <p>Vervolgstappen: <%= project.vervolgstappen %></p>
+                                        <p>Opmerkingen: <%= project.opmerkingen %></p>
+                                    <% } %>
                                 </div>
+
+                                <form action="/uploadexcel" method="post" enctype="multipart/form-data">
+                                    <input type="hidden" name="projectId" value="<%= project._id %>"> <!-- Verstuur projectId met het formulier -->
+                                    <input type="file" name="firstReviewFile"> <!-- De `name` moet hetzelfde zijn als wat je in `upload.single()` hebt opgegeven -->
+                                    <input type="submit" value="Upload">
+                                </form>
+
+
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 </div>

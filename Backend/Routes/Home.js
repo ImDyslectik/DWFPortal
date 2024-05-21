@@ -7,20 +7,19 @@ const path = require('path');
 const router = express.Router();
 
 const Project = require('../../DataSchematics/ProjectSchematic');
-
+const FirstReview = require("../../DataSchematics/FirstReviewSchematic");
+const Users = require('../../DataSchematics/UserSchematic');
 
 router.use('/upload', uploadRouter);
 router.post('/data', HandleData);
 
 
-router.get('/', async (req, res) => {
-    if (req.session && req.session.username) {
-        let userEmail = req.session.username;
-        const projects = await Project.find();
-        res.render(path.join(__dirname, '../../Frontend/EJS/homepage.ejs'), { email: userEmail, isAdmin: false, projects });
-    } else {
-        res.redirect('/login');
-    }
+router.get('/', checkAuth, async (req, res) => {
+    let userEmail = req.session.username;
+    // let user = Users.findOne({ email: userEmail });
+    const projects = await Project.find();
+    res.render(path.join(__dirname, '../../Frontend/EJS/homepage.ejs'),
+        { email: userEmail, isAdmin: false, projects });
 });
 
 
