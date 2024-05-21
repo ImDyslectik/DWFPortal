@@ -31,6 +31,11 @@ app.use('/', homepageRouter);
 app.use('/', projectRouter);
 app.use('/', uploadRouter);
 
+const cards = require('../Backend/Routes/projectRoutes');
+app.use('/', cards);
+
+
+
 
 app.set('views', path.join(__dirname, '../../Frontend/EJS'));
 app.set('view engine', 'ejs');

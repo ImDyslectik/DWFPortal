@@ -7,6 +7,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sortablejs@latest/Sortable.min.js"></script>
 </head>
 
 <body>
@@ -104,11 +105,11 @@
     <input type="email" id="companyEmail" />
     <input type="email" id="dealOwnerEmail" />
     <select id="stage">
-        <option value="appointmentscheduled">Appointment Scheduled</option>
-        <option value="qualifiedtobuy">Qualified to Buy</option>
-        <option value="closedwon">Closed Won</option>
-        <option value="112184788">112184788</option>
-        <option value="closedlost">Closed Lost</option>
+        <option value="appointmentscheduled">Interesse</option>
+        <option value="qualifiedtobuy">Contact Gehad</option>
+        <option value="closedwon">Match Gemaakt</option>
+        <option value="closedlost">Geen Match</option>
+        <option value="112184788">Afgerond</option>
     </select>
     <input type="submit" />
 </form>
@@ -138,6 +139,44 @@
                 console.log(error);
             });
     });
+
+
+    window.onload = function() {
+
+        document.querySelectorAll('.sortable').forEach(sortable => {
+            Sortable.create(sortable, {
+                group: {
+                    name: 'sortable',
+                    pull: true,
+                    put: true
+                },
+                animation: 100,
+                onAdd: function (event) {
+                    const item_id = event.item.dataset.id;
+                    const new_stage = event.to.id;
+                    fetch('/update-project', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            id: item_id,
+                            stage: new_stage
+                        }),
+                    })
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                        })
+                        .catch(error => {
+                            console.error(`Fetch error: ${error}`);
+                        });
+                },
+            });
+        });
+
+    };
 </script>
 
 <div class="project-container">
@@ -164,11 +203,11 @@
 
         <div class="projects">
             <label>Interesse</label>
-            <div class="column-name">
+            <div id="appointmentscheduled" class="column-name sortable"> <!-- toevoegen van uniek ID -->
                 <% stages["appointmentscheduled"].forEach((project) => { %>
-                    <div class="column-item" data-toggle="modal" data-target="#projectModal<%= project.name.replace(/\s+/g, '') %>">
-                        <p><%= project.name %></p>
-                    </div>
+                    <div data-id="<%= project._id %>" class="column-item" data-toggle="modal" data-target="#projectModal<%= project.name.replace(/\s+/g, '') %>">
+                            <p><%= project.name %></p>
+                        </div>
 
                     <!-- Modal -->
                     <div class="modal fade" id="projectModal<%= project.name.replace(/\s+/g, '') %>" tabindex="-1" role="dialog" aria-labelledby="projectModalLabel" aria-hidden="true">
@@ -182,7 +221,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <p>Contact: <%= project.companyEmail %></p>
-                                    <% if (project.problem) { %>
+                                <% if (project.problem) { %>
                                         <p>Project Description: <%= project.description %></p>
                                         <p>Project owner: dropdown (coming soon!)</p>
                                         <p>Company: <%= project.company %></p>
@@ -217,9 +256,9 @@
 
         <div class="projects">
             <label>Contact Gehad</label>
-            <div class="column-name">
+            <div id="qualifiedtobuy" class="column-name sortable"> <!-- toevoegen van uniek ID -->
                 <% stages["qualifiedtobuy"].forEach((project) => { %>
-                    <div class="column-item" data-toggle="modal" data-target="#projectModal<%= project.name.replace(/\s+/g, '') %>">
+                    <div data-id="<%= project._id %>" class="column-item" data-toggle="modal" data-target="#projectModal<%= project.name.replace(/\s+/g, '') %>">
                         <p><%= project.name %></p>
                     </div>
 
@@ -251,12 +290,12 @@
                                     <% } %>
                                 </div>
 
+                                <!-- Upload Form -->
                                 <form action="/uploadexcel" method="post" enctype="multipart/form-data">
-                                    <input type="hidden" name="projectId" value="<%= project._id %>"> <!-- Verstuur projectId met het formulier -->
-                                    <input type="file" name="firstReviewFile"> <!-- De `name` moet hetzelfde zijn als wat je in `upload.single()` hebt opgegeven -->
+                                    <input type="hidden" name="projectId" value="<%= project._id %>">
+                                    <input type="file" name="firstReviewFile">
                                     <input type="submit" value="Upload">
                                 </form>
-
 
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -269,10 +308,10 @@
         </div>
 
         <div class="projects">
-            <label>Match Gemaakt</label>
-            <div class="column-name">
+            <label>Contact Gehad</label>
+            <div id="closedwon" class="column-name sortable"> <!-- toevoegen van uniek ID -->
                 <% stages["closedwon"].forEach((project) => { %>
-                    <div class="column-item" data-toggle="modal" data-target="#projectModal<%= project.name.replace(/\s+/g, '') %>">
+                    <div data-id="<%= project._id %>" class="column-item" data-toggle="modal" data-target="#projectModal<%= project.name.replace(/\s+/g, '') %>">
                         <p><%= project.name %></p>
                     </div>
 
@@ -304,12 +343,12 @@
                                     <% } %>
                                 </div>
 
+                                <!-- Upload Form -->
                                 <form action="/uploadexcel" method="post" enctype="multipart/form-data">
-                                    <input type="hidden" name="projectId" value="<%= project._id %>"> <!-- Verstuur projectId met het formulier -->
-                                    <input type="file" name="firstReviewFile"> <!-- De `name` moet hetzelfde zijn als wat je in `upload.single()` hebt opgegeven -->
+                                    <input type="hidden" name="projectId" value="<%= project._id %>">
+                                    <input type="file" name="firstReviewFile">
                                     <input type="submit" value="Upload">
                                 </form>
-
 
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -320,12 +359,13 @@
                 <% }) %>
             </div>
         </div>
+
 
         <div class="projects">
             <label>Geen Match</label>
-            <div class="column-name">
+            <div id="closedlost" class="column-name sortable"> <!-- toevoegen van uniek ID -->
                 <% stages["closedlost"].forEach((project) => { %>
-                    <div class="column-item" data-toggle="modal" data-target="#projectModal<%= project.name.replace(/\s+/g, '') %>">
+                    <div data-id="<%= project._id %>" class="column-item" data-toggle="modal" data-target="#projectModal<%= project.name.replace(/\s+/g, '') %>">
                         <p><%= project.name %></p>
                     </div>
 
@@ -376,9 +416,9 @@
 
         <div class="projects">
             <label>Project Afgerond</label>
-            <div class="column-name">
+            <div id="112184788" class="column-name sortable"> <!-- toevoegen van uniek ID -->
                 <% stages["112184788"].forEach((project) => { %>
-                    <div class="column-item" data-toggle="modal" data-target="#projectModal<%= project.name.replace(/\s+/g, '') %>">
+                    <div data-id="<%= project._id %>" class="column-item" data-toggle="modal" data-target="#projectModal<%= project.name.replace(/\s+/g, '') %>">
                         <p><%= project.name %></p>
                     </div>
 
