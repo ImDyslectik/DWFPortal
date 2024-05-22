@@ -208,6 +208,7 @@ button:hover {
 
 .projects {
     width: 100%;
+    min-width: 20%;
     padding: 8px;
 }
 

@@ -1,22 +1,36 @@
+document.addEventListener("DOMContentLoaded", function() {
+    initDragAndDropEvents();
+    initFileClipboard();
+    initSearchUsersEmailList();
+    initProjectFormAddEvent();
+    initSortableColumns();
+});
+
+function initDragAndDropEvents() {
+    let dropArea = document.getElementById("dropArea");
+
+    dropArea.addEventListener("dragover", handleDragOver);
+    dropArea.addEventListener("dragenter", toggleInvalidClassOn);
+    dropArea.addEventListener("dragleave", toggleInvalidClassOff);
+    dropArea.addEventListener("drop", handleDrop);
+}
+
 function handleDragOver(event) {
     event.preventDefault();
 }
 
-function handleDragEnter(event) {
-    event.preventDefault();
-    document.getElementById('dropArea').classList.add('invalid');
+function toggleInvalidClassOn() {
+    this.classList.add("invalid");
 }
 
-function handleDragLeave(event) {
-    event.preventDefault();
-    document.getElementById('dropArea').classList.remove('invalid');
+function toggleInvalidClassOff() {
+    this.classList.remove("invalid");
 }
 
 function handleDrop(event) {
     event.preventDefault();
-    const file = event.dataTransfer.files[0];
-    handleFile(file);
-    document.getElementById('dropArea').classList.remove('invalid');
+    handleFile(event.dataTransfer.files[0]);
+    this.classList.remove("invalid");
 }
 
 function selectFile() {
@@ -39,27 +53,46 @@ function handleFile(file) {
         method: 'POST',
         body: formData
     })
-        .then(response => {
-            if (response.ok) {
-                return response.text();
-            } else {
-                throw new Error('Bestand formaat niet herkend.');
-            }
-        })
+        .then(response => response.ok ? response.text() : Promise.reject('Bestand formaat niet herkend.'))
         .then(message => {
             console.log(message);
-            console.log('Bestandnaam:', file.name);
-            document.getElementById('message').textContent = `Bestand "${file.name}" succesvol geüpload!`;
-            document.getElementById('message').classList.remove('error');
+            setMessage(`Bestand "${file.name}" succesvol geüpload!`);
         })
         .catch(error => {
             console.error(error);
-            document.getElementById('message').textContent = error.message;
-            document.getElementById('message').classList.add('error');
+            setMessage(error, true);
         });
 }
 
-window.onload = function() {
+function setMessage(text, isError = false) {
+    let messageElement = document.getElementById('message');
+    messageElement.textContent = text;
+    messageElement.classList.toggle('error', isError);
+}
+
+function initFileClipboard() {
+    let emailElements = document.querySelectorAll(".card-email");
+
+    emailElements.forEach(element => {
+        element.addEventListener("click", function(event) {
+            event.stopPropagation();
+            let email = event.target.textContent.split(": ")[1];
+            writeToClipboard(email);
+        });
+    });
+}
+
+function writeToClipboard(text) {
+    navigator.clipboard.writeText(text)
+        .then(() => {
+            console.log('Email copied to clipboard');
+        })
+        .catch(err => {
+            console.error('Could not copy email: ', err);
+        });
+}
+
+function initSearchUsersEmailList() {
     document.querySelector('#dealOwnerEmail').addEventListener('input', async function() {
         const searchTerm = this.value;
         const response = await fetch(`/search-users?term=${searchTerm}`);
@@ -74,7 +107,9 @@ window.onload = function() {
             dataList.appendChild(option);
         });
     });
+}
 
+function initProjectFormAddEvent() {
     document.getElementById('addProjectForm').addEventListener('submit', function(event) {
         event.preventDefault();
         const name = document.getElementById('name').value;
@@ -83,12 +118,11 @@ window.onload = function() {
         const stage = document.getElementById('stage').value;
 
         axios.post('/addProject', {
-                name: name,
-                companyEmail: companyEmail,
-                dealOwnerEmail: dealOwnerEmail,
-                stage: stage,
-            },
-        )
+            name: name,
+            companyEmail: companyEmail,
+            dealOwnerEmail: dealOwnerEmail,
+            stage: stage,
+        })
             .then(function (response) {
                 console.log(response);
                 console.log(projectName)
@@ -97,19 +131,21 @@ window.onload = function() {
                 console.log(error);
             });
     });
+}
 
+function initSortableColumns() {
     document.querySelectorAll('.sortable').forEach(sortable => {
         Sortable.create(sortable, {
             group: {
                 name: 'sortable',
-                tolerance: "pointer",
                 pull: true,
                 put: true
             },
             animation: 100,
-            onAdd: function (event) {
+            onAdd: function(event) {
                 const item_id = event.item.dataset.id;
                 const new_stage = event.to.id;
+
                 fetch('/update-project', {
                     method: 'POST',
                     headers: {

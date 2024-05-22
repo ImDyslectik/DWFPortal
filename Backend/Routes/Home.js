@@ -20,9 +20,10 @@ router.post('/data', HandleData);
 
 router.get('/', checkAuth, async (req, res) => {
     let userEmail = req.session.username;
-    const projects = await Project.find({ dealOwnerEmail: userEmail });
+    const projects = await Project.find();
+    const personalProjects = await Project.find({ dealOwnerEmail: userEmail });
     res.render(path.join(__dirname, '../../Frontend/EJS/homepage.ejs'),
-        { email: userEmail, isAdmin: false, projects });
+        { email: userEmail, isAdmin: false, projects, personalProjects });
 });
 
 
