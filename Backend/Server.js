@@ -29,6 +29,14 @@ app.use('/', homepageRouter);
 app.use('/', uploadRouter);
 
 
+//TODO put this inside a seperate function / file
+app.get('/search-users', async (req, res) => {
+    const searchTerm = req.query.term;
+    const users = await User.find({ email: new RegExp(searchTerm, 'i') }); // MongoDB query die email veld vergelijkt met zoekterm
+    res.json(users.map(user => user.email));
+});
+
+
 //wild card voor error catching als gebruikers een pagina laden die niet beschikbaar is
 app.use((req, res, next) => {
     res.status(500);
@@ -42,13 +50,7 @@ app.use((req, res, next) => {
             </body>
         </html>
     `);
-});
 
-//TODO put this inside a seperate function / file
-app.get('/search-users', async (req, res) => {
-    const searchTerm = req.query.term;
-    const users = await User.find({ email: new RegExp(searchTerm, 'i') }); // MongoDB query die email veld vergelijkt met zoekterm
-    res.json(users.map(user => user.email));
 });
 
 

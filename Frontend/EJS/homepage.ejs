@@ -72,15 +72,11 @@
     <div class="overview-container">
         <div class="assigned-projects">
             <ul>
-                <li>
-                    <a>project a</a>
-                </li>
-                <li>
-                    <a>project b</a>
-                </li>
-                <li>
-                    <a>project c</a>
-                </li>
+                <% projects.forEach(function(project) { %>
+                    <li>
+                        <a><%= project.name %></a>
+                    </li>
+                <% }); %>
             </ul>
         </div>
     </div>
@@ -98,22 +94,23 @@
 <div class="break">
     <a class="api-text" href="https://app-eu1.hubspot.com/oauth/authorize?client_id=ee514772-3efe-4518-ad4f-ae1a13610dd7&redirect_uri=http://
     localhost:3000/code&scope=crm.schemas.deals.read%20crm.schemas.deals.write%20crm.schemas.contacts.read">Ga naar API (tijdelijk)</a>
+
+    <form id="addProjectForm">
+        <input placeholder="Project naam" type="text" id="name" />
+        <input placeholder="Bedrijf email" type="email" id="companyEmail" />
+        <input placeholder="Deal owner" list="emailList" type="email" id="dealOwnerEmail" />
+        <datalist id="emailList"></datalist>
+        <select id="stage">
+            <option value="appointmentscheduled">Interesse</option>
+            <option value="qualifiedtobuy">Contact Gehad</option>
+            <option value="closedwon">Match Gemaakt</option>
+            <option value="closedlost">Geen Match</option>
+            <option value="112184788">Afgerond</option>
+        </select>
+        <input type="submit" />
+    </form>
 </div>
 
-<form id="addProjectForm">
-    <input placeholder="Project naam" type="text" id="name" />
-    <input placeholder="Bedrijf email" type="email" id="companyEmail" />
-    <input placeholder="Deal owner" list="emailList" type="email" id="dealOwnerEmail" />
-    <datalist id="emailList"></datalist>
-    <select id="stage">
-        <option value="appointmentscheduled">Interesse</option>
-        <option value="qualifiedtobuy">Contact Gehad</option>
-        <option value="closedwon">Match Gemaakt</option>
-        <option value="closedlost">Geen Match</option>
-        <option value="112184788">Afgerond</option>
-    </select>
-    <input type="submit" />
-</form>
 
 <div class="project-container">
     <div class="search">
