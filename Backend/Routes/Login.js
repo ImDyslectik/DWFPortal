@@ -29,7 +29,7 @@ router.post('/', (req, res) => {
         })
         .catch((err) => {
             console.error(err);
-            res.sendStatus(500);
+            res.redirect(`https://http.cat/${500}`);
         });
 });
 

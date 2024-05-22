@@ -8,6 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/sortablejs@latest/Sortable.min.js"></script>
+    <script src="/home.js"></script>
 </head>
 
 <body>
@@ -99,11 +100,11 @@
     localhost:3000/code&scope=crm.schemas.deals.read%20crm.schemas.deals.write%20crm.schemas.contacts.read">Ga naar API (tijdelijk)</a>
 </div>
 
-
-<form id="myForm">
-    <input type="text" id="name" />
-    <input type="email" id="companyEmail" />
-    <input type="email" id="dealOwnerEmail" />
+<form id="addProjectForm">
+    <input placeholder="Project naam" type="text" id="name" />
+    <input placeholder="Bedrijf email" type="email" id="companyEmail" />
+    <input placeholder="Deal owner" list="emailList" type="email" id="dealOwnerEmail" />
+    <datalist id="emailList"></datalist>
     <select id="stage">
         <option value="appointmentscheduled">Interesse</option>
         <option value="qualifiedtobuy">Contact Gehad</option>
@@ -113,71 +114,6 @@
     </select>
     <input type="submit" />
 </form>
-
-
-<script>
-    // TODO put into function and add to rest of script
-    document.getElementById('myForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        const name = document.getElementById('name').value;
-        const companyEmail = document.getElementById('companyEmail').value;
-        const dealOwnerEmail = document.getElementById('dealOwnerEmail').value;
-        const stage = document.getElementById('stage').value
-
-        axios.post('/addProject', {
-                name: name,
-                companyEmail: companyEmail,
-                dealOwnerEmail: dealOwnerEmail,
-                stage: stage,
-            },
-        )
-            .then(function (response) {
-                console.log(response);
-                console.log(projectName)
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    });
-
-
-    window.onload = function() {
-
-        document.querySelectorAll('.sortable').forEach(sortable => {
-            Sortable.create(sortable, {
-                group: {
-                    name: 'sortable',
-                    pull: true,
-                    put: true
-                },
-                animation: 100,
-                onAdd: function (event) {
-                    const item_id = event.item.dataset.id;
-                    const new_stage = event.to.id;
-                    fetch('/update-project', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify({
-                            id: item_id,
-                            stage: new_stage
-                        }),
-                    })
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok');
-                            }
-                        })
-                        .catch(error => {
-                            console.error(`Fetch error: ${error}`);
-                        });
-                },
-            });
-        });
-
-    };
-</script>
 
 <div class="project-container">
     <div class="search">
@@ -206,8 +142,10 @@
             <div id="appointmentscheduled" class="column-name sortable"> <!-- toevoegen van uniek ID -->
                 <% stages["appointmentscheduled"].forEach((project) => { %>
                     <div data-id="<%= project._id %>" class="column-item" data-toggle="modal" data-target="#projectModal<%= project.name.replace(/\s+/g, '') %>">
-                            <p><%= project.name %></p>
-                        </div>
+                            <p class="card-title"><%= project.name %></p>
+                            <p class="card-bottom">Door: <%= project.dealOwnerEmail %></p>
+                            <p class="card-bottom">Contact: <%= project.companyEmail %></p>
+                    </div>
 
                     <!-- Modal -->
                     <div class="modal fade" id="projectModal<%= project.name.replace(/\s+/g, '') %>" tabindex="-1" role="dialog" aria-labelledby="projectModalLabel" aria-hidden="true">
@@ -221,6 +159,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <p>Contact: <%= project.companyEmail %></p>
+                                    <p>Deal Owner: <%= project.dealOwnerEmail %></p>
                                 <% if (project.problem) { %>
                                         <p>Project Description: <%= project.description %></p>
                                         <p>Project owner: dropdown (coming soon!)</p>
@@ -259,7 +198,9 @@
             <div id="qualifiedtobuy" class="column-name sortable"> <!-- toevoegen van uniek ID -->
                 <% stages["qualifiedtobuy"].forEach((project) => { %>
                     <div data-id="<%= project._id %>" class="column-item" data-toggle="modal" data-target="#projectModal<%= project.name.replace(/\s+/g, '') %>">
-                        <p><%= project.name %></p>
+                        <p class="card-title"><%= project.name %></p>
+                        <p class="card-bottom">Door: <%= project.dealOwnerEmail %></p>
+                        <p class="card-bottom">Contact: <%= project.companyEmail %></p>
                     </div>
 
                     <!-- Modal -->
@@ -274,7 +215,8 @@
                                 </div>
                                 <div class="modal-body">
                                     <p>Contact: <%= project.companyEmail %></p>
-                                    <% if (project.problem) { %>
+                                    <p>Deal Owner: <%= project.dealOwnerEmail %></p>
+                                <% if (project.problem) { %>
                                         <p>Project Description: <%= project.description %></p>
                                         <p>Project owner: dropdown (coming soon!)</p>
                                         <p>Company: <%= project.company %></p>
@@ -312,7 +254,9 @@
             <div id="closedwon" class="column-name sortable"> <!-- toevoegen van uniek ID -->
                 <% stages["closedwon"].forEach((project) => { %>
                     <div data-id="<%= project._id %>" class="column-item" data-toggle="modal" data-target="#projectModal<%= project.name.replace(/\s+/g, '') %>">
-                        <p><%= project.name %></p>
+                        <p class="card-title"><%= project.name %></p>
+                        <p class="card-bottom">Door: <%= project.dealOwnerEmail %></p>
+                        <p class="card-bottom">Contact: <%= project.companyEmail %></p>
                     </div>
 
                     <!-- Modal -->
@@ -327,7 +271,8 @@
                                 </div>
                                 <div class="modal-body">
                                     <p>Contact: <%= project.companyEmail %></p>
-                                    <% if (project.problem) { %>
+                                    <p>Deal Owner: <%= project.dealOwnerEmail %></p>
+                                <% if (project.problem) { %>
                                         <p>Project Description: <%= project.description %></p>
                                         <p>Project owner: dropdown (coming soon!)</p>
                                         <p>Company: <%= project.company %></p>
@@ -366,7 +311,9 @@
             <div id="closedlost" class="column-name sortable"> <!-- toevoegen van uniek ID -->
                 <% stages["closedlost"].forEach((project) => { %>
                     <div data-id="<%= project._id %>" class="column-item" data-toggle="modal" data-target="#projectModal<%= project.name.replace(/\s+/g, '') %>">
-                        <p><%= project.name %></p>
+                        <p class="card-title"><%= project.name %></p>
+                        <p class="card-bottom">Door: <%= project.dealOwnerEmail %></p>
+                        <p class="card-bottom">Contact: <%= project.companyEmail %></p>
                     </div>
 
                     <!-- Modal -->
@@ -381,7 +328,8 @@
                                 </div>
                                 <div class="modal-body">
                                     <p>Contact: <%= project.companyEmail %></p>
-                                    <% if (project.problem) { %>
+                                    <p>Deal Owner: <%= project.dealOwnerEmail %></p>
+                                <% if (project.problem) { %>
                                         <p>Project Description: <%= project.description %></p>
                                         <p>Project owner: dropdown (coming soon!)</p>
                                         <p>Company: <%= project.company %></p>
@@ -419,7 +367,9 @@
             <div id="112184788" class="column-name sortable"> <!-- toevoegen van uniek ID -->
                 <% stages["112184788"].forEach((project) => { %>
                     <div data-id="<%= project._id %>" class="column-item" data-toggle="modal" data-target="#projectModal<%= project.name.replace(/\s+/g, '') %>">
-                        <p><%= project.name %></p>
+                        <p class="card-title"><%= project.name %></p>
+                        <p class="card-bottom">Door: <%= project.dealOwnerEmail %></p>
+                        <p class="card-bottom">Contact: <%= project.companyEmail %></p>
                     </div>
 
                     <!-- Modal -->
@@ -434,7 +384,8 @@
                                 </div>
                                 <div class="modal-body">
                                     <p>Contact: <%= project.companyEmail %></p>
-                                    <% if (project.problem) { %>
+                                    <p>Deal Owner: <%= project.dealOwnerEmail %></p>
+                                <% if (project.problem) { %>
                                         <p>Project Description: <%= project.description %></p>
                                         <p>Project owner: dropdown (coming soon!)</p>
                                         <p>Company: <%= project.company %></p>
@@ -456,7 +407,6 @@
                                     <input type="submit" value="Upload">
                                 </form>
 
-
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                 </div>
@@ -467,92 +417,5 @@
             </div>
         </div>
     </div>
-
-    <script>
-        function handleDragOver(event) {
-            event.preventDefault();
-        }
-
-        function handleDragEnter(event) {
-            event.preventDefault();
-            document.getElementById('dropArea').classList.add('invalid');
-        }
-
-        function handleDragLeave(event) {
-            event.preventDefault();
-            document.getElementById('dropArea').classList.remove('invalid');
-        }
-
-        function handleDrop(event) {
-            event.preventDefault();
-            const file = event.dataTransfer.files[0];
-            handleFile(file);
-            document.getElementById('dropArea').classList.remove('invalid');
-        }
-
-        function selectFile() {
-            const fileInput = document.createElement('input');
-            fileInput.type = 'file';
-            fileInput.accept = '.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel';
-            fileInput.addEventListener('change', (event) => {
-                const file = event.target.files[0];
-                handleFile(file);
-            });
-            fileInput.click();
-        }
-
-        function handleFile(file) {
-            const formData = new FormData();
-            formData.append('file', file);
-
-            fetch('/upload', {
-                method: 'POST',
-                body: formData
-            })
-                .then(response => {
-                    if (response.ok) {
-                        return response.text();
-                    } else {
-                        throw new Error('Bestand format niet herkend.');
-                    }
-                })
-                .then(message => {
-                    console.log(message);
-                    console.log('Bestandnaam:', file.name);
-                    document.getElementById('message').textContent = `Bestand "${file.name}" succesvol geüpload!`;
-                    document.getElementById('message').classList.remove('error');
-                })
-                .catch(error => {
-                    console.error(error);
-                    document.getElementById('message').textContent = error.message;
-                    document.getElementById('message').classList.add('error');
-                });
-        }
-
-        // document.getElementById('newProjectForm').addEventListener('submit', function(event) {
-        //     // Dit voorkomt dat de pagina ververst wordt als het formulier wordt verzonden
-        //     event.preventDefault();
-        //
-        //     // Hier halen we de waarden op van het formulier
-        //     const projectName = document.getElementById('projectName').value;
-        //     const companyEmail = document.getElementById('companyEmail').value;
-        //     const dealOwnerEmail = document.getElementById('dealOwnerEmail').value;
-        //
-        //     // Maak een POST request naar de '/addProject' endpoint in de backend
-        //     axios.post('/addProject', JSON.stringify({
-        //         projectName: projectName,
-        //         companyEmail: companyEmail,
-        //         dealOwnerEmail: dealOwnerEmail
-        //     }), {
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         }
-        //     })
-        // });
-
-
-
-
-    </script>
 </div>
 </body>
