@@ -1,22 +1,21 @@
 const schedule = require('node-schedule');
-const updateDatabase = require('./APIConnection');
-const sendEmail = require('./EmailService');
-const refreshAccesToken = require('./EmailService');
+// const updateDatabase = require('./Old/APIConnection');
+const sendEmailsToUsers = require('./EmailService');
+const getInactiveProjects = require('./FetchInactive');
 
-//For syntax see cronjob documentation at: https://crontab.guru/
-// Call refresh function every minute
-const refreshJob = schedule.scheduleJob('*/5 * * * * *', function() {
-    updateDatabase();
-});
-
-// Call email to send a mail every friday morning
-// const emailJob = schedule.scheduleJob('*/1 * * * *', function() {
-//     sendEmail();
+// Voor syntax, zie cronjob documentatie op: https://crontab.guru/
+// Refresh functie aanroepen elke minuut
+// const refreshJob = schedule.scheduleJob('*/5 * * * * *', function() {
+//     updateDatabase();
 // });
 
-//TODO access token refreshen als het nodig is
-
-// Call API function to refresh acces token every night
-const tokenJob = schedule.scheduleJob('0 0 * * *', function() {
-    refreshAccesToken();
+// Email sturen elke vrijdagochtend
+const emailJob = schedule.scheduleJob('*/5 * * * * *', function() {
+    sendEmailsToUsers();
 });
+
+// TODO access token verversen als het nodig is
+// API functie aanroepen om access token te verversen elke nacht
+// const tokenJob = schedule.scheduleJob('0 0 * * *', function() {
+//     refreshAccesToken();
+// });

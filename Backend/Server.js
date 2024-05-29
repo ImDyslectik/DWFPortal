@@ -7,15 +7,20 @@ const adminRouter = require('./Routes/Admin');
 const loginRouter = require('./Routes/Login');
 const uploadRouter = require('./Routes/Upload');
 const User = require('../DataSchematics/UserSchematic');
+const test = require('../DataSchematics/ExportSchematic')
 
-const express = require('express');
-const db = require('./ConnectDB');
-require('dotenv').config();
-const bodyParser = require('body-parser');
 const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
+const mongoose = require("mongoose");
+mongoose.connect(process.env.DATABASE_URI);
+const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+if (process.env.USEE_MAIL_SERVICE === 'true') {
+    refresh = require('./Scheduler');
+}
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

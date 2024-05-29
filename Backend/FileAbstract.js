@@ -76,6 +76,8 @@ class FirstReviewDataImporter extends DataImporter {
             hooptU: row['Wat hoopt u dat de samenwerking met de Digitale Werkplaats u oplevert?'],
             vraagstuk: row['Met welk vraagstuk ga je aan de slag?']
         });
+
+        console.log(this.model);
     }
     async saveToDatabase() {
         const existingReview = await FirstReviewModel.findOne({
@@ -117,6 +119,8 @@ class SecondReviewDataImporter extends DataImporter {
             verbeteringSuggesties: row["Heb je suggesties ter verbetering van de werkplaats?"],
             opmerkingen: row["Opmerkingen:"],
         });
+        console.log(this.model);
+
     }
     async saveToDatabase() {
         const existingReview = await SecondReviewModel.findOne({ id: this.model.id });

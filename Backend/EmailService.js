@@ -3,6 +3,7 @@ const path = require('path')
 const DataModel = require('../DataSchematics/UserSchematic');
 const {decryptText} = require("./Validation/RSAEncryption");
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
+const getInactiveProjects = require('./FetchInactive');
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -12,36 +13,44 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-//let userEmail = req.session.username;
-//console.log(userEmail);
+async function sendEmailsToUsers() {
 
+    const users = await DataModel.find();
+    const inactiveProjects = await getInactiveProjects();
 
-const emailContent = `
-  Hey!,
+    for (const user of users) {
+        const userProjects = inactiveProjects.filter(project => project.dealOwnerEmail === user.email);
+        // if (userProjects && userProjects.length > 0){
+        //     console.log('gebruiker heeft projecten');
+        //     break;
+        // }
+        // console.log('gebruiker heeft geen projecten');
 
-  Er staan nog wat dingetjes open die ingevuld moeten worden.
-  Project A: nog geen enquete verstuurd
-  Project B: project al een maand geen vooruitgang
+        const emailContent = `
+            Hey ${user.email}!,
 
-  Met vriendelijke groet,
-  Deze webapp
-`;
+            Er zijn nog wat dingetjes die al een paar dagen niet geupdate zijn.
+            ${userProjects.map(project => `Projectnaam: ${project.name}`).join('\n')}
+            
+            Met vriendelijke groet,
+            Deze webapp
+        `;
 
-module.exports = function email() {
-    const userEmail = process.env.EMAILSERVICE_TESTER;
+        const mailOptions = {
+            from: process.env.EMAILSERVICE_USERNAME,
+            to: user.email,
+            subject: 'Wekelijks reminder',
+            text: emailContent
+        };
 
-    const mailOptions = {
-        from: process.env.EMAILSERVICE_USERNAME,
-        to: userEmail,
-        subject: 'Wekelijks meldingen',
-        text: emailContent
-    };
-
-    transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-            console.error('Fout bij het verzenden van e-mail:', error);
-        } else {
-            console.log('E-mail succesvol verzonden:', info.response);
-        }
-    });
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.error('Fout bij het verzenden van e-mail:', error);
+            } else {
+                console.log('Succesvol verzonden:', info.response);
+            }
+        });
+    }
 }
+
+module.exports = sendEmailsToUsers;

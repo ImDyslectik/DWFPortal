@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const path = require('path');
 const dotenv = require('dotenv');
-const Deal = require('../DataSchematics/DealSchematic');
-const FirstReview = require('../DataSchematics/FirstReviewSchematic');
-const SecondReview = require('../DataSchematics/SecondReviewSchematic');
-const Project = require('../DataSchematics/ProjectSchematic');
+const Deal = require('./DealSchematic');
+const FirstReview = require('../../DataSchematics/FirstReviewSchematic');
+const SecondReview = require('../../DataSchematics/SecondReviewSchematic');
+const Project = require('../../DataSchematics/ProjectSchematic');
 
 dotenv.config({ path: path.resolve(__dirname, '../.env') });
 

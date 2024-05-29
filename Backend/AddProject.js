@@ -8,6 +8,7 @@ router.post('/addProject', (req, res) => {
         companyEmail: req.body.companyEmail,
         dealOwnerEmail: req.body.dealOwnerEmail,
         stage: req.body.stage,
+        time: req.body.time,
     });
     projectData.save()
         .then(item => {

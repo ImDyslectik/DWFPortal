@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const FirstReview = require('../../DataSchematics/FirstReviewSchematic');
 const SecondReview = require('../../DataSchematics/SecondReviewSchematic');
 const Project = require('../../DataSchematics/ProjectSchematic');
-const Deal = require('../../DataSchematics/DealSchematic');
+const Deal = require('../Old/DealSchematic');
 
 const router = express.Router();
 const checkAuth = require('../Validation/CheckAuth');

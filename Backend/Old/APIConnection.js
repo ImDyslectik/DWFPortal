@@ -1,14 +1,12 @@
 const mongoose = require('mongoose');
 const axios = require('axios');
-const Deal = require('../DataSchematics/DealSchematic');
+const Deal = require('./DealSchematic');
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 
 const accessToken = process.env.ACCES_TOKEN;
-mongoose.connect(process.env.DATABASE_URI, { useNewUrlParser: true });
 
 module.exports = async function refresh() { // voeg async toe
-    mongoose.connect(process.env.DATABASE_URI, { useNewUrlParser: true });
 
     const response = await axios.get(process.env.SCOPE, { // voeg await toe
         headers: {
