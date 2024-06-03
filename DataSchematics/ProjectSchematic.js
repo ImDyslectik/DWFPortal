@@ -33,7 +33,6 @@ const projectSchema = new Schema(
             suggesties: { type: String, required: false },
 
             obstakels: { type: Array, required: false },
-            verwachtResultaat: { type: Array, required: false },
             vervolgstappen: { type: Array, required: false },
             belemmeringen: { type: Array, required: false }
 
