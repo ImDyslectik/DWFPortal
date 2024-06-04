@@ -26,12 +26,12 @@
 <!--            </svg>-->
 <!--            <a href="/projecten" class="navbar-items"> Projecten </a>-->
 <!--        </li>-->
-<!--        <li>-->
-<!--            <svg class="icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 24 24">-->
-<!--                <path d="M 12 2 A 1 1 0 0 0 11.289062 2.296875 L 1.203125 11.097656 A 0.5 0.5 0 0 0 1 11.5 A 0.5 0.5 0 0 0 1.5 12 L 4 12 L 4 20 C 4 20.552 4.448 21 5 21 L 9 21 C 9.552 21 10 20.552 10 20 L 10 14 L 14 14 L 14 20 C 14 20.552 14.448 21 15 21 L 19 21 C 19.552 21 20 20.552 20 20 L 20 12 L 22.5 12 A 0.5 0.5 0 0 0 23 11.5 A 0.5 0.5 0 0 0 22.796875 11.097656 L 12.716797 2.3027344 A 1 1 0 0 0 12.710938 2.296875 A 1 1 0 0 0 12 2 z"></path>-->
-<!--            </svg>-->
-<!--            <a href="/agenda" class="navbar-items"> Agenda </a>-->
-<!--        </li>-->
+        <li>
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 24 24">
+                <path d="M 12 2 A 1 1 0 0 0 11.289062 2.296875 L 1.203125 11.097656 A 0.5 0.5 0 0 0 1 11.5 A 0.5 0.5 0 0 0 1.5 12 L 4 12 L 4 20 C 4 20.552 4.448 21 5 21 L 9 21 C 9.552 21 10 20.552 10 20 L 10 14 L 14 14 L 14 20 C 14 20.552 14.448 21 15 21 L 19 21 C 19.552 21 20 20.552 20 20 L 20 12 L 22.5 12 A 0.5 0.5 0 0 0 23 11.5 A 0.5 0.5 0 0 0 22.796875 11.097656 L 12.716797 2.3027344 A 1 1 0 0 0 12.710938 2.296875 A 1 1 0 0 0 12 2 z"></path>
+            </svg>
+                <a href="http://localhost:3000/save">Download CSV</a>
+        </li>
         <li>
             <svg class="icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 24 24">
                 <path d="M 12 2 A 1 1 0 0 0 11.289062 2.296875 L 1.203125 11.097656 A 0.5 0.5 0 0 0 1 11.5 A 0.5 0.5 0 0 0 1.5 12 L 4 12 L 4 20 C 4 20.552 4.448 21 5 21 L 9 21 C 9.552 21 10 20.552 10 20 L 10 14 L 14 14 L 14 20 C 14 20.552 14.448 21 15 21 L 19 21 C 19.552 21 20 20.552 20 20 L 20 12 L 22.5 12 A 0.5 0.5 0 0 0 23 11.5 A 0.5 0.5 0 0 0 22.796875 11.097656 L 12.716797 2.3027344 A 1 1 0 0 0 12.710938 2.296875 A 1 1 0 0 0 12 2 z"></path>
@@ -83,34 +83,42 @@
         </div>
     </div>
     <div class="overview-container">
-        <div class="upload-text" id="message">Sleep hier je bestanden in of klik!</div>
-        <div class="upload-csv"></div>
-        <div id="dropArea" ondragover="handleDragOver(event)"
-             ondrop="handleDrop(event)" ondragenter="handleDragEnter(event)"
-             ondragleave="handleDragLeave(event)" onclick="selectFile()">
-            <a class="upload-text">Upload CSV</a>
-        </div>
+        <div class="upload-text" id="message">Voeg hier een project toe!</div>
+        <form id="addProjectForm">
+            <input placeholder="Project naam" type="text" id="name" />
+            <input placeholder="Bedrijf email" type="email" id="companyEmail" />
+            <input placeholder="Deal owner" list="emailList" type="email" id="dealOwnerEmail" />
+            <datalist id="emailList"></datalist>
+            <select id="stage">
+                <option value="appointmentscheduled">Interesse</option>
+                <option value="qualifiedtobuy">Contact Gehad</option>
+                <option value="closedwon">Match Gemaakt</option>
+                <option value="closedlost">Geen Match</option>
+                <option value="112184788">Afgerond</option>
+            </select>
+            <input type="submit" />
+        </form>
     </div>
 </div>
 
-<div class="break">
-    <a class="api-text" href="https://app-eu1.hubspot.com/oauth/authorize?client_id=ee514772-3efe-4518-ad4f-ae1a13610dd7&redirect_uri=http://
-    localhost:3000/code&scope=crm.schemas.deals.read%20crm.schemas.deals.write%20crm.schemas.contacts.read">Ga naar API (tijdelijk)</a>
 
-    <form id="addProjectForm">
-        <input placeholder="Project naam" type="text" id="name" />
-        <input placeholder="Bedrijf email" type="email" id="companyEmail" />
-        <input placeholder="Deal owner" list="emailList" type="email" id="dealOwnerEmail" />
-        <datalist id="emailList"></datalist>
-        <select id="stage">
-            <option value="appointmentscheduled">Interesse</option>
-            <option value="qualifiedtobuy">Contact Gehad</option>
-            <option value="closedwon">Match Gemaakt</option>
-            <option value="closedlost">Geen Match</option>
-            <option value="112184788">Afgerond</option>
-        </select>
-        <input type="submit" />
-    </form>
+<script>
+    document.getElementById('export-btn').addEventListener('click', function () {
+        fetch('save', {  //replace this with your actual endpoint
+            method: 'GET',
+        }).then(function (response) {
+            console.log(response);
+            // handle the response
+        }).catch(function (error) {
+            console.log(error);
+            // handle errors
+        });
+    });
+</script>
+
+
+<div class="break">
+<!--    <a href="http://localhost:3000/save">Download CSV</a>-->
 </div>
 
 

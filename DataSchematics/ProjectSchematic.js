@@ -4,41 +4,50 @@ const {
         verwachtResultaatMapper,
         vervolgstappenMapper,
         belemmeringenMapper
-} = require("../Backend/ExportTests");
+} = require("../Helpers/ArrayMapper");
 const { Schema } = mongoose;
 
 
 const projectSchema = new Schema(
     {
-            name: { type: String, required: true },
-            companyEmail: { type: String, required: true },
-            dealOwnerEmail: { type: String, required: true },
-            stage: { type: String, required: true },
+        name: { type: String, required: true },
+        companyEmail: { type: String, required: true },
+        dealOwnerEmail: { type: String, required: true },
+        stage: { type: String, required: true },
 
-            company: { type: String },
-            problem: { type: String },
-            description: { type: String },
-            nameContactPerson: { type: String },
-            digitlisering: { type: Number },
+        name: { type: String },
+        company: { type: String },
+        problem: { type: String },
+        description: { type: String },
+        nameContactPerson: { type: String },
 
-            kvkNummer: { type: String, required: false },
-            typeActiviteit: { type: String, required: false },
-            inAanraking: { type: Number, required: false },
-            aanleiding: { type: Date, required: false },
-            vraagstuk: { type: String, required: false },
-            resultaat: { type: String, required: false },
-            tevredenheid: { type: Number, required: false },
-            extraUitkomst: { type: String, required: false },
-            aanraden: { type: Number, required: false },
-            suggesties: { type: String, required: false },
+        kvkNummer: { type: String },
+        typeActiviteit: { type: String },
+        inAanraking: { type: String },
+        aanleiding: { type: String },
+        digitlisering: { type: Number },
 
-            obstakels: { type: Array, required: false },
-            vervolgstappen: { type: Array, required: false },
-            belemmeringen: { type: Array, required: false }
+        obstakels: { type: Array },
+        gewensteResultaat: { type: Array },
+        vraagstuk: { type: String },
 
+        meerInzicht: { type: String },
+        meerTeWeten: { type: String },
+        toegang: { type: String },
+        kennisToegang: { type: String },
+        zelfKennis: { type: String },
+        tevredenheid: { type: String },
+        resultaat: { type: String },
+        tevredenheidNummer: { type: Number },
+        extraUitkomst: { type: String },
+
+        aanraden: { type: Number },
+        vervolgstappen: { type: Array },
+        belemmeringen: { type: Array },
+        suggesties: { type: String },
     },
     {
-            timestamps: true,
+        timestamps: true,
     }
 );
 

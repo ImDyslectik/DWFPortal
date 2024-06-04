@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Project = require('../DataSchematics/ProjectSchematic');
+const Project = require('../../DataSchematics/ProjectSchematic');
 const path = require("path");
 
 async function getInactiveProjects() {

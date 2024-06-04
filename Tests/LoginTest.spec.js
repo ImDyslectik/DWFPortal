@@ -8,8 +8,8 @@ jest.mock('../DataSchematics/UserSchematic');
 
 const req = {
     body: {
-        email: "a@gmail.com",
-        password: "a",
+        email: "testuser@gmail.com",
+        password: "password",
         role: "user"
     }
 };
@@ -19,7 +19,6 @@ const res = {
 };
 
 test('HandleData function saves new user and sends correct status', async () => {
-    // Setting up our mocks
     const mockKeyPair = {publicKey: "publickey", privateKey: "privatekey"};
     const mockEncryptedPassword = "encryptedPassword";
 
@@ -27,14 +26,13 @@ test('HandleData function saves new user and sends correct status', async () => 
     encryptText.mockReturnValue(mockEncryptedPassword);
 
     const mockNewData = {
-        save: jest.fn().mockResolvedValue(null), // Assuming newData.save() resolves a promise with no value
+        save: jest.fn().mockResolvedValue(null),
     };
 
     DataModel.mockReturnValue(mockNewData);
 
     await HandleData(req, res);
 
-    // Check that the correct values were passed to the DataModel constructor
     expect(DataModel).toHaveBeenCalledWith({
         email: req.body.email,
         password: mockEncryptedPassword,
@@ -56,7 +54,7 @@ test('HandleData function sends 500 status when saving user fails', async () => 
     encryptText.mockReturnValue(mockEncryptedPassword);
 
     const mockNewData = {
-        save: jest.fn().mockRejectedValue(new Error("Mocking an error")),  // Assuming that save() rejects the promise with an error
+        save: jest.fn().mockRejectedValue(new Error("Mocking an error")),
     };
 
     console.error = jest.fn();

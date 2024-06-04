@@ -18,7 +18,7 @@ module.exports = {
         "Ontwikkeling van eigen kennis en vaardigheden": "e",
         "Samenwerking met een student (extra capaciteit aantrekken)": "f",
         "Verbreden (kennis)netwerk": "g",
-        "Een concreet opgeleverd advies / stappenplan of product": "h"
+        'Een concreet opgeleverd advies / stappenplan of product': "h"
     },
     vervolgstappenMapper: {
         "Voor de implementatie neem ik een gespecialiseerd bedrijf in de arm die een maatwerkoplossing ontwikkelt.": "a",
@@ -34,8 +34,8 @@ module.exports = {
     },
     belemmeringenMapper: {
         "Ik ervaar of voorzie geen belemmeringen": "a",
-        "Ik heb geen budget": "b",
-        "Ik heb geen kennis": "c",
+        "Ik beschik niet over het vereiste budget": "b",
+        "Ik beschik niet over de juiste kennis": "c",
         "Ik beschik niet over het juiste netwerk": "d",
         "Ik ben niet overtuigd van de noodzaak": "e",
         "Anders, namelijk": "f"

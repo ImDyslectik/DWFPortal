@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const {obstakelsMapper, verwachtResultaatMapper,
-    vervolgstappenMapper, belemmeringenMapper } = require('../Backend/ExportTests');
+    vervolgstappenMapper, belemmeringenMapper } = require('../Helpers/ArrayMapper');
 
 
 const exportSchematic = new Schema({

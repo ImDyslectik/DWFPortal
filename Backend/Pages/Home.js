@@ -1,14 +1,14 @@
 const checkAuth = require('../Validation/CheckAuth');
 const HandleData = require('../Validation/HandelLogin');
 //const { getHubspotConnection } = require('../APIConnection');
-const uploadRouter = require('../FileAbstract');
+const uploadRouter = require('../Old/FileAbstract');
 const express = require('express');
 const path = require('path');
 const router = express.Router();
 
 const Project = require('../../DataSchematics/ProjectSchematic');
-const projectRouter = require("../AddProject");
-const cards = require("./UpdateCards");
+const projectRouter = require("../EndPoints/AddProject");
+const cards = require("../EndPoints/UpdateCards");
 
 router.use('/', projectRouter);
 router.use('/', uploadRouter);

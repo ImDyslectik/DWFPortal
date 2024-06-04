@@ -3,9 +3,9 @@ const router = express.Router();
 const multer = require("multer");
 const upload = multer();
 const xlsx = require("xlsx");
-const ContactModel = require("../DataSchematics/CompanySchematic");
-const FirstReviewModel = require("../DataSchematics/FirstReviewSchematic");
-const SecondReviewModel = require("../DataSchematics/SecondReviewSchematic");
+const ContactModel = require("../../DataSchematics/CompanySchematic");
+const FirstReviewModel = require("../../DataSchematics/FirstReviewSchematic");
+const SecondReviewModel = require("../../DataSchematics/SecondReviewSchematic");
 
 class DataImporter {
     async import(fileData) {

@@ -1,9 +1,9 @@
 const nodemailer = require('nodemailer');
 const path = require('path')
-const DataModel = require('../DataSchematics/UserSchematic');
-const {decryptText} = require("./Validation/RSAEncryption");
+const DataModel = require('../../DataSchematics/UserSchematic');
+const {decryptText} = require("../Validation/RSAEncryption");
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
-const getInactiveProjects = require('./FetchInactive');
+const getInactiveProjects = require('./FetchInactiveProjects');
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',

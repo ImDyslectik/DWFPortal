@@ -1,7 +1,7 @@
 const schedule = require('node-schedule');
 // const updateDatabase = require('./Old/APIConnection');
 const sendEmailsToUsers = require('./EmailService');
-const getInactiveProjects = require('./FetchInactive');
+const getInactiveProjects = require('./FetchInactiveProjects');
 
 // Voor syntax, zie cronjob documentatie op: https://crontab.guru/
 // Refresh functie aanroepen elke minuut

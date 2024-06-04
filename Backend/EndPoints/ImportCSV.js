@@ -8,8 +8,9 @@ const Project = require('../../DataSchematics/ProjectSchematic');
 const {
     obstakelsMapper,
     vervolgstappenMapper,
-    belemmeringenMapper
-} = require("../ExportTests");
+    belemmeringenMapper,
+    verwachtResultaatMapper
+} = require("../../Helpers/ArrayMapper");
 
 
 router.post('/uploadexcel', upload.single('firstReviewFile'), function(req, res) {
@@ -19,12 +20,18 @@ router.post('/uploadexcel', upload.single('firstReviewFile'), function(req, res)
 
     const excelData = data[0];
 
+    const noSpacesExcelKeys = Object.keys(excelData).reduce((newObj, key) => {
+        newObj[key.replace(/\s/g,'')] = excelData[key];
+        return newObj;
+    }, {});
+
+
     const mapData = (rawData, mapper) => {
         return rawData.split(';').map(value => mapper[value.trim()] || 'z');
     };
 
-    //Need to do this to make sure not to overwrite the colomns not present in the active file
-    let obstakelsMapped, vervolgstappenMapped, belemmeringenMapped;
+    //Need to do this to make sure not to overwrite the colomns not present in the most recent file
+    let obstakelsMapped, vervolgstappenMapped, belemmeringenMapped, verwachtresultaatMapped;
 
     //Annoying NBSP in the microsoft form
     if (excelData[" Indien je obstakels ervaart met (de implementatie van) digitalisering, welke zijn dit? (meerdere antwoorden mogelijk)"]){
@@ -36,30 +43,46 @@ router.post('/uploadexcel', upload.single('firstReviewFile'), function(req, res)
     if (excelData["Ervaar of voorzie je belemmeringen bij het zetten van deze vervolgstappen, zo ja welke? (meerdere antwoorden mogelijk)"]){
         belemmeringenMapped = mapData(excelData["Ervaar of voorzie je belemmeringen bij het zetten van deze vervolgstappen, zo ja welke? (meerdere antwoorden mogelijk)"], belemmeringenMapper);
     }
+    if (excelData['Wat hoopt u dat de samenwerking met de Digitale Werkplaats u oplevert?\r\n']){
+        verwachtresultaatMapped = mapData(excelData['Wat hoopt u dat de samenwerking met de Digitale Werkplaats u oplevert?\r\n'], verwachtResultaatMapper);
+    }
 
     const mappedData = {
         name: excelData['Naam'],
-        companyEmail: excelData["E-mail"],
         company: excelData['Bedrijfsnaam'],
         problem: excelData['Wat was de aanleiding om de werkplaats te betrekken in jouw vraagstuk?\r\n'],
         description: excelData['Met welk vraagstuk ga je aan de slag?'],
         nameContactPerson: excelData['Naam contactpersoon\r\n'],
-        digitlisering: excelData['Stel je de ideale organisatie voor die digitale technologieën en mogelijkheden gebruikt om de organisatie te verbeteren: hoe dicht staat jouw organisatie bij dat ideaal (op een schaal van 1 tot 10)?'],
+
+
         kvkNummer: excelData["KvK nummer"],
+        companyEmail: excelData["E-mail"],
         typeActiviteit: excelData['Welk type activiteit ga jij ondernemen met de Digitale Werkplaats?'],
-        inAanraking: excelData['Hoe bent u in aanraking gekomen met Digitale Werkplaats Fryslân?'],
-        aanleiding: excelData['Wat was de aanleiding om de werkplaats te betrekken in jouw vraagstuk?'],
-        vraagstuk: excelData['Met welk vraagstuk ga je aan de slag?'],
-        resultaat: excelData['Er is een concreet advies/stappenplan of product opgeleverd'],
-        tevredenheid: excelData['Ik ben tevreden over de samenwerking met de student/ studenten'],
-        extraUitkomst: excelData['Is er naast bovenstaande antwoorden nog meer uitgekomen wat je op voorhand niet had gedacht/verwacht?'],
-        aanraden: excelData['Zou je het andere ondernemers aanraden om een traject met een werkplaats te starten? (op een schaal van 1 tot 10)'],
-        suggesties: excelData['Heb je suggesties ter verbetering van de werkplaats?'],
+        inAanraking: excelData['Hoe bent u in aanraking gekomen met Digitale Werkplaats Fryslân?\r\n'],
+        aanleiding: excelData['Wat was de aanleiding om de werkplaats te betrekken in jouw vraagstuk?\r\n'],
+        digitlisering: excelData['Stel je de ideale organisatie voor die digitale technologieën en mogelijkheden gebruikt om de organisatie te verbeteren: hoe dicht staat jouw organisatie bij dat ideaal (op een schaal van 1 tot 10)?'],
         obstakels: obstakelsMapped,
+        gewenstResultaat: verwachtresultaatMapped,
+        vraagstuk: excelData['Met welk vraagstuk ga je aan de slag?'],
+
+
+        meerInzicht: excelData['Ik heb meer inzicht gekregen in de kansen van digitalisering voor mijn bedrijf'],
+        meerTeWeten: excelData['Ik ben meer te weten gekomen over de kosten of haalbaarheid voor digitaliseringsmogelijkheden voor mijn bedrijf                '],
+        toegang: excelData['Ik heb toegang gekregen tot data en/of software die nodig zijn om (verder) te digitaliseren                '],
+        kennisToegang: excelData['Ik heb zelf kennis en vaardigheden ontwikkeld om (verder) te digitaliseren                '],
+        zelfKennis: excelData['Ik heb zelf kennis en vaardigheden ontwikkeld om (verder) te digitaliseren                '],
+        tevredenheid: excelData['Ik ben tevreden over de samenwerking met de student/ studenten                '],
+        resultaat: excelData['Er is een concreet advies/stappenplan of product opgeleverd                '],
+        tevredenheidNummer: excelData['In hoeverre ben je tevreden over het opgeleverde resultaat: het concrete advies/stappenplan of product ? (op een schaal van 1 tot 10)'],
+        extraUitkomst: excelData['Is er naast bovenstaande antwoorden nog meer uitgekomen wat je op voorhand niet had gedacht/verwacht?'],
+
+        aanraden: excelData['Zou je het andere ondernemers aanraden om een traject met een werkplaats te starten? (op een schaal van 1 tot 10)'],
         vervolgstappen: vervolgstappenMapped,
         belemmeringen: belemmeringenMapped,
+        suggesties: excelData['Heb je suggesties ter verbetering van de werkplaats?'],
     };
 
+    console.log(excelData)
 
     if (mongoose.Types.ObjectId.isValid(req.body.projectId)) {
         Project.findByIdAndUpdate(req.body.projectId, { $set: mappedData }, { new: true })

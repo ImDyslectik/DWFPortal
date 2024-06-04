@@ -1,19 +1,19 @@
 document.addEventListener("DOMContentLoaded", function() {
-    initDragAndDropEvents();
+    // initDragAndDropEvents();
     initFileClipboard();
     initSearchUsersEmailList();
     initProjectFormAddEvent();
     initSortableColumns();
 });
-
-function initDragAndDropEvents() {
-    let dropArea = document.getElementById("dropArea");
-
-    dropArea.addEventListener("dragover", handleDragOver);
-    dropArea.addEventListener("dragenter", toggleInvalidClassOn);
-    dropArea.addEventListener("dragleave", toggleInvalidClassOff);
-    dropArea.addEventListener("drop", handleDrop);
-}
+//
+// function initDragAndDropEvents() {
+//     let dropArea = document.getElementById("dropArea");
+//
+//     dropArea.addEventListener("dragover", handleDragOver);
+//     dropArea.addEventListener("dragenter", toggleInvalidClassOn);
+//     dropArea.addEventListener("dragleave", toggleInvalidClassOff);
+//     dropArea.addEventListener("drop", handleDrop);
+// }
 
 function handleDragOver(event) {
     event.preventDefault();

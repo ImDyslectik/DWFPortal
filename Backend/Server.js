@@ -1,11 +1,11 @@
-const sessionMiddleware = require('./session');
+const sessionMiddleware = require('./Validation/Session');
 const session = require('express-session');
 const checkAuth = require('./Validation/CheckAuth');
-const agendaRouter = require('./Routes/Agenda');
-const homepageRouter = require('./Routes/Home');
-const adminRouter = require('./Routes/Admin');
-const loginRouter = require('./Routes/Login');
-const uploadRouter = require('./Routes/Upload');
+const agendaRouter = require('./Pages/Agenda');
+const homepageRouter = require('./Pages/Home');
+const adminRouter = require('./Pages/Admin');
+const loginRouter = require('./Pages/Login');
+const uploadRouter = require('./EndPoints/ImportCSV');
 const User = require('../DataSchematics/UserSchematic');
 const test = require('../DataSchematics/ExportSchematic')
 
@@ -19,8 +19,14 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 if (process.env.USEE_MAIL_SERVICE === 'true') {
-    refresh = require('./Scheduler');
+    refresh = require('./Schedules/Scheduler');
 }
+
+const exportCSV = require('./EndPoints/ExportCSV');  // Pas dit pad aan naar het pad van de exportCSV-module
+
+app.get('/save', exportCSV);  // Voeg de route toe
+
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

@@ -1,4 +1,4 @@
-const InputValidatorPattern = require('../Backend/Validation/InputValidationPattern');
+const InputValidatorPattern = require('../Backend/Old/InputValidationPattern');
 const { describe, it, expect } = require('@jest/globals');
 
 describe('InputValidatorPattern', () => {

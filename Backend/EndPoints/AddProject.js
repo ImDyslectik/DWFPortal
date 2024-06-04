@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Project = require('../DataSchematics/ProjectSchematic');
+const Project = require('../../DataSchematics/ProjectSchematic');
 
 router.post('/addProject', (req, res) => {
     let projectData = new Project({
