@@ -1,20 +1,21 @@
 :root {
-    --primary2: #fb6d48;
-    --secondary2: #ffa559;
-    --tertiary: #ffe6c7;
-    --fourth: #d74b76;
-    --border: #d4d3e8;
-    --top: rgb(51, 71, 91);
+    --primary: #fb6d48 !important;
+    --secondary: #ffa559 !important;
+    --tertiary: #ffe6c7 !important;
+    --fourth: #d74b76 !important;
+    --border: #d4d3e8 !important;
+    --top: rgb(51, 71, 91) !important;
 }
 
 body {
-    margin: 0px;
+    margin: 0;
     font-family: system-ui;
     background-color: var(--top) !important;
 }
 
 label {
     color: white;
+    font-weight: bold;
 }
 
 p {
@@ -36,7 +37,7 @@ li {
     list-style: none;
     background-color: var(--top);
     padding: 16px;
-    margin: 0px;
+    margin: 0;
 }
 
 .navbar-items {
@@ -44,7 +45,6 @@ li {
     text-decoration: none;
     font-weight: 500;
     font-size: large;
-    font-weight: bold;
     padding-left: 5px;
 }
 
@@ -60,29 +60,58 @@ li {
 .overview {
     display: flex;
     justify-content: space-between;
-    justify-content: space-between;
     padding: 36px;
-    background-color: var(--secondary2);
+    background-color: var(--secondary);
 }
 
 .search {
     display: flex;
     align-items: center;
+    /*justify-content: center;*/
 }
 
-button {
-    font-family: monospace;
+
+.add-project-btn {
     background-color: #f3f7fe;
-    width: 150px;
+    width: 200px;
     height: 45px;
     transition: .3s;
     border-radius: 16px !important;
-    border: 2px solid #fb6d48;
-    color: var(--primary2);
+    border: 2px solid var(--top);
+    color: var(--primary);
+}
+
+.reset-btn {
+    width: 35px;
+    border: 2px solid var(--top);
+    color: var(--top);
+}
+
+.project-searchbar {
+    padding: 3px;
+}
+
+
+.add-project-input {
+    border: 4px solid var(--primary);
+    border-radius: 8px;
+    flex: 1;
+    margin-right: 30px;
+    background-color: white;
+}
+
+.add-project-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-project {
+    display: flex;
+    justify-content: center;
 }
 
 .search-field {
-    padding: 0px 16px;
+    padding: 0 8px 0 16px;
 }
 
 button {
@@ -93,12 +122,12 @@ button {
     transition: .3s;
     border-radius: 16px !important;
     border: 2px solid #fb6d48;
-    color: var(--primary2);
+    color: var(--primary);
 }
 
 
 button:hover {
-    background-color: var(--primary2);
+    background-color: var(--primary);
     box-shadow: 0 0 0 5px #3b83f65f;
     color: #fff;
 }
@@ -117,10 +146,12 @@ button:hover {
 .overview-container {
     border: 2px solid var(--top);
     width: 30%;
+    max-height: 310px;
+    overflow: hidden;
     padding: 16px;
     margin: 16px;
     border-radius: 10px;
-    background-color: var(--primary2);
+    background-color: var(--primary);
 }
 
 .break {
@@ -206,6 +237,7 @@ button:hover {
 .projects {
     width: 100%;
     min-width: 20%;
+    min-height: 300px;
     padding: 8px;
     border: 2px solid var(--top);
     border-radius: 16px;
@@ -214,15 +246,24 @@ button:hover {
 
 .project-container {
     padding: 36px;
-    background-color: var(--secondary2);
+    background-color: var(--secondary);
+}
+
+.project-container-top {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 36px;
+    border-width:0 0 2px;
+    border-style: solid;
+    border-color:white;
 }
 
 .column-item {
     border: 2px solid #333333;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     margin-bottom: 8px;
-    height: 114px;
-    background-color: var(--primary2);
+    height: 124px;
+    background-color: var(--primary);
     padding: 8px;
     border-radius: 8px;
     overflow: hidden;
@@ -235,16 +276,58 @@ button:hover {
 
 .card-bottom {
     color: white;
+    margin-bottom: 0;
 }
 
 
 
 /**************************************************/
-/************** Modal Time! *****************/
+/****************** Modal Time ********************/
 /**************************************************/
 
 
 .modal-content {
-    background-color: black !important;
     border-radius: 16px !important;
+}
+
+
+.modal-title {
+    font-weight: 700 !important;
+    font-size: xx-large;
+}
+
+
+.modal-items {
+    margin-top: 0;
+    border-radius: 8px;
+    padding: 0 0 8px 16px;
+    box-shadow: 2px 2px;
+    margin-bottom: 1rem;
+}
+
+
+.button-close {
+    color: var(--top);
+    border: 2px solid var(--top);
+    width: 35px;
+}
+
+.modal-upload {
+    padding: 16px;
+}
+
+.modal-choose-file {
+    display: flex;
+    justify-content: center;
+}
+
+.extra {
+    display: flex;
+    justify-content: space-between;
+}
+
+.button-basic {
+    background-color: white;
+    border: 2px solid white;
+    width: 40px;
 }

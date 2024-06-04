@@ -109,13 +109,51 @@ function initSearchUsersEmailList() {
     });
 }
 
+
+document.addEventListener("DOMContentLoaded", function() {
+    const items = document.querySelectorAll('.column-item');
+
+    function filterProjects() {
+        const filterValue = document.querySelector('.search-text').value.toLowerCase();
+
+        Array.from(items).forEach(function(item) {
+            const projectNameElement = item.querySelector('.card-title');
+            const projectName = projectNameElement ? projectNameElement.innerText.toLowerCase() : '';
+
+            if (filterValue === '' || projectName.includes(filterValue)) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
+        });
+
+        if (filterValue === '') {
+            resetProjects();
+        }
+    }
+
+    function resetProjects() {
+        Array.from(items).forEach(function(item) {
+            item.style.display = 'block';
+        });
+    }
+
+    document.querySelector('.search-text').addEventListener('input', filterProjects);
+    document.querySelector('.reset-btn').addEventListener('click', function() {
+        document.querySelector('.search-text').value = '';
+        resetProjects();
+    });
+});
+
+
+
 function initProjectFormAddEvent() {
     document.getElementById('addProjectForm').addEventListener('submit', function(event) {
-        event.preventDefault();
         const name = document.getElementById('name').value;
         const companyEmail = document.getElementById('companyEmail').value;
         const dealOwnerEmail = document.getElementById('dealOwnerEmail').value;
         const stage = document.getElementById('stage').value;
+        event.preventDefault();
 
         axios.post('/addProject', {
             name: name,
@@ -125,13 +163,64 @@ function initProjectFormAddEvent() {
         })
             .then(function (response) {
                 console.log(response);
-                console.log(projectName)
             })
             .catch(function (error) {
                 console.log(error);
+            })
+            .finally(function() {
+                location.reload();
             });
     });
 }
+
+document.addEventListener('DOMContentLoaded', (event) => {
+    const buttons = document.querySelectorAll('.button-basic');
+
+    buttons.forEach((button) => {
+        button.addEventListener('click', function(event) {
+            event.stopPropagation();
+
+            const container = button.parentElement;
+
+            container.innerHTML = "";
+
+            const input = document.createElement('input');
+            input.classList.add('change-owner-text');
+            input.type = 'text';
+            input.placeholder = 'Nieuwe Deal Owner';
+            container.appendChild(input);
+
+            const dataList = document.createElement('datalist');
+            dataList.id = 'emailList';
+            container.appendChild(dataList);
+
+            const saveButton = document.createElement('button');
+            saveButton.innerText = 'Save';
+            saveButton.addEventListener('click', async function() {
+                const newOwner = input.value;
+                const ownerId = button.dataset.id;
+
+                const response = await fetch('/updateOwner', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ ownerId, newOwner }),
+                });
+
+                if (!response.ok) {
+                    console.error("Error updating owner:", await response.text());
+                } else {
+                    container.innerHTML = `Deal Owner: ${newOwner}`;
+                    location.reload();
+                }
+            });
+            container.appendChild(saveButton);
+        });
+    });
+});
+
+
 
 function initSortableColumns() {
     document.querySelectorAll('.sortable').forEach(sortable => {

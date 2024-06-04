@@ -84,19 +84,34 @@
     </div>
     <div class="overview-container">
         <div class="upload-text" id="message">Voeg hier een project toe!</div>
-        <form id="addProjectForm">
-            <input placeholder="Project naam" type="text" id="name" />
-            <input placeholder="Bedrijf email" type="email" id="companyEmail" />
-            <input placeholder="Deal owner" list="emailList" type="email" id="dealOwnerEmail" />
-            <datalist id="emailList"></datalist>
-            <select id="stage">
-                <option value="appointmentscheduled">Interesse</option>
-                <option value="qualifiedtobuy">Contact Gehad</option>
-                <option value="closedwon">Match Gemaakt</option>
-                <option value="closedlost">Geen Match</option>
-                <option value="112184788">Afgerond</option>
-            </select>
-            <button class="search-btn" type="submit">Project Toevoegen! </button>
+        <form class="add-project-form" id="addProjectForm" method="post">
+            <ul>
+                <li>
+                    <input class="add-project-input" placeholder="Project naam" type="text" id="name" />
+                </li>
+                <li>
+                    <input class="add-project-input" placeholder="Bedrijf email" type="email" id="companyEmail" />
+                </li>
+                <li>
+                    <input class="add-project-input" placeholder="Deal owner" list="emailList" type="email" id="dealOwnerEmail" />
+                </li>
+                <li>
+                    <datalist class="add-project-input" id="emailList"></datalist>
+                </li>
+                <li>
+                    <select class="add-project-input" id="stage">
+                        <option value="appointmentscheduled">Interesse</option>
+                        <option value="qualifiedtobuy">Contact Gehad</option>
+                        <option value="closedwon">Match Gemaakt</option>
+                        <option value="closedlost">Geen Match</option>
+                        <option value="112184788">Afgerond</option>
+                    </select>
+                </li>
+            </ul>
+
+            <div class="add-project">
+                <button class="add-project-btn" type="submit">Project Toevoegen! </button>
+            </div>
         </form>
     </div>
 </div>
@@ -104,32 +119,35 @@
 
 <script>
     document.getElementById('export-btn').addEventListener('click', function () {
-        fetch('save', {  //replace this with your actual endpoint
+        fetch('save', {
             method: 'GET',
         }).then(function (response) {
             console.log(response);
-            // handle the response
         }).catch(function (error) {
             console.log(error);
-            // handle errors
         });
     });
 </script>
 
 
 <div class="break">
-<!--    <a href="http://localhost:3000/save">Download CSV</a>-->
     <div class="search">
         <div class="search-field">
             <input class="search-text">
+            <button id="reset-btn" class="reset-btn">X</button>
         </div>
-        <button class="search-btn2"> Zoeken</button>
+    </div>
+    <div class="project-container-top">
+        <label>Interesse</label>
+        <label>Contact Gehad</label>
+        <label>Match Gemaakt</label>
+        <label>Geen Match</label>
+        <label>Project Afgerond</label>
     </div>
 </div>
 
 
 <div class="project-container">
-
 
     <div class="grid">
         <% const stages = { "appointmentscheduled": []
@@ -145,13 +163,12 @@
 
 
         <div class="projects">
-            <label>Interesse</label>
             <div id="appointmentscheduled" class="column-name sortable"> <!-- toevoegen van uniek ID -->
                 <% stages["appointmentscheduled"].forEach((project) => { %>
                     <div data-id="<%= project._id %>" class="column-item" data-toggle="modal" data-target="#projectModal<%= project.name.replace(/\s+/g, '') %>">
                             <p class="card-title"><%= project.name %></p>
-<!--                            <p class="card-bottom card-email">Door: <%= project.dealOwnerEmail %></p>-->
-<!--                            <p class="card-bottom card-email">Contact: <%= project.companyEmail %></p>-->
+                            <p class="card-bottom card-email">Door: <%= project.dealOwnerEmail %></p>
+                            <p class="card-bottom card-email">Contact: <%= project.companyEmail %></p>
                     </div>
 
                     <!-- Modal -->
@@ -160,38 +177,41 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="projectModalLabel"><%= project.name %></h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
+                                    <button type="button" class="button-close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">X</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Contact: <%= project.companyEmail %></p>
-                                    <p>Deal Owner: <%= project.dealOwnerEmail %></p>
-                                <% if (project.problem) { %>
-                                        <p>Project Description: <%= project.description %></p>
-                                        <p>Project owner: dropdown (coming soon!)</p>
-                                        <p>Company: <%= project.company %></p>
-                                        <p>Contactpersoon: <%= project.nameContactPerson %></p>
+                                    <p class="modal-items extra">Deal Owner: <%= project.dealOwnerEmail %>
+                                        <button class="button-basic" data-id="<%= project._id %>">
+                                                                                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
+                                                                                        </svg>
+                                        </button>
+                                    </p>
+                                    <% if (project.problem) { %>
+                                        <p class="modal-items">Opdracht: <%= project.description %></p>
+                                        <p class="modal-items">Project owner: dropdown (coming soon!)</p>
+                                        <p class="modal-items">Bedrijf: <%= project.company %></p>
+                                        <p class="modal-items">Contactpersoon: <%= project.nameContactPerson %></p>
                                     <% } %>
-                                    <% if (project.tevredenResultaat) { %>
-                                        <p>Tevredenheid: <%= project.tevredenResultaat %></p>
-                                        <p>Onverwachte resultaten: <%= project.onverwachteResultaten %></p>
-                                        <p>Aanbeveling: <%= project.aanbevelingWerkplaats %></p>
-                                        <p>Belemmeringen: <%= project.belemmeringen %></p>
-                                        <p>Vervolgstappen: <%= project.vervolgstappen %></p>
-                                        <p>Opmerkingen: <%= project.opmerkingen %></p>
+                                    <% if (project.tevredenheid) { %>
+                                        <p class="modal-items">Tevredenheid: <%= project.tevredenheidNummer %></p>
+                                        <p class="modal-items">Aanbeveling: <%= project.aanraden %></p>
+                                        <p class="modal-items">Extra uitkomsten: <%= project.extraUitkomst %></p>
+                                        <p class="modal-items">Opmerkingen: <%= project.suggesties %></p>
                                     <% } %>
                                 </div>
-
-                                <form action="/uploadexcel" method="post" enctype="multipart/form-data">
-                                    <input type="hidden" name="projectId" value="<%= project._id %>"> <!-- Verstuur projectId met het formulier -->
-                                    <input type="file" name="firstReviewFile"> <!-- De `name` moet hetzelfde zijn als wat je in `upload.single()` hebt opgegeven -->
-                                    <input type="submit" value="Upload">
-                                </form>
-
-
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <div class="excel-upload">
+                                    <form action="/uploadexcel" method="post" enctype="multipart/form-data">
+                                        <input type="hidden" name="projectId" value="<%= project._id %>">
+                                        <div class="modal-upload">
+                                            <input  type="file" name="firstReviewFile">
+                                        </div>
+                                        <div class="modal-choose-file">
+                                            <input class="add-project-btn" type="submit" value="Upload">
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -201,7 +221,6 @@
         </div>
 
         <div class="projects">
-            <label>Contact Gehad</label>
             <div id="qualifiedtobuy" class="column-name sortable"> <!-- toevoegen van uniek ID -->
                 <% stages["qualifiedtobuy"].forEach((project) => { %>
                     <div data-id="<%= project._id %>" class="column-item" data-toggle="modal" data-target="#projectModal<%= project.name.replace(/\s+/g, '') %>">
@@ -216,37 +235,41 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="projectModalLabel"><%= project.name %></h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
+                                    <button type="button" class="button-close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">X</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Deal Owner: <%= project.dealOwnerEmail %></p>
-                                <% if (project.problem) { %>
-                                        <p>Project Description: <%= project.description %></p>
-                                        <p>Project owner: dropdown (coming soon!)</p>
-                                        <p>Company: <%= project.company %></p>
-                                        <p>Contactpersoon: <%= project.nameContactPerson %></p>
+                                    <p class="modal-items extra">Deal Owner: <%= project.dealOwnerEmail %>
+                                        <button class="button-basic" data-id="<%= project._id %>">
+                                                                                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
+                                                                                        </svg>
+                                        </button>
+                                    </p>
+                                    <% if (project.problem) { %>
+                                        <p class="modal-items">Opdracht: <%= project.description %></p>
+                                        <p class="modal-items">Project owner: dropdown (coming soon!)</p>
+                                        <p class="modal-items">Bedrijf: <%= project.company %></p>
+                                        <p class="modal-items">Contactpersoon: <%= project.nameContactPerson %></p>
                                     <% } %>
-                                    <% if (project.tevredenResultaat) { %>
-                                        <p>Tevredenheid: <%= project.tevredenheid %></p>
-                                        <p>Onverwachte resultaten: <%= project.onverwachteResultaten %></p>
-                                        <p>Aanbeveling: <%= project.aanbevelingWerkplaats %></p>
-                                        <p>Belemmeringen: <%= project.belemmeringen %></p>
-                                        <p>Vervolgstappen: <%= project.vervolgstappen %></p>
-                                        <p>Opmerkingen: <%= project.opmerkingen %></p>
+                                    <% if (project.tevredenheid) { %>
+                                        <p class="modal-items">Tevredenheid: <%= project.tevredenheidNummer %></p>
+                                        <p class="modal-items">Aanbeveling: <%= project.aanraden %></p>
+                                        <p class="modal-items">Extra uitkomsten: <%= project.extraUitkomst %></p>
+                                        <p class="modal-items">Opmerkingen: <%= project.suggesties %></p>
                                     <% } %>
                                 </div>
-
-                                <!-- Upload Form -->
-                                <form action="/uploadexcel" method="post" enctype="multipart/form-data">
-                                    <input type="hidden" name="projectId" value="<%= project._id %>">
-                                    <input type="file" name="firstReviewFile">
-                                    <input type="submit" value="Upload">
-                                </form>
-
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <div class="excel-upload">
+                                    <form action="/uploadexcel" method="post" enctype="multipart/form-data">
+                                        <input type="hidden" name="projectId" value="<%= project._id %>">
+                                        <div class="modal-upload">
+                                            <input  type="file" name="firstReviewFile">
+                                        </div>
+                                        <div class="modal-choose-file">
+                                            <input class="add-project-btn" type="submit" value="Upload">
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -256,7 +279,6 @@
         </div>
 
         <div class="projects">
-            <label>Contact Gehad</label>
             <div id="closedwon" class="column-name sortable"> <!-- toevoegen van uniek ID -->
                 <% stages["closedwon"].forEach((project) => { %>
                     <div data-id="<%= project._id %>" class="column-item" data-toggle="modal" data-target="#projectModal<%= project.name.replace(/\s+/g, '') %>">
@@ -271,38 +293,41 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="projectModalLabel"><%= project.name %></h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
+                                    <button type="button" class="button-close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">X</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Contact: <%= project.companyEmail %></p>
-                                    <p>Deal Owner: <%= project.dealOwnerEmail %></p>
-                                <% if (project.problem) { %>
-                                        <p>Project Description: <%= project.description %></p>
-                                        <p>Project owner: dropdown (coming soon!)</p>
-                                        <p>Company: <%= project.company %></p>
-                                        <p>Contactpersoon: <%= project.nameContactPerson %></p>
+                                    <p class="modal-items extra">Deal Owner: <%= project.dealOwnerEmail %>
+                                        <button class="button-basic" data-id="<%= project._id %>">
+                                                                                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
+                                                                                        </svg>
+                                        </button>
+                                    </p>
+                                    <% if (project.problem) { %>
+                                        <p class="modal-items">Opdracht: <%= project.description %></p>
+                                        <p class="modal-items">Project owner: dropdown (coming soon!)</p>
+                                        <p class="modal-items">Bedrijf: <%= project.company %></p>
+                                        <p class="modal-items">Contactpersoon: <%= project.nameContactPerson %></p>
                                     <% } %>
-                                    <% if (project.tevredenResultaat) { %>
-                                        <p>Tevredenheid: <%= project.tevredenResultaat %></p>
-                                        <p>Onverwachte resultaten: <%= project.onverwachteResultaten %></p>
-                                        <p>Aanbeveling: <%= project.aanbevelingWerkplaats %></p>
-                                        <p>Belemmeringen: <%= project.belemmeringen %></p>
-                                        <p>Vervolgstappen: <%= project.vervolgstappen %></p>
-                                        <p>Opmerkingen: <%= project.opmerkingen %></p>
+                                    <% if (project.tevredenheid) { %>
+                                        <p class="modal-items">Tevredenheid: <%= project.tevredenheidNummer %></p>
+                                        <p class="modal-items">Aanbeveling: <%= project.aanraden %></p>
+                                        <p class="modal-items">Extra uitkomsten: <%= project.extraUitkomst %></p>
+                                        <p class="modal-items">Opmerkingen: <%= project.suggesties %></p>
                                     <% } %>
                                 </div>
-
-                                <!-- Upload Form -->
-                                <form action="/uploadexcel" method="post" enctype="multipart/form-data">
-                                    <input type="hidden" name="projectId" value="<%= project._id %>">
-                                    <input type="file" name="firstReviewFile">
-                                    <input type="submit" value="Upload">
-                                </form>
-
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <div class="excel-upload">
+                                    <form action="/uploadexcel" method="post" enctype="multipart/form-data">
+                                        <input type="hidden" name="projectId" value="<%= project._id %>">
+                                        <div class="modal-upload">
+                                            <input  type="file" name="firstReviewFile">
+                                        </div>
+                                        <div class="modal-choose-file">
+                                            <input class="add-project-btn" type="submit" value="Upload">
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -313,7 +338,6 @@
 
 
         <div class="projects">
-            <label>Geen Match</label>
             <div id="closedlost" class="column-name sortable"> <!-- toevoegen van uniek ID -->
                 <% stages["closedlost"].forEach((project) => { %>
                     <div data-id="<%= project._id %>" class="column-item" data-toggle="modal" data-target="#projectModal<%= project.name.replace(/\s+/g, '') %>">
@@ -328,38 +352,41 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="projectModalLabel"><%= project.name %></h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
+                                    <button type="button" class="button-close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">X</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Contact: <%= project.companyEmail %></p>
-                                    <p>Deal Owner: <%= project.dealOwnerEmail %></p>
-                                <% if (project.problem) { %>
-                                        <p>Project Description: <%= project.description %></p>
-                                        <p>Project owner: dropdown (coming soon!)</p>
-                                        <p>Company: <%= project.company %></p>
-                                        <p>Contactpersoon: <%= project.nameContactPerson %></p>
+                                    <p class="modal-items extra">Deal Owner: <%= project.dealOwnerEmail %>
+                                        <button class="button-basic" data-id="<%= project._id %>">
+                                                                                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
+                                                                                        </svg>
+                                        </button>
+                                    </p>
+                                    <% if (project.problem) { %>
+                                        <p class="modal-items">Opdracht: <%= project.description %></p>
+                                        <p class="modal-items">Project owner: dropdown (coming soon!)</p>
+                                        <p class="modal-items">Bedrijf: <%= project.company %></p>
+                                        <p class="modal-items">Contactpersoon: <%= project.nameContactPerson %></p>
                                     <% } %>
-                                    <% if (project.tevredenResultaat) { %>
-                                        <p>Tevredenheid: <%= project.tevredenResultaat %></p>
-                                        <p>Onverwachte resultaten: <%= project.onverwachteResultaten %></p>
-                                        <p>Aanbeveling: <%= project.aanbevelingWerkplaats %></p>
-                                        <p>Belemmeringen: <%= project.belemmeringen %></p>
-                                        <p>Vervolgstappen: <%= project.vervolgstappen %></p>
-                                        <p>Opmerkingen: <%= project.opmerkingen %></p>
+                                    <% if (project.tevredenheid) { %>
+                                        <p class="modal-items">Tevredenheid: <%= project.tevredenheidNummer %></p>
+                                        <p class="modal-items">Aanbeveling: <%= project.aanraden %></p>
+                                        <p class="modal-items">Extra uitkomsten: <%= project.extraUitkomst %></p>
+                                        <p class="modal-items">Opmerkingen: <%= project.suggesties %></p>
                                     <% } %>
                                 </div>
-
-                                <form action="/uploadexcel" method="post" enctype="multipart/form-data">
-                                    <input type="hidden" name="projectId" value="<%= project._id %>"> <!-- Verstuur projectId met het formulier -->
-                                    <input type="file" name="firstReviewFile"> <!-- De `name` moet hetzelfde zijn als wat je in `upload.single()` hebt opgegeven -->
-                                    <input type="submit" value="Upload">
-                                </form>
-
-
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <div class="excel-upload">
+                                    <form action="/uploadexcel" method="post" enctype="multipart/form-data">
+                                        <input type="hidden" name="projectId" value="<%= project._id %>">
+                                        <div class="modal-upload">
+                                            <input  type="file" name="firstReviewFile">
+                                        </div>
+                                        <div class="modal-choose-file">
+                                            <input class="add-project-btn" type="submit" value="Upload">
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -369,7 +396,6 @@
         </div>
 
         <div class="projects">
-            <label>Project Afgerond</label>
             <div id="112184788" class="column-name sortable"> <!-- toevoegen van uniek ID -->
                 <% stages["112184788"].forEach((project) => { %>
                     <div data-id="<%= project._id %>" class="column-item" data-toggle="modal" data-target="#projectModal<%= project.name.replace(/\s+/g, '') %>">
@@ -384,37 +410,41 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="projectModalLabel"><%= project.name %></h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
+                                    <button type="button" class="button-close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">X</span>
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>Contact: <%= project.companyEmail %></p>
-                                    <p>Deal Owner: <%= project.dealOwnerEmail %></p>
+                                    <p class="modal-items extra">Deal Owner: <%= project.dealOwnerEmail %>
+                                        <button class="button-basic" data-id="<%= project._id %>">
+                                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
+                                            </svg>
+                                        </button>
+                                    </p>
                                 <% if (project.problem) { %>
-                                        <p>Project Description: <%= project.description %></p>
-                                        <p>Project owner: dropdown (coming soon!)</p>
-                                        <p>Company: <%= project.company %></p>
-                                        <p>Contactpersoon: <%= project.nameContactPerson %></p>
+                                        <p class="modal-items">Opdracht: <%= project.description %></p>
+                                        <p class="modal-items">Project owner: dropdown (coming soon!)</p>
+                                        <p class="modal-items">Bedrijf: <%= project.company %></p>
+                                        <p class="modal-items">Contactpersoon: <%= project.nameContactPerson %></p>
                                     <% } %>
-                                    <% if (project.tevredenResultaat) { %>
-                                        <p>Tevredenheid: <%= project.tevredenResultaat %></p>
-                                        <p>Onverwachte resultaten: <%= project.onverwachteResultaten %></p>
-                                        <p>Aanbeveling: <%= project.aanbevelingWerkplaats %></p>
-                                        <p>Belemmeringen: <%= project.belemmeringen %></p>
-                                        <p>Vervolgstappen: <%= project.vervolgstappen %></p>
-                                        <p>Opmerkingen: <%= project.opmerkingen %></p>
+                                    <% if (project.tevredenheid) { %>
+                                        <p class="modal-items">Tevredenheid: <%= project.tevredenheidNummer %></p>
+                                        <p class="modal-items">Aanbeveling: <%= project.aanraden %></p>
+                                        <p class="modal-items">Extra uitkomsten: <%= project.extraUitkomst %></p>
+                                        <p class="modal-items">Opmerkingen: <%= project.suggesties %></p>
                                     <% } %>
                                 </div>
-
-                                <form action="/uploadexcel" method="post" enctype="multipart/form-data">
-                                    <input type="hidden" name="projectId" value="<%= project._id %>"> <!-- Verstuur projectId met het formulier -->
-                                    <input type="file" name="firstReviewFile"> <!-- De `name` moet hetzelfde zijn als wat je in `upload.single()` hebt opgegeven -->
-                                    <input type="submit" value="Upload">
-                                </form>
-
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <div class="excel-upload">
+                                    <form action="/uploadexcel" method="post" enctype="multipart/form-data">
+                                        <input type="hidden" name="projectId" value="<%= project._id %>">
+                                        <div class="modal-upload">
+                                            <input  type="file" name="firstReviewFile">
+                                        </div>
+                                        <div class="modal-choose-file">
+                                            <input class="add-project-btn" type="submit" value="Upload">
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
