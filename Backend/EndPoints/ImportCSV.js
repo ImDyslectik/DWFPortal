@@ -82,8 +82,6 @@ router.post('/uploadexcel', upload.single('firstReviewFile'), function(req, res)
         suggesties: excelData['Heb je suggesties ter verbetering van de werkplaats?'],
     };
 
-    console.log(excelData)
-
     if (mongoose.Types.ObjectId.isValid(req.body.projectId)) {
         Project.findByIdAndUpdate(req.body.projectId, { $set: mappedData }, { new: true })
             .then(project => {
