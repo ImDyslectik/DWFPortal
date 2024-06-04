@@ -1,7 +1,7 @@
 const checkAuth = require('../Validation/CheckAuth');
 const HandleData = require('../Validation/HandelLogin');
 //const { getHubspotConnection } = require('../APIConnection');
-const uploadRouter = require('../Old/FileAbstract');
+const uploadRouter = require('../EndPoints/ImportCSV');
 const express = require('express');
 const path = require('path');
 const router = express.Router();
@@ -9,14 +9,15 @@ const router = express.Router();
 const Project = require('../../DataSchematics/ProjectSchematic');
 const projectRouter = require("../EndPoints/AddProject");
 const cards = require("../EndPoints/UpdateCards");
+const updateOwnerRoute = require("../EndPoints/UpdateOwner");
 
 router.use('/', projectRouter);
 router.use('/', uploadRouter);
 router.use('/', cards);
+router.use('/', updateOwnerRoute)
 
 router.use('/upload', uploadRouter);
 router.post('/data', HandleData);
-
 
 router.get('/', checkAuth, async (req, res) => {
     let userEmail = req.session.username;
@@ -30,9 +31,10 @@ router.get('/', checkAuth, async (req, res) => {
 
 
 router.get('/code', (req, res) => {
-    getHubspotConnection(req);
+    //getHubspotConnection(req);
     res.redirect('/');
 });
+
 
 
 module.exports = router;

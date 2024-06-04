@@ -7,7 +7,8 @@ const adminRouter = require('./Pages/Admin');
 const loginRouter = require('./Pages/Login');
 const uploadRouter = require('./EndPoints/ImportCSV');
 const User = require('../DataSchematics/UserSchematic');
-const test = require('../DataSchematics/ExportSchematic')
+const exportCSV = require('./EndPoints/ExportCSV');
+
 
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
@@ -22,10 +23,6 @@ if (process.env.USEE_MAIL_SERVICE === 'true') {
     refresh = require('./Schedules/Scheduler');
 }
 
-const exportCSV = require('./EndPoints/ExportCSV');  // Pas dit pad aan naar het pad van de exportCSV-module
-
-app.get('/save', exportCSV);  // Voeg de route toe
-
 
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -36,8 +33,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/agenda', agendaRouter);
 app.use('/login', loginRouter);
 app.use('/admin', adminRouter);
+app.get('/save', exportCSV);
 app.use('/', homepageRouter);
 app.use('/', uploadRouter);
+
 
 
 //TODO put this inside a seperate function / file
