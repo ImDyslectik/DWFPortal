@@ -1,6 +1,6 @@
 :root {
-    --primary: #fb6d48;
-    --secondary: #ffa559;
+    --primary2: #fb6d48;
+    --secondary2: #ffa559;
     --tertiary: #ffe6c7;
     --fourth: #d74b76;
     --border: #d4d3e8;
@@ -9,8 +9,21 @@
 
 body {
     margin: 0px;
-    background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     font-family: system-ui;
+    background-color: var(--top) !important;
+}
+
+label {
+    color: white;
+}
+
+p {
+    color: var(--top);
+}
+
+li {
+    color: white;
+    display: flex;
 }
 
 /**************************************************/
@@ -21,7 +34,7 @@ body {
     display: flex;
     justify-content: space-between;
     list-style: none;
-    background-color: #333;
+    background-color: var(--top);
     padding: 16px;
     margin: 0px;
 }
@@ -32,6 +45,7 @@ body {
     font-weight: 500;
     font-size: large;
     font-weight: bold;
+    padding-left: 5px;
 }
 
 .icon {
@@ -46,33 +60,52 @@ body {
 .overview {
     display: flex;
     justify-content: space-between;
-    background-image: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    justify-content: space-between;
+    padding: 36px;
+    background-color: var(--secondary2);
 }
 
 .search {
     display: flex;
+    align-items: center;
 }
 
 button {
     font-family: monospace;
     background-color: #f3f7fe;
-    color: #3b82f6;
-    border: none;
-    border-radius: 8px;
-    width: 100px;
+    width: 150px;
     height: 45px;
     transition: .3s;
+    border-radius: 16px !important;
+    border: 2px solid #fb6d48;
+    color: var(--primary2);
 }
 
+.search-field {
+    padding: 0px 16px;
+}
+
+button {
+    font-family: monospace;
+    background-color: #f3f7fe;
+    width: 150px;
+    height: 35px;
+    transition: .3s;
+    border-radius: 16px !important;
+    border: 2px solid #fb6d48;
+    color: var(--primary2);
+}
+
+
 button:hover {
-    background-color: #3b82f6;
+    background-color: var(--primary2);
     box-shadow: 0 0 0 5px #3b83f65f;
     color: #fff;
 }
 
 .grid {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .upload-text {
@@ -87,11 +120,11 @@ button:hover {
     padding: 16px;
     margin: 16px;
     border-radius: 10px;
-    background-color: white;
+    background-color: var(--primary2);
 }
 
 .break {
-    background-color: #333333d1;
+    background-color: var(--top);
     padding: 16px;
 }
 
@@ -114,7 +147,7 @@ button:hover {
     margin-top: 20px;
     font-weight: bold;
     font-size: medium;
-    /*color: lightgreen;*/
+    color: white;
 }
 
 /**************************************************/
@@ -124,50 +157,15 @@ button:hover {
 .overview {
     display: flex;
     justify-content: space-between;
-    background-color: var(--tertiary);
 }
 
 .search {
     display: flex;
 }
-.search-btn {
-}
-.search-btn {
-    background-color: #ea4c89;
-    border-radius: 8px;
-    border-style: none;
-    box-sizing: border-box;
-    color: #ffffff;
-    cursor: pointer;
-    display: inline-block;
-    font-family: "Haas Grot Text R Web", "Helvetica Neue", Helvetica, Arial,
-    sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    height: 40px;
-    line-height: 20px;
-    list-style: none;
-    margin: 0;
-    outline: none;
-    padding: 10px 16px;
-    position: relative;
-    text-align: center;
-    text-decoration: none;
-    transition: color 100ms;
-    vertical-align: baseline;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-}
-
-.search-btn:hover,
-.search-btn:focus {
-    background-color: #f082ac;
-}
 
 .grid {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
 }
 
 .upload-text {
@@ -182,7 +180,6 @@ button:hover {
     padding: 16px;
     margin: 16px;
     border-radius: 10px;
-    background-color: var(--border);
 }
 
 #dropArea {
@@ -210,10 +207,14 @@ button:hover {
     width: 100%;
     min-width: 20%;
     padding: 8px;
+    border: 2px solid var(--top);
+    border-radius: 16px;
+    margin: 4px;
 }
 
 .project-container {
-    padding: 10px;
+    padding: 36px;
+    background-color: var(--secondary2);
 }
 
 .column-item {
@@ -221,7 +222,29 @@ button:hover {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     margin-bottom: 8px;
     height: 114px;
+    background-color: var(--primary2);
     padding: 8px;
     border-radius: 8px;
     overflow: hidden;
+}
+
+.card-title {
+    color: white;
+    font-weight: bold;
+}
+
+.card-bottom {
+    color: white;
+}
+
+
+
+/**************************************************/
+/************** Modal Time! *****************/
+/**************************************************/
+
+
+.modal-content {
+    background-color: black !important;
+    border-radius: 16px !important;
 }
