@@ -138,6 +138,13 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 
+    document.getElementById('exportDate').addEventListener('change', function() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("POST", "/save", true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.send("exportDate=" + this.value);
+    });
+
     document.querySelector('.search-text').addEventListener('input', filterProjects);
     document.querySelector('.reset-btn').addEventListener('click', function() {
         document.querySelector('.search-text').value = '';

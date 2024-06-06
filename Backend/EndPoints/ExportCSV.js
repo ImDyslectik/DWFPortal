@@ -3,6 +3,7 @@ const fs = require("fs");
 const xlsx = require("xlsx");
 const Project = require("../../DataSchematics/ProjectSchematic");
 const labels = require("../../Constants/Labels");
+const moment = require("moment");
 
 function transpose(array) {
     return array[0].map((_, colIndex) => array.map((row) => row[colIndex]));
@@ -17,7 +18,17 @@ function checkIfExists(value, array) {
 
 const exportCSV = async (req, res) => {
     try {
-        const projects = await Project.find({}).lean();
+        let exportDate = req.session.exportDate;
+
+        let [day, month, year] = exportDate.split('-');
+        let isoDate = `${day}-${month}-${year}`;
+
+        let date = moment(isoDate).add(1, 'days').toDate(); // Gebruik moment.js om de dag te verhogen
+
+        const projects = await Project.find({
+            stage: '112184788',
+            updatedAt: { $gte: date },
+        }).lean();
 
         const data = projects.map((project) => {
 

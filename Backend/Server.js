@@ -1,14 +1,12 @@
 const sessionMiddleware = require('./Validation/Session');
 const session = require('express-session');
 const checkAuth = require('./Validation/CheckAuth');
-const agendaRouter = require('./Pages/Agenda');
 const homepageRouter = require('./Pages/Home');
 const adminRouter = require('./Pages/Admin');
 const loginRouter = require('./Pages/Login');
 const uploadRouter = require('./EndPoints/ImportCSV');
 const User = require('../DataSchematics/UserSchematic');
 const exportCSV = require('./EndPoints/ExportCSV');
-
 
 const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
@@ -23,31 +21,32 @@ if (process.env.USEE_MAIL_SERVICE === 'true') {
     refresh = require('./Schedules/Scheduler');
 }
 
-
-
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(sessionMiddleware);
 app.use(express.static(path.join(__dirname, '../Frontend/public')));
 app.use(express.urlencoded({ extended: true }));
-app.use('/agenda', agendaRouter);
+
+// Je huidige routes ...
 app.use('/login', loginRouter);
 app.use('/admin', adminRouter);
-app.get('/save', exportCSV);
 app.use('/', homepageRouter);
 app.use('/', uploadRouter);
 
+app.post('/save', (req, res) => {
+    if (req.body.exportDate) {
+        req.session.exportDate = req.body.exportDate;
+    }
+    exportCSV(req, res)
+});
+app.get('/save', exportCSV);
 
-
-//TODO put this inside a seperate function / file
 app.get('/search-users', async (req, res) => {
     const searchTerm = req.query.term;
-    const users = await User.find({ email: new RegExp(searchTerm, 'i') }); // MongoDB query die email veld vergelijkt met zoekterm
+    const users = await User.find({ email: new RegExp(searchTerm, 'i') });
     res.json(users.map(user => user.email));
 });
 
-
-//wild card voor error catching als gebruikers een pagina laden die niet beschikbaar is
 app.use((req, res, next) => {
     res.status(500);
     res.send(`
@@ -60,9 +59,7 @@ app.use((req, res, next) => {
             </body>
         </html>
     `);
-
 });
-
 
 app.set('views', path.join(__dirname, '../../Frontend/EJS'));
 app.set('view engine', 'ejs');

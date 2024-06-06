@@ -8,7 +8,6 @@ router.get('/', (req, res) => {
     res.render(path.join(__dirname, '../../Frontend/EJS/login.ejs'));
 });
 
-//TODO wanneer gebruiker verkeerde gegevens invoert terugsturen naar /login
 
 router.post('/', (req, res) => {
     const { email, password } = req.body;
