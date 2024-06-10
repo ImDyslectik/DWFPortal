@@ -4,7 +4,6 @@ const checkAuth = require('../Validation/CheckAuth');
 const path = require("path");
 const router = express.Router();
 
-
 router.post('/delete', (req, res) => {
     const { email } = req.body;
 

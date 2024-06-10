@@ -23,7 +23,7 @@ const exportCSV = async (req, res) => {
         let [day, month, year] = exportDate.split('-');
         let isoDate = `${day}-${month}-${year}`;
 
-        let date = moment(isoDate).add(1, 'days').toDate(); // Gebruik moment.js om de dag te verhogen
+        let date = moment(isoDate).add(1, 'days').toDate();
 
         const projects = await Project.find({
             stage: '112184788',
@@ -41,7 +41,6 @@ const exportCSV = async (req, res) => {
 
             return [
                 project.company,
-                project.name,
                 project.kvkNummer,
                 project.companyEmail,
                 project.typeActiviteit,

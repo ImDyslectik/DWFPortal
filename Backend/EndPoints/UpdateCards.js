@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Project = require('../../DataSchematics/ProjectSchematic');
 
-
 router.post('/update-project', async (req, res) => {
     try {
         const { id, stage } = req.body;

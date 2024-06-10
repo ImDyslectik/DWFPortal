@@ -1,74 +1,9 @@
 document.addEventListener("DOMContentLoaded", function() {
-    // initDragAndDropEvents();
     initFileClipboard();
     initSearchUsersEmailList();
     initProjectFormAddEvent();
     initSortableColumns();
 });
-//
-// function initDragAndDropEvents() {
-//     let dropArea = document.getElementById("dropArea");
-//
-//     dropArea.addEventListener("dragover", handleDragOver);
-//     dropArea.addEventListener("dragenter", toggleInvalidClassOn);
-//     dropArea.addEventListener("dragleave", toggleInvalidClassOff);
-//     dropArea.addEventListener("drop", handleDrop);
-// }
-
-function handleDragOver(event) {
-    event.preventDefault();
-}
-
-function toggleInvalidClassOn() {
-    this.classList.add("invalid");
-}
-
-function toggleInvalidClassOff() {
-    this.classList.remove("invalid");
-}
-
-function handleDrop(event) {
-    event.preventDefault();
-    handleFile(event.dataTransfer.files[0]);
-    this.classList.remove("invalid");
-}
-
-function selectFile() {
-    const fileInput = document.createElement('input');
-    fileInput.type = 'file';
-    fileInput.accept = '.csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel';
-    fileInput.addEventListener('change', (event) => {
-        const file = event.target.files[0];
-        handleFile(file);
-    });
-
-    fileInput.click();
-}
-
-function handleFile(file) {
-    const formData = new FormData();
-    formData.append('file', file);
-
-    fetch('/upload', {
-        method: 'POST',
-        body: formData
-    })
-        .then(response => response.ok ? response.text() : Promise.reject('Bestand formaat niet herkend.'))
-        .then(message => {
-            console.log(message);
-            setMessage(`Bestand "${file.name}" succesvol geüpload!`);
-        })
-        .catch(error => {
-            console.error(error);
-            setMessage(error, true);
-        });
-}
-
-function setMessage(text, isError = false) {
-    let messageElement = document.getElementById('message');
-    messageElement.textContent = text;
-    messageElement.classList.toggle('error', isError);
-}
 
 function initFileClipboard() {
     let emailElements = document.querySelectorAll(".card-email");
@@ -153,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-
+// Adding new cards to the project dashboard
 function initProjectFormAddEvent() {
     document.getElementById('addProjectForm').addEventListener('submit', function(event) {
         const name = document.getElementById('name').value;
@@ -180,6 +115,8 @@ function initProjectFormAddEvent() {
     });
 }
 
+
+// Changing the Deal Owner within the modals
 document.addEventListener('DOMContentLoaded', (event) => {
     const buttons = document.querySelectorAll('.button-basic');
 
@@ -192,7 +129,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             container.innerHTML = "";
 
             const input = document.createElement('input');
-            input.classList.add('change-owner-text');
+            input.classList.add('modal-input');
             input.type = 'text';
             input.placeholder = 'Nieuwe Deal Owner';
             container.appendChild(input);
@@ -202,7 +139,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
             container.appendChild(dataList);
 
             const saveButton = document.createElement('button');
-            saveButton.innerText = 'Save';
+            saveButton.innerHTML = '&#10003;';
+            saveButton.classList.add("button-basic");
             saveButton.addEventListener('click', async function() {
                 const newOwner = input.value;
                 const ownerId = button.dataset.id;
@@ -228,7 +166,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 
 
-
+// Able to drag and drop the projects
 function initSortableColumns() {
     document.querySelectorAll('.sortable').forEach(sortable => {
         Sortable.create(sortable, {

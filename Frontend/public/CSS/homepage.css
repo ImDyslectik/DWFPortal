@@ -141,6 +141,11 @@ button:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+    color: white;
+    border-width:0 0 2px;
+    border-style: solid;
+    border-color:white;
+    padding-bottom: 5px;
 }
 
 .overview-container {
@@ -282,7 +287,7 @@ button:hover {
 
 
 /**************************************************/
-/****************** Modal Time ********************/
+/****************** Modal Items *******************/
 /**************************************************/
 
 
@@ -290,12 +295,15 @@ button:hover {
     border-radius: 16px !important;
 }
 
-
 .modal-title {
     font-weight: 700 !important;
     font-size: xx-large;
 }
 
+.modal-header {
+    border-bottom: 1px solid var(--top) !important;
+    align-items: center !important;
+}
 
 .modal-items {
     margin-top: 0;
@@ -305,6 +313,10 @@ button:hover {
     margin-bottom: 1rem;
 }
 
+.modal-input {
+    border: 0;
+    background-color: white;
+}
 
 .button-close {
     color: var(--top);
@@ -321,7 +333,12 @@ button:hover {
     justify-content: center;
 }
 
-.extra {
+.modal-small-items {
+    color: var(--top);
+    padding-bottom: 10px;
+}
+
+.editable {
     display: flex;
     justify-content: space-between;
 }

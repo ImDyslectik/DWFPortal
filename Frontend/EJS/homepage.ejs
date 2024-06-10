@@ -21,24 +21,26 @@
             </svg>
             <a href="/" class="navbar-items"> Home </a>
         </li>
-<!--        <li>-->
-<!--            <svg class="icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 24 24">-->
-<!--                <path d="M 12 2 A 1 1 0 0 0 11.289062 2.296875 L 1.203125 11.097656 A 0.5 0.5 0 0 0 1 11.5 A 0.5 0.5 0 0 0 1.5 12 L 4 12 L 4 20 C 4 20.552 4.448 21 5 21 L 9 21 C 9.552 21 10 20.552 10 20 L 10 14 L 14 14 L 14 20 C 14 20.552 14.448 21 15 21 L 19 21 C 19.552 21 20 20.552 20 20 L 20 12 L 22.5 12 A 0.5 0.5 0 0 0 23 11.5 A 0.5 0.5 0 0 0 22.796875 11.097656 L 12.716797 2.3027344 A 1 1 0 0 0 12.710938 2.296875 A 1 1 0 0 0 12 2 z"></path>-->
-<!--            </svg>-->
-<!--            <a href="/projecten" class="navbar-items"> Projecten </a>-->
-<!--        </li>-->
+        <!--        <li>-->
+        <!--            <svg class="icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 24 24">-->
+        <!--                <path d="M 12 2 A 1 1 0 0 0 11.289062 2.296875 L 1.203125 11.097656 A 0.5 0.5 0 0 0 1 11.5 A 0.5 0.5 0 0 0 1.5 12 L 4 12 L 4 20 C 4 20.552 4.448 21 5 21 L 9 21 C 9.552 21 10 20.552 10 20 L 10 14 L 14 14 L 14 20 C 14 20.552 14.448 21 15 21 L 19 21 C 19.552 21 20 20.552 20 20 L 20 12 L 22.5 12 A 0.5 0.5 0 0 0 23 11.5 A 0.5 0.5 0 0 0 22.796875 11.097656 L 12.716797 2.3027344 A 1 1 0 0 0 12.710938 2.296875 A 1 1 0 0 0 12 2 z"></path>-->
+        <!--            </svg>-->
+        <!--            <a href="/projecten" class="navbar-items"> Projecten </a>-->
+        <!--        </li>-->
         <li>
             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 13V4M7 14H5a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-2m-1-5-4 5-4-5m9 8h.01"/>
             </svg>
-            <a class="navbar-items" href="http://localhost:3000/save">Download CSV</a>
+            <div data-toggle="modal" data-target="#myModal">
+                <a class="navbar-items">Download CSV</a>
+            </div>
         </li>
-        <li>
-            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5.365V3m0 2.365a5.338 5.338 0 0 1 5.133 5.368v1.8c0 2.386 1.867 2.982 1.867 4.175 0 .593 0 1.292-.538 1.292H5.538C5 18 5 17.301 5 16.708c0-1.193 1.867-1.789 1.867-4.175v-1.8A5.338 5.338 0 0 1 12 5.365ZM8.733 18c.094.852.306 1.54.944 2.112a3.48 3.48 0 0 0 4.646 0c.638-.572 1.236-1.26 1.33-2.112h-6.92Z"/>
-            </svg>
-            <a href="/admin" class="navbar-items"> Meldingen </a>
-        </li>
+        <!--        <li>-->
+        <!--            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">-->
+        <!--                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5.365V3m0 2.365a5.338 5.338 0 0 1 5.133 5.368v1.8c0 2.386 1.867 2.982 1.867 4.175 0 .593 0 1.292-.538 1.292H5.538C5 18 5 17.301 5 16.708c0-1.193 1.867-1.789 1.867-4.175v-1.8A5.338 5.338 0 0 1 12 5.365ZM8.733 18c.094.852.306 1.54.944 2.112a3.48 3.48 0 0 0 4.646 0c.638-.572 1.236-1.26 1.33-2.112h-6.92Z"/>-->
+        <!--            </svg>-->
+        <!--            <a href="/" class="navbar-items"> Meldingen </a>-->
+        <!--        </li>-->
         <li>
             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
@@ -56,14 +58,34 @@
     </ul>
 </div>
 
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Exporteren</h5>
+                <button type="button" class="button-close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">X</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                    <label class="modal-small-items" for="exportDate">Start Datum:</label>
+                    <input type="date" id="exportDate" name="exportDate">
+                <div class="modal-choose-file">
+                    <button class="add-project-btn" href="http://localhost:3000/save">Download</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div class="overview">
     <div class="overview-container">
+        <h2 class="upload-text"> Meldingen </h2>
         <div class="notifications">
             <ul>
-                <li>
-                    <label for="exportDate">Exportdatum:</label>
-                    <input type="date" id="exportDate" name="exportDate">
-                </li>
                 <li>
                     <a>melding a</a>
                 </li>
@@ -77,6 +99,7 @@
         </div>
     </div>
     <div class="overview-container">
+        <h2 class="upload-text"> Open Projecten </h2>
         <div class="assigned-projects">
             <ul>
                 <% personalProjects.forEach(function(project) { %>
@@ -88,7 +111,7 @@
         </div>
     </div>
     <div class="overview-container">
-        <div class="upload-text" id="message">Voeg hier een project toe!</div>
+        <h2 class="upload-text" >Nieuw Project</h2>
         <form class="add-project-form" id="addProjectForm" method="post">
             <ul>
                 <li>
@@ -171,9 +194,9 @@
             <div id="appointmentscheduled" class="column-name sortable"> <!-- toevoegen van uniek ID -->
                 <% stages["appointmentscheduled"].forEach((project) => { %>
                     <div data-id="<%= project._id %>" class="column-item" data-toggle="modal" data-target="#projectModal<%= project.name.replace(/\s+/g, '') %>">
-                            <p class="card-title"><%= project.name %></p>
-                            <p class="card-bottom card-email">Door: <%= project.dealOwnerEmail %></p>
-                            <p class="card-bottom card-email">Contact: <%= project.companyEmail %></p>
+                        <p class="card-title"><%= project.name %></p>
+                        <p class="card-bottom card-email">Door: <%= project.dealOwnerEmail %></p>
+                        <p class="card-bottom card-email">Contact: <%= project.companyEmail %></p>
                     </div>
 
                     <!-- Modal -->
@@ -187,11 +210,11 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <p class="modal-items extra">Deal Owner: <%= project.dealOwnerEmail %>
+                                    <p class="modal-items editable">Deal Owner: <%= project.dealOwnerEmail %>
                                         <button class="button-basic" data-id="<%= project._id %>">
-                                                                                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
-                                                                                        </svg>
+                                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
+                                            </svg>
                                         </button>
                                     </p>
                                     <% if (project.problem) { %>
@@ -245,11 +268,11 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <p class="modal-items extra">Deal Owner: <%= project.dealOwnerEmail %>
+                                    <p class="modal-items editable">Deal Owner: <%= project.dealOwnerEmail %>
                                         <button class="button-basic" data-id="<%= project._id %>">
-                                                                                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
-                                                                                        </svg>
+                                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
+                                            </svg>
                                         </button>
                                     </p>
                                     <% if (project.problem) { %>
@@ -303,11 +326,11 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <p class="modal-items extra">Deal Owner: <%= project.dealOwnerEmail %>
+                                    <p class="modal-items editable">Deal Owner: <%= project.dealOwnerEmail %>
                                         <button class="button-basic" data-id="<%= project._id %>">
-                                                                                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
-                                                                                        </svg>
+                                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
+                                            </svg>
                                         </button>
                                     </p>
                                     <% if (project.problem) { %>
@@ -362,11 +385,11 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <p class="modal-items extra">Deal Owner: <%= project.dealOwnerEmail %>
+                                    <p class="modal-items editable">Deal Owner: <%= project.dealOwnerEmail %>
                                         <button class="button-basic" data-id="<%= project._id %>">
-                                                                                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
-                                                                                        </svg>
+                                            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
+                                            </svg>
                                         </button>
                                     </p>
                                     <% if (project.problem) { %>
@@ -420,14 +443,14 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <p class="modal-items extra">Deal Owner: <%= project.dealOwnerEmail %>
+                                    <p class="modal-items editable">Deal Owner: <%= project.dealOwnerEmail %>
                                         <button class="button-basic" data-id="<%= project._id %>">
                                             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28"/>
                                             </svg>
                                         </button>
                                     </p>
-                                <% if (project.problem) { %>
+                                    <% if (project.problem) { %>
                                         <p class="modal-items">Opdracht: <%= project.description %></p>
                                         <p class="modal-items">Project owner: dropdown (coming soon!)</p>
                                         <p class="modal-items">Bedrijf: <%= project.company %></p>

@@ -29,12 +29,4 @@ router.get('/', checkAuth, async (req, res) => {
         { email: userEmail, role: currentRole, time: currentTime, projects, personalProjects });
 });
 
-
-router.get('/code', (req, res) => {
-    //getHubspotConnection(req);
-    res.redirect('/');
-});
-
-
-
 module.exports = router;
