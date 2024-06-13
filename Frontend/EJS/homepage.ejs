@@ -73,7 +73,7 @@
                     <label class="modal-small-items" for="exportDate">Start Datum:</label>
                     <input type="date" id="exportDate" name="exportDate">
                 <div class="modal-choose-file">
-                    <button class="add-project-btn" href="http://localhost:3000/save">Download</button>
+                    <a class="add-project-btn" href="http://localhost:3000/save">Download</a>
                 </div>
             </div>
         </div>
@@ -86,15 +86,21 @@
         <h2 class="upload-text"> Meldingen </h2>
         <div class="notifications">
             <ul>
-                <li>
-                    <a>melding a</a>
-                </li>
-                <li>
-                    <a>melding b</a>
-                </li>
-                <li>
-                    <a>melding c</a>
-                </li>
+                <% personalProjects.forEach(function(project) { %>
+                    <% if (project.stage == 'appointmentscheduled' || project.stage == 'qualifiedtobuy' && project.obstakels.length === 0) { %>
+                        <li>
+                            <a><%= project.name %> 0-lijst ontbreekt</a>
+                        </li>
+                    <% } else if (project.obstakels.length !== 0 && project.vervolgstappen.length === 0) { %>
+                        <li>
+                            <a><%= project.name %> : 1-lijst ontbreekt</a>
+                        </li>
+                    <% } else if (project.stage !== '112184788' && project.obstakels.length !== 0 && project.vervolgstappen.length !== 0) { %>
+                        <li>
+                            <a><%= project.name %> : Klaar om ingeleverd te worden</a>
+                        </li>
+                    <% } %>
+                <% }); %>
             </ul>
         </div>
     </div>
@@ -103,9 +109,11 @@
         <div class="assigned-projects">
             <ul>
                 <% personalProjects.forEach(function(project) { %>
-                    <li>
-                        <a><%= project.name %></a>
-                    </li>
+                    <% if (project.stage !== '112184788') { %>
+                        <li>
+                            <a><%= project.name %></a>
+                        </li>
+                    <% } %>
                 <% }); %>
             </ul>
         </div>
@@ -195,8 +203,8 @@
                 <% stages["appointmentscheduled"].forEach((project) => { %>
                     <div data-id="<%= project._id %>" class="column-item" data-toggle="modal" data-target="#projectModal<%= project.name.replace(/\s+/g, '') %>">
                         <p class="card-title"><%= project.name %></p>
-                        <p class="card-bottom card-email">Door: <%= project.dealOwnerEmail %></p>
-                        <p class="card-bottom card-email">Contact: <%= project.companyEmail %></p>
+                        <p class="card-bottom">Door: <%= project.dealOwnerEmail %></p>
+                        <p class="card-bottom">Contact: <%= project.companyEmail %></p>
                     </div>
 
                     <!-- Modal -->
@@ -219,8 +227,6 @@
                                     </p>
                                     <% if (project.problem) { %>
                                         <p class="modal-items">Opdracht: <%= project.description %></p>
-                                        <p class="modal-items">Project owner: dropdown (coming soon!)</p>
-                                        <p class="modal-items">Bedrijf: <%= project.company %></p>
                                         <p class="modal-items">Contactpersoon: <%= project.nameContactPerson %></p>
                                     <% } %>
                                     <% if (project.tevredenheid) { %>
@@ -234,7 +240,10 @@
                                     <form action="/uploadexcel" method="post" enctype="multipart/form-data">
                                         <input type="hidden" name="projectId" value="<%= project._id %>">
                                         <div class="modal-upload">
-                                            <input  type="file" name="firstReviewFile">
+                                            <div class="modal-upload-box">
+                                                <label class="modal-label" for="firstReviewFile">Upload Document</label>
+                                                <input class="hidden" type="file" id="firstReviewFile" name="firstReviewFile">
+                                            </div>
                                         </div>
                                         <div class="modal-choose-file">
                                             <input class="add-project-btn" type="submit" value="Upload">
@@ -277,7 +286,6 @@
                                     </p>
                                     <% if (project.problem) { %>
                                         <p class="modal-items">Opdracht: <%= project.description %></p>
-                                        <p class="modal-items">Project owner: dropdown (coming soon!)</p>
                                         <p class="modal-items">Bedrijf: <%= project.company %></p>
                                         <p class="modal-items">Contactpersoon: <%= project.nameContactPerson %></p>
                                     <% } %>
@@ -335,7 +343,6 @@
                                     </p>
                                     <% if (project.problem) { %>
                                         <p class="modal-items">Opdracht: <%= project.description %></p>
-                                        <p class="modal-items">Project owner: dropdown (coming soon!)</p>
                                         <p class="modal-items">Bedrijf: <%= project.company %></p>
                                         <p class="modal-items">Contactpersoon: <%= project.nameContactPerson %></p>
                                     <% } %>
@@ -394,7 +401,6 @@
                                     </p>
                                     <% if (project.problem) { %>
                                         <p class="modal-items">Opdracht: <%= project.description %></p>
-                                        <p class="modal-items">Project owner: dropdown (coming soon!)</p>
                                         <p class="modal-items">Bedrijf: <%= project.company %></p>
                                         <p class="modal-items">Contactpersoon: <%= project.nameContactPerson %></p>
                                     <% } %>
@@ -452,7 +458,11 @@
                                     </p>
                                     <% if (project.problem) { %>
                                         <p class="modal-items">Opdracht: <%= project.description %></p>
-                                        <p class="modal-items">Project owner: dropdown (coming soon!)</p>
+<!--                                        <select class="modal-items" id="projectOwnerDropdown">-->
+<!--                                            <% users.forEach(user => { %>-->
+<!--                                                <option value="<%= user.email %>"><%= user.email %></option>-->
+<!--                                            <% }); %>-->
+<!--                                        </select>-->
                                         <p class="modal-items">Bedrijf: <%= project.company %></p>
                                         <p class="modal-items">Contactpersoon: <%= project.nameContactPerson %></p>
                                     <% } %>

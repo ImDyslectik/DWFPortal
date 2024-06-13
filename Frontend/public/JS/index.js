@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", function() {
     initSearchUsersEmailList();
     initProjectFormAddEvent();
     initSortableColumns();
+    filterAndResetProjects();
+    changeDealOwner();
 });
 
 function initFileClipboard() {
@@ -44,8 +46,7 @@ function initSearchUsersEmailList() {
     });
 }
 
-
-document.addEventListener("DOMContentLoaded", function() {
+function filterAndResetProjects() {
     const items = document.querySelectorAll('.column-item');
 
     function filterProjects() {
@@ -85,10 +86,8 @@ document.addEventListener("DOMContentLoaded", function() {
         document.querySelector('.search-text').value = '';
         resetProjects();
     });
-});
+}
 
-
-// Adding new cards to the project dashboard
 function initProjectFormAddEvent() {
     document.getElementById('addProjectForm').addEventListener('submit', function(event) {
         const name = document.getElementById('name').value;
@@ -115,9 +114,7 @@ function initProjectFormAddEvent() {
     });
 }
 
-
-// Changing the Deal Owner within the modals
-document.addEventListener('DOMContentLoaded', (event) => {
+function changeDealOwner() {
     const buttons = document.querySelectorAll('.button-basic');
 
     buttons.forEach((button) => {
@@ -163,10 +160,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
             container.appendChild(saveButton);
         });
     });
-});
+}
 
-
-// Able to drag and drop the projects
 function initSortableColumns() {
     document.querySelectorAll('.sortable').forEach(sortable => {
         Sortable.create(sortable, {

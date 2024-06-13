@@ -1,7 +1,75 @@
 :root {
-    --primary: #FB6D48;
-    --secondary: #FFA559;
-    --tertiary: #FFE6C7;
-    --fourth: #D74B76;
-    --border: #D4D3E8;
+    --primary: #fb6d48 !important;
+    --secondary: #ffa559 !important;
+    --tertiary: #ffe6c7 !important;
+    --fourth: #d74b76 !important;
+    --border: #d4d3e8 !important;
+    --top: rgb(51, 71, 91) !important;
 }
+
+
+body {
+    margin: 0;
+    font-family: system-ui;
+    background-color: var(--top) !important;
+}
+
+label {
+    color: white;
+    font-weight: bold;
+}
+
+p {
+    color: var(--top);
+}
+
+li {
+    color: white;
+    display: flex;
+}
+
+/**************************************************/
+/***************** Navigation Bar******************/
+/**************************************************/
+
+.navbar-primary {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    background-color: var(--top);
+    padding: 16px;
+    margin: 0;
+}
+
+.navbar-items {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: large;
+    padding-left: 5px;
+}
+
+.icon {
+    max-height: 16px;
+    max-width: 16px;
+}
+
+
+.overview {
+    display: flex;
+    justify-content: space-between;
+    padding: 36px;
+    background-color: var(--secondary);
+}
+
+.overview-container {
+    border: 2px solid var(--top);
+    width: 30%;
+    max-height: 310px;
+    overflow: hidden;
+    padding: 16px;
+    margin: 16px;
+    border-radius: 10px;
+    background-color: var(--primary);
+}
+

@@ -1,35 +1,101 @@
 <head>
     <title>Admin</title>
     <link rel="stylesheet" type="text/css" href="/CSS/admin.css">
+    <link rel="icon" href="" type="image/x-icon">
+    <link rel="icon" href="/Images/dwf_logo.png" sizes="200x200" type="image/png">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/sortablejs@latest/Sortable.min.js"></script>
+    <script src="/JS/index.js"></script>
 </head>
 <body>
-<h1>Gebruiker toevoegen</h1>
+<div class="top-bar">
+    <ul class="navbar-primary">
+        <li>
+            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m4 12 8-8 8 8M6 10.5V19a1 1 0 0 0 1 1h3v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h3a1 1 0 0 0 1-1v-8.5"/>
+            </svg>
+            <a href="/" class="navbar-items"> Home </a>
+        </li>
+        <!--        <li>-->
+        <!--            <svg class="icon" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 24 24">-->
+        <!--                <path d="M 12 2 A 1 1 0 0 0 11.289062 2.296875 L 1.203125 11.097656 A 0.5 0.5 0 0 0 1 11.5 A 0.5 0.5 0 0 0 1.5 12 L 4 12 L 4 20 C 4 20.552 4.448 21 5 21 L 9 21 C 9.552 21 10 20.552 10 20 L 10 14 L 14 14 L 14 20 C 14 20.552 14.448 21 15 21 L 19 21 C 19.552 21 20 20.552 20 20 L 20 12 L 22.5 12 A 0.5 0.5 0 0 0 23 11.5 A 0.5 0.5 0 0 0 22.796875 11.097656 L 12.716797 2.3027344 A 1 1 0 0 0 12.710938 2.296875 A 1 1 0 0 0 12 2 z"></path>-->
+        <!--            </svg>-->
+        <!--            <a href="/projecten" class="navbar-items"> Projecten </a>-->
+        <!--        </li>-->
+        <li>
+            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 13V4M7 14H5a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-2m-1-5-4 5-4-5m9 8h.01"/>
+            </svg>
+            <div data-toggle="modal" data-target="#myModal">
+                <a class="navbar-items">Download CSV</a>
+            </div>
+        </li>
+        <!--        <li>-->
+        <!--            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">-->
+        <!--                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5.365V3m0 2.365a5.338 5.338 0 0 1 5.133 5.368v1.8c0 2.386 1.867 2.982 1.867 4.175 0 .593 0 1.292-.538 1.292H5.538C5 18 5 17.301 5 16.708c0-1.193 1.867-1.789 1.867-4.175v-1.8A5.338 5.338 0 0 1 12 5.365ZM8.733 18c.094.852.306 1.54.944 2.112a3.48 3.48 0 0 0 4.646 0c.638-.572 1.236-1.26 1.33-2.112h-6.92Z"/>-->
+        <!--            </svg>-->
+        <!--            <a href="/" class="navbar-items"> Meldingen </a>-->
+        <!--        </li>-->
+        <li>
+            <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+            </svg>
+            <a href="/" class="navbar-items"> Ingelogd als</a>
+        </li>
+            <li>
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14v3m-3-6V7a3 3 0 1 1 6 0v4m-8 0h10a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-7a1 1 0 0 1 1-1Z"/>
+                </svg>
+                <a href="/admin" class="navbar-items"> Admin </a>
+            </li>
+    </ul>
+</div>
 
-<form id="dataForm" method="POST" action="/data">
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
 
-    <label for="password">Wachtwoord:</label>
-    <input type="password" id="password" name="password" required>
 
-    <label for="role">Rol:</label>
-    <select id="role" name="role">
-        <option value="user">Gebruiker</option>
-        <option value="admin">Beheerder</option>
-    </select>
+<div class="overview">
+    <div class="overview-container">
+        <h1>Gebruiker toevoegen</h1>
+        <div class="notifications">
+            <form id="dataForm" method="POST" action="/data">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
 
-    <button type="submit">Verzenden</button>
-</form>
+                <label for="password">Wachtwoord:</label>
+                <input type="password" id="password" name="password" required>
+
+                <label for="role">Rol:</label>
+                <select id="role" name="role">
+                    <option value="user">Gebruiker</option>
+                    <option value="admin">Beheerder</option>
+                </select>
+
+                <button type="submit">Verzenden</button>
+            </form>
+        </div>
+    </div>
+    <div class="overview-container">
+        <h1>Gebruiker verwijderen</h1>
+        <form id="deleteForm" method="POST" action="/admin/delete">
+            <label for="deleteEmail">E-mail:</label>
+            <input type="email" id="filterInput" name="email" required>
+
+            <button type="submit">Verwijderen</button>
+        </form>
+    </div>
+</div>
+
+
+
+
 
 <div id="feedback"></div>
 
-<h1>Gebruiker verwijderen</h1>
-<form id="deleteForm" method="POST" action="/admin/delete">
-    <label for="deleteEmail">E-mail:</label>
-    <input type="email" id="filterInput" name="email" required>
 
-    <button type="submit">Verwijderen</button>
-</form>
 
 <h1>Gegevens</h1>
 <ul id="dataList">

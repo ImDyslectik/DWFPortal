@@ -54,7 +54,7 @@ li {
 }
 
 /**************************************************/
-/*** Notifications, Projects and Uploading*********/
+/*** Notifications, Projects and Uploading ********/
 /**************************************************/
 
 .overview {
@@ -64,21 +64,37 @@ li {
     background-color: var(--secondary);
 }
 
+.overview-container {
+    border: 2px solid var(--top);
+    width: 30%;
+    max-height: 310px;
+    overflow: hidden;
+    padding: 16px;
+    margin: 16px;
+    border-radius: 10px;
+    background-color: var(--primary);
+}
+
 .search {
     display: flex;
     align-items: center;
     /*justify-content: center;*/
 }
 
-
 .add-project-btn {
     background-color: #f3f7fe;
     width: 200px;
     height: 45px;
-    transition: .3s;
     border-radius: 16px !important;
     border: 2px solid var(--top);
     color: var(--primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.add-project-btn:hover {
+    border: 5px solid var(--primary);
 }
 
 .reset-btn {
@@ -146,17 +162,6 @@ button:hover {
     border-style: solid;
     border-color:white;
     padding-bottom: 5px;
-}
-
-.overview-container {
-    border: 2px solid var(--top);
-    width: 30%;
-    max-height: 310px;
-    overflow: hidden;
-    padding: 16px;
-    margin: 16px;
-    border-radius: 10px;
-    background-color: var(--primary);
 }
 
 .break {
@@ -268,6 +273,7 @@ button:hover {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     margin-bottom: 8px;
     height: 124px;
+    cursor: grab;
     background-color: var(--primary);
     padding: 8px;
     border-radius: 8px;
@@ -283,7 +289,6 @@ button:hover {
     color: white;
     margin-bottom: 0;
 }
-
 
 
 /**************************************************/
@@ -347,4 +352,21 @@ button:hover {
     background-color: white;
     border: 2px solid white;
     width: 40px;
+}
+
+.input[type=file] {
+    display: none;
+}
+
+.modal-label {
+    padding: 10px;
+    background-color: #4CAF50;
+}
+
+.modal-label:hover {
+    background-color: #45a049;
+}
+
+.hidden {
+    display: none;
 }

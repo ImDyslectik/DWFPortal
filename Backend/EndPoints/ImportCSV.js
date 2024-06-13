@@ -14,6 +14,12 @@ const {
 
 
 router.post('/uploadexcel', upload.single('firstReviewFile'), function(req, res) {
+
+    if (!req.file) {
+        res.redirect('/')
+        return;
+    }
+
     const workbook = xlsx.read(req.file.buffer, { type: "buffer" });
     const worksheet = workbook.Sheets[workbook.SheetNames[0]];
     const data = xlsx.utils.sheet_to_json(worksheet);
