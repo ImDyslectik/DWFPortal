@@ -21,7 +21,7 @@ router.post('/delete', (req, res) => {
 router.get('/', checkAuth, (req, res) => {
     DataModel.find()
         .then((data) => {
-            res.render(path.join(__dirname, '../../Frontend/EJS/admin.ejs'), { isAdmin: false, data });
+            res.render(path.join(__dirname, '../../Frontend/EJS/admin.ejs'), { isAdmin: false, data, email: req.session.username });
         })
         .catch((err) => {
             console.error(err);

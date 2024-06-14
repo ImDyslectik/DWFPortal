@@ -44,7 +44,7 @@
             <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
             </svg>
-            <a href="/" class="navbar-items"> Ingelogd als</a>
+            <a href="/" class="navbar-items"> Ingelogd als: <%= email %> </a>
         </li>
             <li>
                 <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -59,32 +59,34 @@
 
 <div class="overview">
     <div class="overview-container">
-        <h1>Gebruiker toevoegen</h1>
+        <h2 class="upload-text">Gebruiker toevoegen</h2>
         <div class="notifications">
-            <form id="dataForm" method="POST" action="/data">
+            <form class="aaa" id="dataForm" method="POST" action="/data">
                 <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+                <input placeholder="Email" type="email" id="email" name="email" required>
 
                 <label for="password">Wachtwoord:</label>
-                <input type="password" id="password" name="password" required>
+                <input placeholder="Wachtwoord" type="password" id="password" name="password" required>
 
                 <label for="role">Rol:</label>
                 <select id="role" name="role">
                     <option value="user">Gebruiker</option>
                     <option value="admin">Beheerder</option>
                 </select>
-
-                <button type="submit">Verzenden</button>
+                <div class="add-project">
+                    <button type="submit">Verzenden</button>
+                </div>
             </form>
         </div>
     </div>
     <div class="overview-container">
-        <h1>Gebruiker verwijderen</h1>
-        <form id="deleteForm" method="POST" action="/admin/delete">
+        <h2 class="upload-text">Gebruiker verwijderen</h2>
+        <form class="aaa" id="deleteForm" method="POST" action="/admin/delete">
             <label for="deleteEmail">E-mail:</label>
-            <input type="email" id="filterInput" name="email" required>
-
-            <button type="submit">Verwijderen</button>
+            <input placeholder="Email" type="email" id="filterInput" name="email" required>
+            <div class="add-project">
+                <button type="submit">Verwijderen</button>
+            </div>
         </form>
     </div>
 </div>
@@ -97,11 +99,11 @@
 
 
 
-<h1>Gegevens</h1>
+<h2 class="upload-text text-white">Gegevens</h2>
 <ul id="dataList">
     <% if (data && data.length > 0) { %>
         <% data.forEach((item) => { %>
-            <li><%= item.email %> - <%= item.role %></li>
+            <li class="modal-items"><%= item.email %> - <%= item.role %></li>
         <% }); %>
     <% } else { %>
         <p>Geen gegevens beschikbaar.</p>

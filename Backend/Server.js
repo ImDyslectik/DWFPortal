@@ -27,7 +27,6 @@ app.use(sessionMiddleware);
 app.use(express.static(path.join(__dirname, '../Frontend/public')));
 app.use(express.urlencoded({ extended: true }));
 
-// Je huidige routes ...
 app.use('/login', loginRouter);
 app.use('/admin', adminRouter);
 app.use('/', homepageRouter);

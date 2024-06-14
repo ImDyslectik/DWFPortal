@@ -169,7 +169,7 @@
 <div class="break">
     <div class="search">
         <div class="search-field">
-            <input class="search-text">
+            <input placeholder="Zoeken..." class="search-text">
             <button id="reset-btn" class="reset-btn">X</button>
         </div>
     </div>
@@ -240,10 +240,7 @@
                                     <form action="/uploadexcel" method="post" enctype="multipart/form-data">
                                         <input type="hidden" name="projectId" value="<%= project._id %>">
                                         <div class="modal-upload">
-                                            <div class="modal-upload-box">
-                                                <label class="modal-label" for="firstReviewFile">Upload Document</label>
-                                                <input class="hidden" type="file" id="firstReviewFile" name="firstReviewFile">
-                                            </div>
+                                            <input  type="file" name="firstReviewFile">
                                         </div>
                                         <div class="modal-choose-file">
                                             <input class="add-project-btn" type="submit" value="Upload">
