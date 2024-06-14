@@ -24,7 +24,8 @@ versie 6.1 of hoger vereist zijn. <br>
 https://www.mongodb.com/try/download/community
 
 **NodeJS versie** <br>
-Voor een verbinding te maken met mongodDB is een NodeJS versie van 20.12+ vereist
+Voor een verbinding te maken met mongodDB is een NodeJS versie van 20.12+ vereist.
+https://www.freecodecamp.org/news/node-version-manager-nvm-install-guide/
 
 
 **(Optioneel) Notification services:** <br>
