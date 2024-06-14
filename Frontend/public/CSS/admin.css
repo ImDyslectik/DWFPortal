@@ -99,11 +99,9 @@ li {
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--top);
-    border-width:0 0 2px;
-    border-style: solid;
-    border-color: var(--top);
     padding-bottom: 5px;
+    color: var(--top);
+    text-decoration: underline;
 }
 
 

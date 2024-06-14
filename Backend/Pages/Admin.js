@@ -9,7 +9,7 @@ router.post('/delete', (req, res) => {
 
     DataModel.findOneAndDelete({ email })
         .then(() => {
-            res.sendStatus(200);
+            res.redirect('/admin')
         })
         .catch((err) => {
             console.error(err);

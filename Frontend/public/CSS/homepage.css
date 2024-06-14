@@ -31,10 +31,10 @@ li {
     color: var(--top);
 }
 
-.notifications li {
-    color: var(--top);
-    overflow-y: auto;
-}
+
+/**************************************************/
+/***************** Text properties ****************/
+/**************************************************/
 
 .text-white {
     color: white;
@@ -49,8 +49,6 @@ li {
 /**************************************************/
 
 .navbar-primary {
-    display: flex;
-    justify-content: space-between;
     list-style: none;
     background-color: var(--top);
     padding: 16px;
@@ -62,7 +60,8 @@ li {
     text-decoration: none;
     font-weight: 500;
     font-size: large;
-    padding-left: 5px;
+    padding-left: 5px;dsd
+    curso
 }
 
 .icon {
@@ -70,13 +69,15 @@ li {
     max-width: 16px;
 }
 
+.hidden {
+    display: none;
+}
+
 /**************************************************/
 /*** Notifications, Projects and Uploading ********/
 /**************************************************/
 
 .overview {
-    display: flex;
-    justify-content: space-between;
     padding: 36px;
     background-color: var(--secondary);
 }
@@ -93,6 +94,24 @@ li {
     background-color: white;
     overflow-y: auto;
 }
+
+.upload-text {
+    color: var(--top);
+    text-decoration: underline;
+    padding-bottom: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.notifications li {
+    color: var(--top);
+    overflow-y: auto;
+}
+
+/**************************************************/
+/********************* Scrollbar ******************/
+/**************************************************/
 
 .overview-container::-webkit-scrollbar {
     width: 10px;
@@ -131,12 +150,41 @@ li {
     border-radius: 16px;
 }
 
+/**************************************************/
+/******************** Break Bar *******************/
+/**************************************************/
+
+.break {
+    background-color: var(--top);
+    padding: 16px;
+}
 
 .search {
     display: flex;
     align-items: center;
     /*justify-content: center;*/
 }
+
+.search-field {
+    padding: 0 8px 0 16px;
+}
+
+.project-searchbar {
+    padding: 3px;
+}
+
+.project-container-top {
+    display: flex;
+    justify-content: space-around;
+    padding-top: 36px;
+    border-width:0 0 2px;
+    border-style: solid;
+    border-color:white;
+}
+
+/**************************************************/
+/********************** Buttons *******************/
+/**************************************************/
 
 .add-project-btn {
     background-color: #f3f7fe;
@@ -164,10 +212,6 @@ li {
     color: var(--top);
 }
 
-.project-searchbar {
-    padding: 3px;
-}
-
 
 .add-project-input {
     border: 0 solid gray;
@@ -187,9 +231,6 @@ li {
     justify-content: center;
 }
 
-.search-field {
-    padding: 0 8px 0 16px;
-}
 
 button {
     font-family: monospace;
@@ -208,42 +249,6 @@ button:hover {
     color: #fff;
 }
 
-.grid {
-    display: flex;
-    justify-content: center;
-}
-
-.upload-text {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: var(--top);
-    border-width:0 0 2px;
-    border-style: solid;
-    border-color: var(--top);
-    padding-bottom: 5px;
-}
-
-.break {
-    background-color: var(--top);
-    padding: 16px;
-}
-
-.api-text {
-    color: white;
-}
-
-#dropArea {
-    display: flex;
-    justify-content: center;
-    width: 300px;
-    height: 100px;
-    border: 2px dashed var(--top);
-    line-height: 150px;
-    margin: 16px auto;
-    cursor: pointer;
-}
-
 #message {
     margin-top: 20px;
     font-weight: bold;
@@ -252,50 +257,18 @@ button:hover {
 }
 
 /**************************************************/
-/************** Search Bar & Grid *****************/
+/******************* Project Grid *****************/
 /**************************************************/
 
-.overview {
-    display: flex;
-    justify-content: space-between;
-}
-
-.search {
-    display: flex;
+.project-container {
+    padding: 36px;
+    background-color: var(--secondary);
 }
 
 .grid {
     display: flex;
     justify-content: center;
 }
-
-.upload-text {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-
-#dropArea {
-    display: flex;
-    justify-content: center;
-    width: 300px;
-    height: 100px;
-    border: 2px dashed var(--top);
-    line-height: 150px;
-    margin: 16px auto;
-    cursor: pointer;
-}
-
-#message {
-    margin-top: 20px;
-    font-weight: bold;
-    font-size: medium;
-}
-
-/**************************************************/
-/************** Search Bar & Grid *****************/
-/**************************************************/
 
 .projects {
     width: 100%;
@@ -307,20 +280,6 @@ button:hover {
     border: 2px solid var(--top);
     border-radius: 16px;
     margin: 4px;
-}
-
-.project-container {
-    padding: 36px;
-    background-color: var(--secondary);
-}
-
-.project-container-top {
-    display: flex;
-    justify-content: space-around;
-    padding-top: 36px;
-    border-width:0 0 2px;
-    border-style: solid;
-    border-color:white;
 }
 
 .column-item {
@@ -345,24 +304,22 @@ button:hover {
     margin-bottom: 0;
 }
 
-
 /**************************************************/
 /****************** Modal Items *******************/
 /**************************************************/
-
 
 .modal-content {
     border-radius: 16px !important;
 }
 
-.modal-title {
-    font-weight: 700 !important;
-    font-size: xx-large;
-}
-
 .modal-header {
     border-bottom: 1px solid var(--top) !important;
     align-items: center !important;
+}
+
+.modal-title {
+    font-weight: 700 !important;
+    font-size: xx-large;
 }
 
 .modal-items {
@@ -398,7 +355,7 @@ button:hover {
     padding-bottom: 10px;
 }
 
-.editable {
+.flex-between {
     display: flex;
     justify-content: space-between;
 }
@@ -410,18 +367,5 @@ button:hover {
 }
 
 .input[type=file] {
-    display: none;
-}
-
-.modal-label {
-    padding: 10px;
-    background-color: #4CAF50;
-}
-
-.modal-label:hover {
-    background-color: #45a049;
-}
-
-.hidden {
     display: none;
 }

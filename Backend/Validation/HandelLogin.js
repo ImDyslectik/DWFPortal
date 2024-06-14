@@ -20,7 +20,7 @@ function HandleData(req, res) {
 
     newData.save()
         .then(() => {
-            res.sendStatus(200);
+            res.redirect('/admin')
         })
         .catch((err) => {
             console.error(err);

@@ -13,6 +13,17 @@ const transporter = nodemailer.createTransport({
     }
 });
 
+function generateProjectNotification(project) {
+    if (project.stage == 'appointmentscheduled' || (project.stage == 'qualifiedtobuy' && project.obstakels.length === 0)) {
+        return `${project.name} 0-lijst ontbreekt`
+    } else if (project.obstakels.length !== 0 && project.vervolgstappen.length === 0) {
+        return `${project.name} : 1-lijst ontbreekt`
+    } else if (project.stage !== '112184788' && project.obstakels.length !== 0 && project.vervolgstappen.length !== 0) {
+        return `${project.name} : Klaar om ingeleverd te worden`
+    }
+    return '';
+}
+
 async function sendEmailsToUsers() {
 
     const users = await DataModel.find();
@@ -20,25 +31,27 @@ async function sendEmailsToUsers() {
 
     for (const user of users) {
         const userProjects = inactiveProjects.filter(project => project.dealOwnerEmail === user.email);
-        // if (userProjects && userProjects.length > 0){
-        //     console.log('gebruiker heeft projecten');
-        //     break;
-        // }
-        // console.log('gebruiker heeft geen projecten');
+
+        const projectNotifications = userProjects.map(generateProjectNotification);
+        if (projectNotifications.length === 0) {
+            continue;
+        }
 
         const emailContent = `
-            Hey ${user.email}!,
+Hey ${user.email}!,
 
-            Er zijn nog wat dingetjes die al een paar dagen niet geupdate zijn.
-            ${userProjects.map(project => `Projectnaam: ${project.name}`).join('\n')}
-            
-            Met vriendelijke groet,
-            Deze webapp
-        `;
+Er zijn nog wat dingetjes die al een paar dagen niet geupdate zijn of klaar staan om voltooid te worden:
+
+${projectNotifications.filter(note => note !== '').map((note, i) => `${i+1}. ${note}`).join('\n\n')}
+
+Met vriendelijke groet,
+Deze webapp
+`;
 
         const mailOptions = {
             from: process.env.EMAILSERVICE_USERNAME,
-            to: user.email,
+            // to: user.email,
+            to: process.env.EMAILSERVICE_TESTER,
             subject: 'Wekelijks reminder',
             text: emailContent
         };
@@ -52,5 +65,4 @@ async function sendEmailsToUsers() {
         });
     }
 }
-
 module.exports = sendEmailsToUsers;

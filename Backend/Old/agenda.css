@@ -1,0 +1,14 @@
+:root {
+    --primary: #fb6d48 !important;
+    --secondary: #ffa559 !important;
+    --tertiary: #ffe6c7 !important;
+    --fourth: #d74b76 !important;
+    --border: #d4d3e8 !important;
+    --top: rgb(51, 71, 91) !important;
+}
+
+body {
+    margin: 0;
+    background-image: linear-gradient( 135deg, #FAD7A1 10%, #E96D71 100%);
+    font-family: system-ui;
+}

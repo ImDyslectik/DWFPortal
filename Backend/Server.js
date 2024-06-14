@@ -17,7 +17,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-if (process.env.USEE_MAIL_SERVICE === 'true') {
+if (process.env.USE_MAIL_SERVICE === 'true') {
     refresh = require('./Schedules/Scheduler');
 }
 
