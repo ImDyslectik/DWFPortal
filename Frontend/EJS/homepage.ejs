@@ -95,7 +95,7 @@
                         <li>
                             <a><%= project.name %> : 1-lijst ontbreekt</a>
                         </li>
-                    <% } else if (project.stage !== '112184788' && project.obstakels.length !== 0 && project.vervolgstappen.length !== 0) { %>
+                    <% } else if (project.stage !== '112184788' && project.stage !== 'closedlost' && project.obstakels.length !== 0 && project.vervolgstappen.length !== 0) { %>
                         <li>
                             <a><%= project.name %> : Klaar om ingeleverd te worden</a>
                         </li>
