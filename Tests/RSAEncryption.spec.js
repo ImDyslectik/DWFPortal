@@ -1,4 +1,4 @@
-const { generateKeyPair, encryptText, decryptText } = require('../Backend/Validation/RSAEncryption');
+const { generateKeyPair, encryptText, decryptText } = require('../Backend/Validation/HashEncryption');
 const crypto = require('crypto');
 
 test('generateKeyPair should return an object with publicKey and privateKey', () => {

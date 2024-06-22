@@ -1,7 +1,7 @@
 const nodemailer = require('nodemailer');
 const path = require('path')
 const DataModel = require('../../DataSchematics/UserSchematic');
-const {decryptText} = require("../Validation/RSAEncryption");
+const {decryptText} = require("../Validation/HashEncryption");
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
 const getInactiveProjects = require('./FetchInactiveProjects');
 
@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
 });
 
 function generateProjectNotification(project) {
-    if (project.stage == 'appointmentscheduled' || (project.stage == 'qualifiedtobuy' && project.obstakels.length === 0)) {
+    if (project.stage === 'appointmentscheduled' || (project.stage === 'qualifiedtobuy' && project.obstakels.length === 0)) {
         return `${project.name} 0-lijst ontbreekt`
     } else if (project.obstakels.length !== 0 && project.vervolgstappen.length === 0) {
         return `${project.name} : 1-lijst ontbreekt`
@@ -38,9 +38,10 @@ async function sendEmailsToUsers() {
         }
 
         const emailContent = `
+        
 Hey ${user.email}!,
 
-Er zijn nog wat dingetjes die al een paar dagen niet geupdate zijn of klaar staan om voltooid te worden:
+Er zijn nog wat projecten die al een paar dagen niet geupdate zijn of klaar staan om voltooid te worden:
 
 ${projectNotifications.filter(note => note !== '').map((note, i) => `${i+1}. ${note}`).join('\n\n')}
 
@@ -50,8 +51,7 @@ Deze webapp
 
         const mailOptions = {
             from: process.env.EMAILSERVICE_USERNAME,
-            // to: user.email,
-            to: process.env.EMAILSERVICE_TESTER,
+            to: user.email,
             subject: 'Wekelijks reminder',
             text: emailContent
         };

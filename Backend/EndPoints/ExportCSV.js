@@ -1,5 +1,3 @@
-const mongoose = require("mongoose");
-const fs = require("fs");
 const xlsx = require("xlsx");
 const Project = require("../../DataSchematics/ProjectSchematic");
 const labels = require("../../Constants/Labels");
@@ -44,7 +42,7 @@ const exportCSV = async (req, res) => {
                 project.kvkNummer,
                 project.companyEmail,
                 project.typeActiviteit,
-
+                "",
                 //0-Lijst
                 project.inAanraking,
                 "",
@@ -56,11 +54,8 @@ const exportCSV = async (req, res) => {
                 "",
                 ...obstakelsResults,
                 "",
-                "",
                 ...gewensteResultaatResults,
                 project.vraagstuk,
-                "",
-                "",
 
                 //1-Lijst
                 project.meerInzicht,

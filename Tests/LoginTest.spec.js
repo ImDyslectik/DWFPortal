@@ -1,9 +1,9 @@
-const { generateKeyPair, encryptText } = require('../Backend/Validation/RSAEncryption');
+const { generateKeyPair, encryptText } = require('../Backend/Validation/HashEncryption');
 const DataModel = require('../DataSchematics/UserSchematic');
 const HandleData = require('../Backend/Validation/HandelLogin');
 const { describe, it, expect } = require('@jest/globals');
 
-jest.mock('../Backend/Validation/RSAEncryption');
+jest.mock('../Backend/Validation/HashEncryption');
 jest.mock('../DataSchematics/UserSchematic');
 
 const req = {

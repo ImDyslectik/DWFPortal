@@ -1,30 +1,26 @@
 require('dotenv').config();
 const DataModel = require('../../DataSchematics/UserSchematic');
 const express = require('express');
-const { decryptText } = require("../Validation/RSAEncryption");
 const path = require('path');
 const router = express.Router();
-const { generateKeyPair, encryptText } = require('../Validation/RSAEncryption');
+const { checkPassword, hashPassword } = require('../Validation/HashEncryption');
 
 
 async function setupInitialAdmin() {
     let adminEmail = process.env.ADMIN_EMAIL;
-    let adminPassword = process.env.ADMIN_PASSWORD;
-    let keys = generateKeyPair();
-    let encryptedPassword = encryptText(adminPassword, keys.publicKey);
+    let adminPassword = hashPassword(process.env.ADMIN_PASSWORD);
 
     let adminUser = await DataModel.findOne({ email: adminEmail });
     if (!adminUser) {
         await new DataModel({
             email: adminEmail,
-            password: encryptedPassword,
-            role: 'admin',
-            publicKey: keys.publicKey,
-            privateKey: keys.privateKey }).save();
+            password: adminPassword,
+            role: 'admin'}).save();
     }
 }
 
 setupInitialAdmin();
+
 
 router.get('/', (req, res) => {
     res.render(path.join(__dirname, '../../Frontend/EJS/login.ejs'));
@@ -35,7 +31,7 @@ router.post('/', (req, res) => {
 
     DataModel.findOne({ email })
         .then((user) => {
-            if (!user || decryptText(user.password, user.privateKey) !== password) {
+            if (!user || !checkPassword(password, user.password)) {
                 res.redirect('/login');
             } else {
                 req.session.username = email;

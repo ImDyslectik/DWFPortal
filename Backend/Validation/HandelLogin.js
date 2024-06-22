@@ -1,21 +1,16 @@
-const { generateKeyPair, encryptText } = require('./RSAEncryption');
+const { hashPassword } = require('./HashEncryption');
 const DataModel = require('../../DataSchematics/UserSchematic');
+
 
 function HandleData(req, res) {
     const { email, password, role } = req.body;
 
-    const keyPair = generateKeyPair();
-    const publicKey = keyPair.publicKey;
-    const privateKey = keyPair.privateKey;
-
-    const encryptedPassword = encryptText(password, publicKey);
+    const hashedPassword = hashPassword(password);
 
     const newData = new DataModel({
         email,
-        password: encryptedPassword,
-        role,
-        publicKey,
-        privateKey,
+        password: hashedPassword,
+        role
     });
 
     newData.save()

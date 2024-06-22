@@ -15,14 +15,6 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    publicKey: {
-        type: String,
-        required: true
-    },
-    privateKey: {
-        type: String,
-        required: true
-    }
 });
 
 const User = mongoose.model('User', userSchema);
